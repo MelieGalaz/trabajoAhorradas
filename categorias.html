@@ -4,49 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
 
-<body>
+<body class=" bg-[url('imagenes/fondoBody2.png')] h-screen bg-center bg-cover">
 
 
-    <div>
-        <h2>Categorías</h2>
-        <div>
-            <label for="agregarCategorias">Nombre</label>
-            <input type="text" id="agregarCategorias">
+    <div class="flex  mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]  rounded-lg">
+        <h2 class=" text-3xl text-center font-bold">Categorías</h2>
+        <div class="flex flex-col ">
+            <label for=" agregarCategorias" class="font-normal text-xl">Nombre</label>
+            <div class="flex flex-row gap-3 items-center ">
+                <input type="text" id="agregarCategorias" class="w-[172px] h-[35px] rounded-lg">
+                <button class="w-28 my-4 h-8 text-white bg-[#a1489f] hover:bg-[#97c5e6] hover:text-[#050505]
+                    rounded-lg m-auto">Agregar</button>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Salidas</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Educación</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Transporte</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Trabajo</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Comida</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
-        <div>
+        <div class="flex justify-between">
             <p>Deporte</p>
-            <a href="">Editar</a>
-            <a href="">Eliminar</a>
+            <div class="flex gap-4">
+                <a href="" class="text-blue-600">Editar</a>
+                <a href="" class="text-blue-600">Eliminar</a>
+            </div>
         </div>
     </div>
+
+
 </body>
 
 </html>
