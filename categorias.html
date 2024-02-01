@@ -8,8 +8,8 @@
     <title>Document</title>
 </head>
 
-<body>
-     <header class="ahorradas-title">
+<body class=" bg-[url('imagenes/fondoBody2.png')] h-screen bg-center bg-cover">
+ <header class="ahorradas-title">
       <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
@@ -56,6 +56,30 @@
                 Reportes
                 </a>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- Mobile menu, show/hide based on menu state. -->
+      <div class="sm:hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pb-3 pt-2">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+          <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page"><i class="fi fi-rr-chart-histogram"></i> Balances </a>
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"> <i class="fi fi-sr-tags"></i> Categorias </a>
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"><i class="fi fi-sr-chart-pie"></i> Reportes </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+    <div class="flex  mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]  rounded-lg">
+        <h2 class=" text-3xl text-center font-bold">Categorías</h2>
+        <div class="flex flex-col ">
+            <label for=" agregarCategorias" class="font-normal text-xl">Nombre</label>
+            <div class="flex flex-row gap-3 items-center ">
+                <input type="text" id="agregarCategorias" class="w-[172px] h-[35px] rounded-lg">
+                <button class="w-28 my-4 h-8 text-white bg-[#a1489f] hover:bg-[#97c5e6] hover:text-[#050505]
+                    rounded-lg m-auto">Agregar</button>
             </div>
           </div>
         </div>
@@ -121,7 +145,6 @@
             </div>
         </div>
     </div>
-    </main>
 </body>
 
 </html>
