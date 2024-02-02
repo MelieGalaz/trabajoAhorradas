@@ -31,11 +31,6 @@
                             aria-controls="mobile-menu" aria-expanded="false">
                             <span class="absolute -inset-0.5"></span>
                             <span class="sr-only">Open main menu</span>
-                            <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
                             <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -97,58 +92,75 @@
         </nav>
     </header>
     <main>
-        <section>
-            <h2>Balance</h2>
-            <p>Ganancias</p>
-            <p>Gastos</p>
-            <p>Total</p>
-        </section>
-        <section>
-            <h2>Filtros</h2>
-            <p>Ocultar Filtros</p>
-            <div>
-                <label for="">Tipo</label>
-                <select name="" id="">
-                    <option value="">Todos</option>
-                    <option value="">Ganancias</option>
-                    <option value="">Gastos</option>
-                </select>
-            </div>
-            <div>
-                <label for="">Categoria</label>
-                <select name="" id="">
-                    <option value="">Todas</option>
-                    <option value="">Comida</option>
-                    <option value="">Servicios</option>
-                    <option value="">Salidas</option>
-                    <option value="">Educación</option>
-                    <option value="">Transporte</option>
-                    <option value="">Trabajo</option>
-                </select>
-            </div>
-            <div>
-                <label for="">Desde</label>
-                <!-- poner calendario -->
-            </div>
-            <div>
-                <label for="">Ordenar por</label>
-                <select name="" id="">
-                    <option value="">Mas recientes</option>
-                    <option value="">Menos recientes</option>
-                    <option value="">Mayor monto</option>
-                    <option value="">Menor monto</option>
-                    <option value="">A/Z</option>
-                    <option value="">Z/A</option>
-                </select>
-            </div>
-        </section>
-        <section>
-            <h2>Operaciones</h2>
-            <button>+ Nueva operación</button>
-            <img src="./assets/mujer-dinero.PNG" alt="" />
-            <div>
-                <h3>Sin resultados</h3>
-                <p>Cambia los filtros o agrega operaciones</p>
+        <section id="Balance" class="flex m-auto justify-center">
+            <section class="flex flex-col">
+                <div
+                    class="w-80 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
+                    <h2 class="text-3xl text-center font-bold p-4 ">Balance</h2>
+                    <div class="ganancias flex p-2 justify-between ">
+                        <p>Ganancias</p>
+                        <p>+$0</p>
+                    </div>
+                    <div class="gastos flex p-2 justify-between">
+                        <p>Gastos</p>
+                        <p>+$0</p>
+                    </div>
+                    <div class="total flex p-2 justify-between">
+                        <p>Total</p>
+                        <p>$0</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
+                    <h2 class="text-3xl text-center font-bold p-4">Filtros</h2>
+                    <p>Ocultar Filtros</p>
+                    <div>
+                        <label for="">Tipo</label>
+                        <select name="" id="">
+                            <option value="">Todos</option>
+                            <option value="">Ganancias</option>
+                            <option value="">Gastos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="">Categoria</label>
+                        <select name="" id="">
+                            <option value="">Todas</option>
+                            <option value="">Comida</option>
+                            <option value="">Servicios</option>
+                            <option value="">Salidas</option>
+                            <option value="">Educación</option>
+                            <option value="">Transporte</option>
+                            <option value="">Trabajo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="">Desde</label>
+                        <!-- poner calendario -->
+                    </div>
+                    <div>
+                        <label for="">Ordenar por</label>
+                        <select name="" id="">
+                            <option value="">Mas recientes</option>
+                            <option value="">Menos recientes</option>
+                            <option value="">Mayor monto</option>
+                            <option value="">Menor monto</option>
+                            <option value="">A/Z</option>
+                            <option value="">Z/A</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <div
+                class="w-6/12 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
+                <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
+                <button>+ Nueva operación</button>
+                <div class="h-4/5">
+                    <img src="./assets/mujer-dinero.PNG" alt="" />
+                    <h3>Sin resultados</h3>
+                    <p>Cambia los filtros o agrega operaciones</p>
+                </div>
             </div>
         </section>
         <!---------------------sección reportes----------------------->
@@ -156,12 +168,14 @@
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:my-6 ">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
-                <div class="object-contain lg:w-80 lg:m-auto">
-                    <img src="imagenes/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
-                </div>
                 <div>
-                    <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
-                    <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
+                    <div class="object-contain lg:w-80 lg:m-auto">
+                        <img src="imagenes/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
+                    </div>
+                    <div>
+                        <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
+                        <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
+                    </div>
                 </div>
         </section>
         <!------------------------sección categorias---------------------------------->
@@ -222,6 +236,37 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section>
+            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
+                rounded-lg lg:w-3/5 lg:m-auto lg:my-6 ">
+                <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
+                <div class="flex flex-col gap-4 lg:gap-6">
+                    <label for="descripcion" class="text-xl">Descripción</label>
+                    <input type="text" id="descripcion" class="h-10 rounded-lg p-2">
+                    <label for="monto" class="text-xl">Monto</label>
+                    <input type="number" id="monto" class="h-10 rounded-lg p-2">
+                    <label for="" class="text-xl">Tipo</label>
+                    <select name="" id="" class="h-10 rounded-lg p-2">
+                        <option value="">Gastos</option>
+                        <option value="">Ganancias</option>
+                    </select>
+                    <label for="" class="text-xl">Categoría</label>
+                    <select name="" id="" class="h-10 rounded-lg p-2">
+                        <option value="">Salidas</option>
+                        <option value="">Educación</option>
+                        <option value="">Transporte</option>
+                        <option value="">Trabajo</option>
+                    </select>
+                    <label for="" class="text-xl">Fecha</label>
+                    <input type="date" class="h-10 rounded-lg p-2">
+                </div>
+                <div class=" flex self-end gap-3">
+                    <button class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#f0d1ef] hover:text-[#050505]
+                    rounded-lg m-auto lg:w-28">Cancelar</button>
+                    <button class=" w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
+                    rounded-lg m-auto lg:w-28">Agregar</button>
+                </div>
         </section>
     </main>
 </body>
