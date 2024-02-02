@@ -30,12 +30,22 @@
                             class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             aria-controls="mobile-menu" aria-expanded="false">
                             <span class="absolute -inset-0.5"></span>
-                            <span class="sr-only">Open main menu</span>                     
+                            <span class="sr-only">Open main menu</span>
+                            <!--
+            Icon when menu is closed.
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
                             <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
+                            <!--
+            Icon when menu is open.
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
                             <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -49,6 +59,7 @@
                         </div>
                         <div class="hidden sm:ml-6 sm:block">
                             <div class="flex space-x-4">
+                                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                 <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                                     aria-current="page">
                                     <i class="fi fi-rr-chart-histogram"></i>
@@ -86,26 +97,14 @@
         </nav>
     </header>
     <main>
-        <section id="Balance" class="flex m-auto justify-center">
-          <section class="flex flex-col">
-          <div class="w-80 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
-            <h2 class="text-3xl text-center font-bold p-4 ">Balance</h2>
-            <div class="ganancias flex p-2 justify-between ">
+        <section>
+            <h2>Balance</h2>
             <p>Ganancias</p>
-            <p >+$0</p>
-            </div>
-            <div class="gastos flex p-2 justify-between">
-            <p  >Gastos</p>
-            <p>+$0</p>
-            </div>
-            <div class="total flex p-2 justify-between">
+            <p>Gastos</p>
             <p>Total</p>
-            <p>$0</p>
-            </div>
-          </div>
-             
-          <div class="flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
-            <h2 class="text-3xl text-center font-bold p-4">Filtros</h2>
+        </section>
+        <section>
+            <h2>Filtros</h2>
             <p>Ocultar Filtros</p>
             <div>
                 <label for="">Tipo</label>
@@ -114,7 +113,7 @@
                     <option value="">Ganancias</option>
                     <option value="">Gastos</option>
                 </select>
-            </div>           
+            </div>
             <div>
                 <label for="">Categoria</label>
                 <select name="" id="">
@@ -142,17 +141,15 @@
                     <option value="">Z/A</option>
                 </select>
             </div>
-          </div>   
-          </section>    
-          <div class="w-6/12 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
-            <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
+        </section>
+        <section>
+            <h2>Operaciones</h2>
             <button>+ Nueva operación</button>
-             <div class="h-4/5">  
-              <img src="./assets/mujer-dinero.PNG" alt="" />
-              <h3>Sin resultados</h3>
-              <p>Cambia los filtros o agrega operaciones</p>
+            <img src="./assets/mujer-dinero.PNG" alt="" />
+            <div>
+                <h3>Sin resultados</h3>
+                <p>Cambia los filtros o agrega operaciones</p>
             </div>
-          </div> 
         </section>
         <!---------------------sección reportes----------------------->
         <section>
