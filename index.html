@@ -18,55 +18,44 @@
     <link rel="icon" href="imagenes/inversion.png" type="image/x-icon">
     <title>AhorrADAs</title>
 </head>
-
 <body class="bg-[url('imagenes/fondoBody2.png')] bg-center bg-cover bg-no-repeat">
     <header class="ahorradas-title">
-        <nav class="bg-gray-800">
+        <nav class="bg-[#b240b8]">
             <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div class="relative flex h-16 items-center justify-between">
                     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                         <!-- Mobile menu button-->
-                        <button type="button"
-                            class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                            aria-controls="mobile-menu" aria-expanded="false">
-                            <span class="absolute -inset-0.5"></span>
-                            <span class="sr-only">Open main menu</span>
-                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-                            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                      <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"                     stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"                     stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
                     </div>
                     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div class="flex flex-shrink-0 items-center">
-                            <h1 class="bg-gray-900 text-white text-sm font-medium"><span><i
-                                        class="fi fi-sr-wallet"></i></span>AhorrADAs</h1>
+                            <h1 class="bg-[#b240b8]  text-white font-medium text-3xl"><span><i
+                                        class="fi fi-sr-wallet"></i></span>  AhorrADAs</h1>
                         </div>
                         <div class="hidden sm:ml-6 sm:block">
                             <div class="flex space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                <a href="#" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white rounded-md px-3 py-2 text-sm font-medium"
                                     aria-current="page">
                                     <i class="fi fi-rr-chart-histogram"></i>
                                     Balances
                                 </a>
                                 <a href="#"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                    class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm font-medium">
                                     <i class="fi fi-sr-tags"></i>
                                     Categorias
                                 </a>
                                 <a href="#"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                    class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm font-medium">
                                     <i class="fi fi-sr-chart-pie"></i>
                                     Reportes
                                 </a>
@@ -92,10 +81,9 @@
         </nav>
     </header>
     <main>
-        <section id="Balance" class="flex m-auto justify-center">
+        <section id="Balance" class="flex m-auto justify-center p-0 m-0">
             <section class="flex flex-col">
-                <div
-                    class="w-80 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
+                <div class=" rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
                     <h2 class="text-3xl text-center font-bold p-4 ">Balance</h2>
                     <div class="ganancias flex p-2 justify-between ">
                         <p>Ganancias</p>
@@ -112,12 +100,12 @@
                 </div>
 
                 <div
-                    class="flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
+                    class="flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
                     <h2 class="text-3xl text-center font-bold p-4">Filtros</h2>
                     <p>Ocultar Filtros</p>
                     <div>
                         <label for="">Tipo</label>
-                        <select name="" id="">
+                        <select name="" id="" class="h-10 rounded-lg p-2">
                             <option value="">Todos</option>
                             <option value="">Ganancias</option>
                             <option value="">Gastos</option>
@@ -125,7 +113,7 @@
                     </div>
                     <div>
                         <label for="">Categoria</label>
-                        <select name="" id="">
+                        <select name="" id="" class="h-10 rounded-lg p-2">
                             <option value="">Todas</option>
                             <option value="">Comida</option>
                             <option value="">Servicios</option>
@@ -137,11 +125,11 @@
                     </div>
                     <div>
                         <label for="">Desde</label>
-                        <!-- poner calendario -->
-                    </div>
+                        <input type="date" class="h-10 rounded-lg p-2">
+                     </div>
                     <div>
                         <label for="">Ordenar por</label>
-                        <select name="" id="">
+                        <select name="" id="" class="h-10 rounded-lg p-2">
                             <option value="">Mas recientes</option>
                             <option value="">Menos recientes</option>
                             <option value="">Mayor monto</option>
@@ -152,10 +140,10 @@
                     </div>
                 </div>
             </section>
-            <div
-                class="w-6/12 rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
+            <div class="w-2/5 rounded-lg p-4 flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
                 <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
-                <button>+ Nueva operación</button>
+                <button class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
+                    rounded-lg m-auto">+ Nueva operación</button>
                 <div class="h-4/5">
                     <img src="./assets/mujer-dinero.PNG" alt="" />
                     <h3>Sin resultados</h3>
