@@ -1,107 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css" />
-    <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
-    <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel="icon" href="assets/inversion.png" type="image/x-icon">
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+    />
+    <link rel="icon" href="assets/inversion.png" type="image/x-icon" />
     <title>AhorrADAs</title>
-</head>
-
-<body class="bg-[url('assets/fondoBody2.png')] bg-center bg-cover bg-no-repeat">
+  </head>
+  <body
+    class="bg-[url('assets/fondoBody2.png')] bg-center bg-cover bg-no-repeat object-contain"
+  >
     <header class="ahorradas-title">
-        <nav class="bg-[#b240b8]">
-            <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div class="relative flex h-16 items-center justify-between">
-                    <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        <!-- Mobile menu button-->
-                      <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="absolute -inset-0.5"></span>
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"                     stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"                     stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                        <div class="flex flex-shrink-0 items-center">
-                            <h1 class="bg-[#b240b8]  text-white font-medium text-3xl"><span><i
-                                        class="fi fi-sr-wallet"></i></span>  AhorrADAs</h1>
-                        </div>
-                        <div class="hidden sm:ml-6 sm:block">
-                            <div class="flex space-x-4">
-                                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                <a href="#Balance" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">
-                                    <i class="fi fi-rr-chart-histogram"></i>
-                                    Balances
-                                </a>
-                                <a href="#categorias"
-                                    class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm font-medium">
-                                    <i class="fi fi-sr-tags"></i>
-                                    Categorias
-                                </a>
-                                <a href="#categorias"
-                                    class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm categorias1">
-                                    <i class="fi fi-sr-chart-pie"></i>
-                                    Reportes
-                                </a>
-                            </div>
-                        </div>
+      <nav class="bg-[#b240b8]">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div class="relative flex h-16 items-center justify-between">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <button type="button" id="navbar-responsive" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="absolute -inset-0.5"></span>
+                <span class="sr-only">Open main menu</span>
+                <svg   class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                </svg>
+                <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex flex-shrink-0 items-center">
+                    <h1 class="bg-[#b240b8]  text-white font-medium text-3xl"><span><i class="fi fi-sr-wallet"></i></span>  AhorrADAs</h1>
+                </div>
+                <div class="hidden sm:ml-6 sm:block">
+                    <div class="flex space-x-4">
+                        <a href="#Balance" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page"><i class="fi fi-rr-chart-histogram"></i> Balances</a>
+                        <a href="#categorias" class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm font-medium"><i class="fi fi-sr-tags"></i>Categorias</a>
+                        <a href="#reportes" class="text-gray-300 bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-md px-3 py-2 text-white text-sm categorias1"><i class="fi fi-sr-chart-pie"></i>Reportes</a>
                     </div>
                 </div>
             </div>
-            <!-- Mobile menu, show/hide based on menu state. -->
-            <div class="sm:hidden" id="mobile-menu">
-                <div class="space-y-1 px-2 pb-3 pt-2">
-                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="#Balance"
-                        class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium  balance1"
-                        aria-current="page"><i class="fi fi-rr-chart-histogram"></i> Balances </a>
-                    <a href="#categorias" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base
-                        font-medium categorias1">
-                        <i class="fi fi-sr-tags"></i> Categorias </a>
-                    <a href="#reportes" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base
-                        font-medium reportes1"><i class="fi fi-sr-chart-pie"></i> Reportes </a>
-                </div>
+          </div>
+        </div>
+        <!-- -----------------Menu mobile----------------------- -->
+        <div class="hidden mobile" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+                <a href="#Balance" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white block rounded-md px-3 py-2 text-base font-medium  balance1" aria-current="page"><i class="fi fi-rr-chart-histogram"></i> Balances </a>
+                <a href="#categorias" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white block rounded-md px-3 py-2 text-base font-medium categorias1"><i class="fi fi-sr-tags"></i> Categorias</a> 
+                <a href="#reportes" class="bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] text-white block rounded-md px-3 py-2 text-base font-medium reportes1"><i class="fi fi-sr-chart-pie"></i> Reportes </a>       
             </div>
-        </nav>
+        </div>
+      </nav>
     </header>
     <main>
-        <section id="Balance" class="flex m-auto justify-center p-0 m-0">
-            <section class="flex flex-col">
+        <section id="Balance" class="flex m-auto justify-center p-0 m-0 max-[1023px]:flex-col">
+            <div class="flex flex-col">
                 <div class=" rounded-lg p-4 flex justify-between mx-7  flex-col p-4 w-80  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
                     <h2 class="text-3xl text-center font-bold p-4 ">Balance</h2>
-                    <div class="ganancias flex p-2 justify-between ">
+                    <div class="ganancias flex p-2 justify-between ">               
                         <p>Ganancias</p>
-                        <p>+$0</p>
+                        <p class="text-green-600">+$0</p>
                     </div>
                     <div class="gastos flex p-2 justify-between">
                         <p>Gastos</p>
-                        <p>+$0</p>
+                        <p class="text-red-600">+$0</p>
                     </div>
                     <div class="total flex p-2 justify-between">
                         <p>Total</p>
                         <p>$0</p>
-                    </div>
+                    </div>                    
                 </div>
-
-                <div
-                    class="flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
+                <div class="flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg ">
                     <h2 class="text-3xl text-center font-bold p-4">Filtros</h2>
                     <p>Ocultar Filtros</p>
                     <div>
@@ -127,7 +114,7 @@
                     <div>
                         <label for="">Desde</label>
                         <input type="date" class="h-10 rounded-lg p-2">
-                     </div>
+                    </div>
                     <div>
                         <label for="">Ordenar por</label>
                         <select name="" id="" class="h-10 rounded-lg p-2">
@@ -139,42 +126,35 @@
                             <option value="">Z/A</option>
                         </select>
                     </div>
-                </div>
-            </section>
+                </div>                                
+            </div>
             <div class="w-2/5 rounded-lg p-4 flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
                 <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
-                <button class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
-                    rounded-lg m-auto">+ Nueva operación</button>
+                <button id="" class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-lg m-auto">+ Nueva operación</button>
                 <div class="h-4/5">
                     <img src="./assets/mujer-dinero.PNG" alt="" />
                     <h3>Sin resultados</h3>
                     <p>Cambia los filtros o agrega operaciones</p>
-                </div>
+                </div> 
             </div>
         </section>
-        <!---------------------sección reportes----------------------->
         <section id="reportes" class="hidden">
-            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
+            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
                 <div>
                     <div class="object-contain lg:w-80 lg:m-auto">
                         <img src="assets/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
                     </div>
-                    <div>
-                        <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
-                        <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
-                    </div>
+                <div>
+                    <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
+                    <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
                 </div>
+            </div>
         </section>
-        <!------------------------sección categorias---------------------------------->
-        <section id="categorias" class="hidden">
-            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
-
+         <section id="categorias" class="hidden">
+            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Categorías</h2>
                 <div>
-
                     <label for="agregarCategorias" class="text-xl">Nombre</label>
                     <div class="flex items-center lg:gap-6">
                         <input type="text" id="agregarCategorias" class="w-48 h-10 rounded-lg lg:w-4/5">
@@ -226,7 +206,7 @@
                 </div>
             </div>
         </section>
-        <section id="nuevaOperacion" class="hidden  ">
+         <section id="nuevaOperacion" class="hidden  ">
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
@@ -259,6 +239,5 @@
         </section>
     </main>
     <script src="main.js"></script>
-</body>
-
+  </body>
 </html>
