@@ -1,22 +1,23 @@
-const balance = document.getElementById("Balance");
-const reportes = document.getElementById("reportes");
-const categorias = document.getElementById("categorias");
-const nuevaOperacion = document.getElementById("nuevaOperacion");
+const sections = ["Balance", "reportes", "categorias"];
 
-reportes.addEventListener("click", () => {
-  reportes.classList.remove("hidden");
-  balance.classList.add("hidden");
-  categorias.classList.add("hidden");
+// Ocultar todas las secciones excepto la de Balance al cargar la página
+sections.forEach((sectionId) => {
+  const section = document.getElementById(sectionId);
+  if (sectionId !== "Balance") {
+    section.classList.add("hidden");
+  }
 });
 
-balance.addEventListener("click", () => {
-  balance.classList.remove("hidden");
-  categorias.classList.add("hidden");
-  reportes.classList.add("hidden");
-});
-
-categorias.addEventListener("click", () => {
-  categorias.classList.remove("hidden");
-  balance.classList.add("hidden");
-  reportes.classList.add("hidden");
+// Agregar event listeners para cada enlace del menú
+const menuLinks = document.querySelectorAll("nav a");
+menuLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = event.target.getAttribute("href").substring(1);
+    // Ocultar todas las secciones
+    sections.forEach((sectionId) => {
+      document.getElementById(sectionId).classList.add("hidden");
+    });
+    // Mostrar la sección correspondiente al enlace clicado
+    document.getElementById(targetId).classList.remove("hidden");
+  });
 });
