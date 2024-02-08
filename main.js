@@ -14,30 +14,10 @@ $("#navbar-responsive").addEventListener("click", () =>{
 })
 
 $("#reportes").addEventListener("click", () => {
-  $("#reportes").classList.remove("hidden")
-  $("#reportes").classList.add("visible")
-  $("#Balance").classList.add("hidden")
-  $("#categorias").classList.add("hidden")
+  $("#reportes").classList.toggle("visible")
+  $("#Balance").classList.toggle("hidden")
 })
 
-$("#categorias").addEventListener("click", () => {
-  $("#categorias").classList.remove("hidden")
-  $("#Balance").classList.add("hidden")
-  $("#reportes").classList.add("hidden")
-})
-
-$("#Balance").addEventListener("click", () => {
-  $("#Balance").classList.remove("hidden")
-  $("#reportes").classList.add("hidden")
-  $("#categorias").classList.add("hidden")
-})
-
-$("#nuevaOperacion").addEventListener("click", () =>{
-   $("#nuevaOperacion").classList.remove("hidden")
-   $("#Balance").classList.add("hidden")
-   $("#reportes").classList.add("hidden")
-   $("#categorias").classList.add("hidden")
-})
 
 
 
