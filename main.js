@@ -1,23 +1,43 @@
-const $ = (selector) => document.querySelector(selector)
+//***********************cerrar y abrir secciones******************************************* */
 
-// const balance = document.getElementById("Balance");
-// const reportes = document.getElementById("reportes");
-// const categorias = document.getElementById("categorias");
-// const nuevaOperacion = document.getElementById("nuevaOperacion");
-// const aBalance = document.querySelector(".balance1");
-// const aReportes = document.querySelector(".reportes1");
-// const aCategorias = document.querySelector(".categorias1");
+const sections = ["Balance", "reportes", "categorias"];
 
-$("#navbar-responsive").addEventListener("click", () =>{
-  $("#mobile-menu").classList.toggle("visible")
-  $("#mobile-menu").classList.toggle("hidden")
-})
+// Ocultar todas las secciones excepto la de Balance al cargar la página
+sections.forEach((sectionId) => {
+  const section = document.getElementById(sectionId);
+  if (sectionId !== "Balance") {
+    section.classList.add("hidden");
+  }
+});
 
-$("#reportes").addEventListener("click", () => {
-  $("#reportes").classList.toggle("visible")
-  $("#Balance").classList.toggle("hidden")
-})
+// Agregar event listeners para cada enlace del menú
+const menuLinks = document.querySelectorAll("nav a");
+menuLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = event.target.getAttribute("href").substring(1);
+    // Ocultar todas las secciones
+    sections.forEach((sectionId) => {
+      document.getElementById(sectionId).classList.add("hidden");
+      //oculta nueva operacion si se hace click en alguna sección
+      nuevaOperacion.classList.add("hidden");
+    });
+    // Mostrar la sección correspondiente al enlace clicado
+    document.getElementById(targetId).classList.remove("hidden");
+  });
+});
 
+//*******************************cerrar y abrir nueva operacion*************************************** */
+const abrirNuevaOperacion = document.getElementById("abrirNuevaOperacion");
+const nuevaOperacion = document.getElementById("nuevaOperacion");
+const Balance = document.getElementById("Balance");
+const cerrarNueOperacion = document.getElementById("cerrar");
 
+abrirNuevaOperacion.addEventListener("click", () => {
+  nuevaOperacion.classList.remove("hidden");
+  Balance.classList.add("hidden");
+});
 
-
+cerrarNueOperacion.addEventListener("click", () => {
+  nuevaOperacion.classList.add("hidden");
+  Balance.classList.remove("hidden");
+});
