@@ -20,6 +20,8 @@ menuLinks.forEach((link) => {
       document.getElementById(sectionId).classList.add("hidden");
       //oculta nueva operacion si se hace click en alguna sección
       nuevaOperacion.classList.add("hidden");
+      // //oculta el menu hamburguesa si se hace click en alguna sección
+      menuHambueguesa.classList.toggle("hidden");
     });
     // Mostrar la sección correspondiente al enlace clicado
     document.getElementById(targetId).classList.remove("hidden");
@@ -40,4 +42,10 @@ abrirNuevaOperacion.addEventListener("click", () => {
 cerrarNueOperacion.addEventListener("click", () => {
   nuevaOperacion.classList.add("hidden");
   Balance.classList.remove("hidden");
+});
+
+/******************************menu hambueguesa abrir y cerrar*************************************************/
+const menuHambueguesa = document.getElementById("mobile-menu");
+document.getElementById("hamburger").addEventListener("click", () => {
+  menuHambueguesa.classList.remove("hidden");
 });
