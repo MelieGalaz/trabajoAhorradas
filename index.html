@@ -19,7 +19,7 @@
     <title>AhorrADAs</title>
 </head>
 
-<body class="bg-[url('assets/fondoBody2.png')] bg-center bg-cover bg-no-repeat object-contain">
+<body class="bg-[url('assets/fondoBody2.png')] bg-center bg-cover bg-no-repeat object-contain h-screen">
     <header class="ahorradas-title">
         <nav class="bg-[#b240b8]">
             <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -72,11 +72,10 @@
                 </div>
             </div>
             <!-- Mobile menu, show/hide based on menu state. -->
-            <!-- <div class="sm:hidden" id="mobile-menu">
+            <div class="sm:hidden" id="mobile-menu">
                 <div class="space-y-1 px-2 pb-3 pt-2">
-                    Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white"  -->
-            <!-- <a href=""
-                        class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium  balance1"
+                    <!-- < Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                    <a href="" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium  balance1"
                         aria-current="page"><i class="fi fi-rr-chart-histogram"></i> Balances </a>
                     <a href="" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base
                         font-medium categorias1">
@@ -84,7 +83,7 @@
                     <a href="" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base
                         font-medium reportes1"><i class="fi fi-sr-chart-pie"></i> Reportes </a>
                 </div>
-            </div> -->
+            </div>
         </nav>
     </header>
     <main>
@@ -150,7 +149,7 @@
             <div
                 class="w-2/5 rounded-lg p-4 flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
                 <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
-                <button id="boton_nueva-operacion"
+                <button id="abrirNuevaOperacion"
                     class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-lg m-auto">+
                     Nueva operación</button>
                 <div class="h-4/5">
@@ -160,17 +159,6 @@
                 </div>
             </div>
         </section>
-        <!-- <div
-            class="w-2/5 rounded-lg p-4 flex justify-between mx-7  flex-col p-4  drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px] rounded-lg">
-            <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
-            <button class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
-                    rounded-lg m-auto">+ Nueva operación</button>
-            <div class="h-4/5">
-                <img src="./assets/mujer-dinero.PNG" alt="" />
-                <h3>Sin resultados</h3>
-                <p>Cambia los filtros o agrega operaciones</p>
-            </div>
-        </div> -->
         </section>
         <!---------------------sección reportes----------------------->
         <section id="reportes" class=" aReportes hidden">
@@ -246,10 +234,10 @@
             </div>
         </section>
         <section id="nuevaOperacion" class="hidden">
-            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[100px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-32">
+            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[100px]
+                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
-                <div class="flex flex-col gap-4 lg:gap-6">
+                <div class="flex flex-col gap-2 lg:gap-3">
                     <label for="descripcion" class="text-xl">Descripción</label>
                     <input type="text" id="descripcion" class="h-10 rounded-lg p-2">
                     <label for="monto" class="text-xl">Monto</label>
@@ -270,7 +258,7 @@
                     <input type="date" class="h-10 rounded-lg p-2">
                 </div>
                 <div class=" flex self-end gap-3">
-                    <button class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#f0d1ef] hover:text-[#050505]
+                    <button id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#f0d1ef] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
                     <button class=" w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Agregar</button>
