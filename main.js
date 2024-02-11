@@ -49,3 +49,5 @@ const menuHambueguesa = document.getElementById("mobile-menu");
 document.getElementById("hamburger").addEventListener("click", () => {
   menuHambueguesa.classList.remove("hidden");
 });
+
+/************************************************************* */
