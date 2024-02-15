@@ -15,6 +15,9 @@
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
+    
+    "></script>
     <link rel="icon" href="assets/inversion.png" type="image/x-icon" />
     <title>AhorrADAs</title>
 </head>
@@ -103,15 +106,10 @@
                         </select>
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
-                        <label for="" class="text-xl">Categoria</label>
-                        <select name="" id="" class="h-10 rounded-lg p-2">
-                            <option value="">Todas</option>
-                            <option value="">Comida</option>
-                            <option value="">Servicios</option>
-                            <option value="">Salidas</option>
-                            <option value="">Educación</option>
-                            <option value="">Transporte</option>
-                            <option value="">Trabajo</option>
+                        <label for="" class=" categorias text-xl">Categoria</label>
+                        <select name="" id="selecBalance" class="h-10 rounded-lg p-2">
+                            <option value=""></option>
+
                         </select>
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
@@ -143,8 +141,8 @@
                     <h3 class="text-xl font-bold text-center">Sin resultados</h3>
                     <p class="text-center">Cambia los filtros o agrega operaciones</p>
                 </div>
-                <!-- --------------------------tablas de operaciones  ---------------------------------------------------------->
-                <table class=" hidden>
+                <!---------------------------tablas de operaciones  ---------------------------------------------------------->
+                <table class=" hidden">
                     <thead class=" text-[#b240b8] ">
                         <tr>
                             <th>Descripcion</th>
@@ -165,155 +163,102 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+
         </section>
         <!---------------------sección reportes----------------------->
-        <section id=" reportes" class=" aReportes hidden">
-                    <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-                        <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
-                        <div>
-                            <div class="object-contain lg:w-80 lg:m-auto">
-                                <img src="assets/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
-                            </div>
-                            <div>
-                                <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
-                                <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
-                            </div>
-                        </div>
-                        <!-- -------------------------tablas de reporte------------------------------------------- -->
-                        <div class="hidden">
-                            <table>
-                                <thead class="text-[#b240b8]">
-                                    <tr>
-                                        <th class="font-bold text-2xl">Resumen</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-[#b240b8] font-bold">Categoria con mayor ganancia</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-[#b240b8] font-bold">Categoria con mayor gasto</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-[#b240b8] font-bold">Categoria con mayor balance</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-[#b240b8] font-bold">Mes con mayor ganancia</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-[#b240b8] font-bold">Mes con mayor gasto</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por categoria</h3>
-                            <table class="">
-                                <thead class="text-[#b240b8]">
-                                    <tr>
-                                        <th>Categoria</th>
-                                        <th>Ganancias</th>
-                                        <th>Gastos</th>
-                                        <th>Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por mes</h3>
-                            <table>
-                                <thead class="text-[#b240b8]">
-                                    <tr>
-                                        <th>Mes</th>
-                                        <th>Ganancias</th>
-                                        <th>Gastos</th>
-                                        <th>Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-        </section>
-        <!------------------------sección categorias---------------------------------->
-        <section id="categorias" class="hidden aCategorias">
+        <section id="reportes" class=" aReportes hidden">
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-
-                <h2 class="text-3xl text-center font-bold lg:text-4xl">Categorías</h2>
+                <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
                 <div>
-                    <label for="agregarCategorias" class="text-xl">Nombre</label>
-                    <div class="flex items-center lg:gap-6">
-                        <input type="text" id="agregarCategorias" class="w-48 h-10 rounded-lg lg:w-4/5">
-                        <button class=" w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
-                    rounded-lg m-auto lg:w-28">Agregar</button>
+                    <div class="object-contain lg:w-80 lg:m-auto">
+                        <img src="assets/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
+                    </div>
+                    <div>
+                        <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
+                        <p class="text-center text-sm lg:text-lg">Prueba agregando más operaciones</p>
                     </div>
                 </div>
-                <div class="flex justify-between">
-                    <p>Salidas</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <p>Educación</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <p>Transporte</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <p>Trabajo</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <p>Comida</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <p>Deporte</p>
-                    <div class="flex gap-4">
-                        <a href="" class="text-blue-600">Editar</a>
-                        <a href="" class="text-blue-600">Eliminar</a>
-                    </div>
+                <!-- -------------------------tablas de reporte------------------------------------------- -->
+                <div class="hidden">
+                    <table>
+                        <thead class="text-[#b240b8]">
+                            <tr>
+                                <th class="font-bold text-2xl">Resumen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-[#b240b8] font-bold">Categoria con mayor ganancia</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#b240b8] font-bold">Categoria con mayor gasto</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#b240b8] font-bold">Categoria con mayor balance</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#b240b8] font-bold">Mes con mayor ganancia</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#b240b8] font-bold">Mes con mayor gasto</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por categoria</h3>
+                    <table class="">
+                        <thead class="text-[#b240b8]">
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Ganancias</th>
+                                <th>Gastos</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por mes</h3>
+                    <table>
+                        <thead class="text-[#b240b8]">
+                            <tr>
+                                <th>Mes</th>
+                                <th>Ganancias</th>
+                                <th>Gastos</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </section>
+        <!------------------------sección categorias---------------------------------->
+        <section id="categorias" class=" categoria hidden aCategorias">
+
         </section>
         <section id="nuevaOperacion" class="hidden">
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
@@ -330,11 +275,9 @@
                         <option value="">Ganancias</option>
                     </select>
                     <label for="" class="text-xl">Categoría</label>
-                    <select name="" id="" class="h-10 rounded-lg p-2">
-                        <option value="">Salidas</option>
-                        <option value="">Educación</option>
-                        <option value="">Transporte</option>
-                        <option value="">Trabajo</option>
+                    <select name="" id="selecCat" class="  h-10 rounded-lg p-2">
+                        <option value=""></option>
+
                     </select>
                     <label for="" class="text-xl">Fecha</label>
                     <input type="date" class="h-10 rounded-lg p-2">
@@ -345,6 +288,7 @@
                     <button class=" w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Agregar</button>
                 </div>
+            </div>
         </section>
     </main>
     <script src="main.js"></script>
