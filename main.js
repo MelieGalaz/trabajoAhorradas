@@ -2,7 +2,6 @@
 
 const sections = ["Balance", "reportes", "categorias"];
 
-// Ocultar todas las secciones excepto la de Balance al cargar la página
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -10,20 +9,19 @@ sections.forEach((sectionId) => {
   }
 });
 
-// Agregar event listeners para cada enlace del menú
 const menuLinks = document.querySelectorAll("nav a");
 menuLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = event.target.getAttribute("href").substring(1);
-    // Ocultar todas las secciones
+
     sections.forEach((sectionId) => {
       document.getElementById(sectionId).classList.add("hidden");
-      //oculta nueva operacion si se hace click en alguna sección
+
       nuevaOperacion.classList.add("hidden");
-      // //oculta el menu hamburguesa si se hace click en alguna sección
+
       menuHambueguesa.classList.toggle("hidden");
     });
-    // Mostrar la sección correspondiente al enlace clicado
+
     document.getElementById(targetId).classList.remove("hidden");
   });
 });
@@ -69,12 +67,6 @@ const actualizarSelectores = () => {
   selecCat.innerHTML = "";
   selecBalance.innerHTML = "";
 
-  // Agregar la opción "Todas" al selector de balance
-  const optionTodas = document.createElement("option");
-  optionTodas.value = "";
-  optionTodas.textContent = "Todas";
-  selecBalance.appendChild(optionTodas);
-
   // Agregar las opciones de categorías a ambos selectores
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
@@ -103,13 +95,14 @@ const movimientoCategoria = () => {
         </div>
     `;
 
-  for (let cat of ArrayCategoria) {
+  for (let i = 0; i < ArrayCategoria.length; i++) {
+    const cat = ArrayCategoria[i];
     contenidoHTML += `
         <div class="flex justify-between">
             <p>${cat}</p>
             <div class="flex gap-4">
-                <a href="" class="text-blue-600">Editar</a>
-                <a href="" class="text-blue-600">Eliminar</a>
+                <a href="javascript:void(0)" class="text-blue-600 eliminar" data-index="${i}">Eliminar</a>
+                <a href="javascript:void(0)" class="text-blue-600 editar" data-index="${i}">Editar</a>
             </div>
         </div>
     `;
@@ -129,6 +122,62 @@ const movimientoCategoria = () => {
       nuevaCategoriaInput.value = ""; // Limpia el input después de agregar la categoría
     }
   });
+
+  categoria.querySelectorAll(".eliminar").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const index = parseInt(el.getAttribute("data-index"));
+      ArrayCategoria.splice(index, 1);
+      movimientoCategoria(); // Actualiza la lista de categorías
+      actualizarSelectores(); // Actualiza los selectores
+    });
+  });
+
+  // Cuando se hace clic en el botón "Editar" de la categoría
+
+  categoria.querySelectorAll(".editar").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const index = parseInt(el.getAttribute("data-index"));
+      const modal = document.getElementById("modal");
+      const nuevoNombreInput = document.getElementById("nuevoNombreInput");
+      const guardarNuevoNombre = document.getElementById("guardarNuevoNombre");
+      const categorias = document.getElementById("categorias");
+      // Mostrar la ventana modal
+      categorias.classList.add("hidden");
+      modal.classList.remove("hidden");
+
+      // Rellenar el campo de entrada con el nombre actual de la categoría
+      nuevoNombreInput.value = ArrayCategoria[index];
+
+      // Cuando se hace clic en el botón "Guardar"
+      guardarNuevoNombre.onclick = () => {
+        const nuevoNombre = nuevoNombreInput.value.trim();
+        if (nuevoNombre !== "") {
+          ArrayCategoria[index] = nuevoNombre;
+          modal.classList.add("hidden");
+          categorias.classList.remove("hidden"); // Ocultar la ventana modal
+          movimientoCategoria(); // Actualiza la lista de categorías
+          actualizarSelectores(); // Actualiza los selectores
+        }
+      };
+
+      // Cuando se hace clic en la 'x' para cerrar la ventana modal
+      modal.querySelector(".close").onclick = () => {
+        modal.classList.add("hidden");
+        categorias.classList.remove("hidden");
+        // Ocultar la ventana modal
+      };
+
+      // Cuando se hace clic fuera de la ventana modal, también se cierra
+      window.onclick = (event) => {
+        if (event.target === modal) {
+          modal.classList.add("hidden"); // Ocultar la ventana modal
+        }
+      };
+    });
+  });
 };
-actualizarSelectores();
+
 movimientoCategoria();
+actualizarSelectores();

@@ -23,7 +23,7 @@
 </head>
 
 
-<body class="bg-gradient-to-r from-[#c457c9]  to-[#96e0a0] ">
+<body class="bg-gradient-to-r from-[#c457c9]  to-[#96e0a0]">
 
 
     <header class=" ahorradas-title">
@@ -290,7 +290,26 @@
                 </div>
             </div>
         </section>
+
+        <div id="modal" class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden ">
+            <div class="modal-content  flex justify-between  flex-col p-4 w-80 drop-shadow-lg  bg-[#b240b8]
+               rounded-lg lg:w-3/5 ">
+                <span class="close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white ">&times;</span>
+
+                <p class="text-xl mb-4 text-white ">Ingrese el nuevo nombre para la categoría:</p>
+                <input type="text" id="nuevoNombreInput"
+                    class="w-full h-10 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 px-4">
+                <button id="guardarNuevoNombre"
+                    class="w-full mt-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Guardar</button>
+            </div>
+        </div>
+
+
     </main>
+    <footer class=" bg-[#b240b8]   shadow-2xl mt-[35px]">
+        <h3 class="flex  items-center justify-center
+         font-bold text-sm lg:font-medium h-[3rem] text-white ">De Argentina con ❤ para el mundo</h3>
+    </footer>
     <script src="main.js"></script>
 </body>
 
