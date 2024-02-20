@@ -16,7 +16,7 @@ menuLinks.forEach((link) => {
 
     sections.forEach((sectionId) => {
       document.getElementById(sectionId).classList.add("hidden");
-
+      // modal.classList.add("hidden");
       nuevaOperacion.classList.add("hidden");
 
       menuHambueguesa.classList.toggle("hidden");
