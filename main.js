@@ -216,7 +216,7 @@ const movimientoCategoria = () => {
             <label for="agregarCategorias" class="text-xl">Nombre</label>
             <div class="flex items-center lg:gap-6">
                 <input type="text" id="agregarCategorias" class="w-48 h-10 rounded-lg lg:w-4/5">
-                <button id="agregarCategoriaBtn" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-lg m-auto lg:w-28">Agregar</button>
+                <button id="agregarCategoriaBtn" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505] rounded-lg m-auto lg:w-28">Agregar</button>
             </div>
         </div>
     `;
