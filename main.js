@@ -132,3 +132,63 @@ const movimientoCategoria = () => {
 };
 actualizarSelectores();
 movimientoCategoria();
+
+document.addEventListener("DOMContentLoaded", () => {
+  generarTabla();
+});
+
+document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Variables que guardan los datos del objeto
+  const descripcion = document.getElementById("descripcionForm").value;
+  const categoria = document.getElementById("selecCat").value;
+  const fecha = document.getElementById("fechaForm").value;
+  const monto = document.getElementById("montoForm").value;
+
+  // OBJETO
+  const operacion = {
+    id: uuidv4(), // Asegúrate de tener una función uuidv4() disponible o reemplázala por otra forma de generar un ID único
+    Descripcion: descripcion,
+    Categoria: categoria,
+    Fecha: fecha,
+    Monto: monto,
+  };
+
+  // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
+  let tablaData = evaluarLocalStorage();
+  tablaData.push(operacion); // Agrega el objeto directamente
+
+  // Actualizar localStorage
+  localStorage.setItem("tablaData", JSON.stringify(tablaData));
+
+  generarTabla();
+});
+
+const generarTabla = () => {
+  const operacionesGuardadas = evaluarLocalStorage();
+  const tableBody = document.getElementById("tabody-operaciones");
+  tableBody.innerHTML = "";
+  operacionesGuardadas.forEach((operacion) => {
+    tableBody.innerHTML += `
+      <tr>
+          <td>${operacion.Descripcion}</td>
+          <td>${operacion.Categoria}</td>
+          <td>${operacion.Fecha}</td>
+          <td>${operacion.Monto}</td>
+          <td class="text-[#64c27b]"> 
+            <button class="edit-btn" data-id="${operacion.id}"><i class="fi fi-sr-edit-alt"></i> Editar</button>
+            <button class="delete-btn" data-id="${operacion.id}"><i class="fi fi-sr-trash"></i> Eliminar</button>
+          </td>
+      </tr>
+    `;
+  });
+};
+
+const evaluarLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("tablaData")) || [];
+};
+
+
+
+

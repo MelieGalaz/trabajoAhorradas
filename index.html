@@ -15,9 +15,11 @@
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
-    
-    "></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <!-- link generador de id CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <link rel="icon" href="assets/inversion.png" type="image/x-icon" />
     <title>AhorrADAs</title>
 </head>
@@ -142,23 +144,26 @@
                     <p class="text-center">Cambia los filtros o agrega operaciones</p>
                 </div>
                 <!---------------------------tablas de operaciones  ---------------------------------------------------------->
-                <table class=" hidden">
-                    <thead class=" text-[#b240b8] ">
+                <table id="tabla-data-operaciones" class="">
+                    <thead class=" text-[#b240b8]">
                         <tr>
-                            <th>Descripcion</th>
-                            <th>Categoria</th>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                            <th>Acciones</th>
+                            <th id="descripcion">Descripcion</th>
+                            <th id="categoria">Categoria</th>
+                            <th id="fecha">Fecha</th>
+                            <th id="monto">Monto</th>
+                            <th >Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabody-operaciones">
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td class="flex justify-center text-[#64c27b] gap-2 "> 
+                                <a href=""><i class="fi fi-sr-edit-alt"></i></a> 
+                                <a href=""><i class="fi fi-sr-trash"></i></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -261,34 +266,34 @@
 
         </section>
         <section id="nuevaOperacion" class="hidden">
-            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
+            <form class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
                     <label for="descripcion" class="text-xl">Descripción</label>
-                    <input type="text" id="descripcion" class="h-10 rounded-lg p-2">
+                    <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
                     <label for="monto" class="text-xl">Monto</label>
-                    <input type="number" id="monto" class="h-10 rounded-lg p-2">
+                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
                     <label for="" class="text-xl">Tipo</label>
                     <select name="" id="" class="h-10 rounded-lg p-2">
                         <option value="">Gastos</option>
                         <option value="">Ganancias</option>
                     </select>
-                    <label for="" class="text-xl">Categoría</label>
-                    <select name="" id="selecCat" class="  h-10 rounded-lg p-2">
+                    <label for="categoria" class="text-xl">Categoría</label>
+                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2">
                         <option value=""></option>
 
                     </select>
-                    <label for="" class="text-xl">Fecha</label>
-                    <input type="date" class="h-10 rounded-lg p-2">
+                    <label for="fecha" class="text-xl">Fecha</label>
+                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
                 </div>
                 <div class=" flex self-end gap-3">
                     <button id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#f0d1ef] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button class=" w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
+                    <button type="submit" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Agregar</button>
                 </div>
-            </div>
+            </form>
         </section>
     </main>
     <script src="main.js"></script>
