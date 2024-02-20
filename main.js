@@ -252,20 +252,79 @@ const movimientoCategoria = () => {
     }
   });
 
+  // categoria.querySelectorAll(".eliminar").forEach((el) => {
+  //   el.addEventListener("click", (event) => {
+  //     event.preventDefault();
+  //     const categoriaId = el.getAttribute("data-id");
+  //     const modalEliminar = document.getElementById("modal-eliminar");
+  //     const eliminarCategoria = document.getElementById("eliminarCategoria");
+  //     modalEliminar.classList.remove("hidden");
+  //     for (let nombreCategoria in categorias) {
+  //       if (categorias[nombreCategoria].id === categoriaId) {
+  //         delete categorias[nombreCategoria];
+  //         break;
+  //       }
+  //     }
+  //     movimientoCategoria(); // Actualizar lista de categorías
+  //     actualizarSelectores();
+  //   });
+  // });
+
   categoria.querySelectorAll(".eliminar").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
       const categoriaId = el.getAttribute("data-id");
-      for (let nombreCategoria in categorias) {
-        if (categorias[nombreCategoria].id === categoriaId) {
-          delete categorias[nombreCategoria];
-          break;
-        }
-      }
-      movimientoCategoria(); // Actualizar lista de categorías
-      actualizarSelectores();
+      const modalEliminar = document.getElementById("modal-eliminar");
+      const eliminarCategoriaInput =
+        document.getElementById("eliminarCategoria");
+      const nombreCategoriaEliminar = obtenerNombreCategoriaPorId(categoriaId); // Función para obtener el nombre de la categoría por su ID
+      eliminarCategoriaInput.textContent = nombreCategoriaEliminar;
+      const categoriasContainer = document.getElementById("categorias");
+      categoriasContainer.classList.add("hidden");
+      modalEliminar.classList.remove("hidden");
+
+      // Definir cerrarModal después de que el modal se muestre
+      const cerrarModal = modalEliminar.querySelector(".modal-close");
+      const cerrarBoton = modalEliminar.querySelector(".modal-btn-close");
+
+      cerrarModal.addEventListener("click", () => {
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
+
+      cerrarBoton.addEventListener("click", () => {
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
+
+      const botonEliminar = document.getElementById("eliminarCategoriaBtn");
+      botonEliminar.addEventListener("click", () => {
+        eliminarCategoria(categoriaId);
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
     });
   });
+
+  function obtenerNombreCategoriaPorId(id) {
+    for (let nombreCategoria in categorias) {
+      if (categorias[nombreCategoria].id === id) {
+        return nombreCategoria;
+      }
+    }
+    return null;
+  }
+
+  function eliminarCategoria(id) {
+    for (let nombreCategoria in categorias) {
+      if (categorias[nombreCategoria].id === id) {
+        delete categorias[nombreCategoria];
+        break;
+      }
+    }
+    movimientoCategoria(); // Actualizar lista de categorías
+    actualizarSelectores();
+  }
 
   // Cuando se hace clic en el botón "Editar" de la categoría
   categoria.querySelectorAll(".editar").forEach((el) => {
@@ -325,3 +384,59 @@ const movimientoCategoria = () => {
 
 movimientoCategoria();
 actualizarSelectores();
+
+document.addEventListener("DOMContentLoaded", () => {
+  generarTabla();
+});
+
+document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Variables que guardan los datos del objeto
+  const descripcion = document.getElementById("descripcionForm").value;
+  const categoria = document.getElementById("selecCat").value;
+  const fecha = document.getElementById("fechaForm").value;
+  const monto = document.getElementById("montoForm").value;
+
+  // OBJETO
+  const operacion = {
+    id: uuidv4(), // Asegúrate de tener una función uuidv4() disponible o reemplázala por otra forma de generar un ID único
+    Descripcion: descripcion,
+    Categoria: categoria,
+    Fecha: fecha,
+    Monto: monto,
+  };
+
+  // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
+  let tablaData = evaluarLocalStorage();
+  tablaData.push(operacion); // Agrega el objeto directamente
+
+  // Actualizar localStorage
+  localStorage.setItem("tablaData", JSON.stringify(tablaData));
+
+  generarTabla();
+});
+
+const generarTabla = () => {
+  const operacionesGuardadas = evaluarLocalStorage();
+  const tableBody = document.getElementById("tabody-operaciones");
+  tableBody.innerHTML = "";
+  operacionesGuardadas.forEach((operacion) => {
+    tableBody.innerHTML += `
+      <tr>
+          <td>${operacion.Descripcion}</td>
+          <td>${operacion.Categoria}</td>
+          <td>${operacion.Fecha}</td>
+          <td>${operacion.Monto}</td>
+          <td class="text-[#64c27b]"> 
+            <button class="edit-btn" data-id="${operacion.id}"><i class="fi fi-sr-edit-alt"></i> </button>
+            <button class="delete-btn" data-id="${operacion.id}"><i class="fi fi-sr-trash"></i> </button>
+          </td>
+      </tr>
+    `;
+  });
+};
+
+const evaluarLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("tablaData")) || [];
+};
