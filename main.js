@@ -252,20 +252,79 @@ const movimientoCategoria = () => {
     }
   });
 
+  // categoria.querySelectorAll(".eliminar").forEach((el) => {
+  //   el.addEventListener("click", (event) => {
+  //     event.preventDefault();
+  //     const categoriaId = el.getAttribute("data-id");
+  //     const modalEliminar = document.getElementById("modal-eliminar");
+  //     const eliminarCategoria = document.getElementById("eliminarCategoria");
+  //     modalEliminar.classList.remove("hidden");
+  //     for (let nombreCategoria in categorias) {
+  //       if (categorias[nombreCategoria].id === categoriaId) {
+  //         delete categorias[nombreCategoria];
+  //         break;
+  //       }
+  //     }
+  //     movimientoCategoria(); // Actualizar lista de categorías
+  //     actualizarSelectores();
+  //   });
+  // });
+
   categoria.querySelectorAll(".eliminar").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
       const categoriaId = el.getAttribute("data-id");
-      for (let nombreCategoria in categorias) {
-        if (categorias[nombreCategoria].id === categoriaId) {
-          delete categorias[nombreCategoria];
-          break;
-        }
-      }
-      movimientoCategoria(); // Actualizar lista de categorías
-      actualizarSelectores();
+      const modalEliminar = document.getElementById("modal-eliminar");
+      const eliminarCategoriaInput =
+        document.getElementById("eliminarCategoria");
+      const nombreCategoriaEliminar = obtenerNombreCategoriaPorId(categoriaId); // Función para obtener el nombre de la categoría por su ID
+      eliminarCategoriaInput.textContent = nombreCategoriaEliminar;
+      const categoriasContainer = document.getElementById("categorias");
+      categoriasContainer.classList.add("hidden");
+      modalEliminar.classList.remove("hidden");
+
+      // Definir cerrarModal después de que el modal se muestre
+      const cerrarModal = modalEliminar.querySelector(".modal-close");
+      const cerrarBoton = modalEliminar.querySelector(".modal-btn-close");
+
+      cerrarModal.addEventListener("click", () => {
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
+
+      cerrarBoton.addEventListener("click", () => {
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
+
+      const botonEliminar = document.getElementById("eliminarCategoriaBtn");
+      botonEliminar.addEventListener("click", () => {
+        eliminarCategoria(categoriaId);
+        modalEliminar.classList.add("hidden");
+        categoriasContainer.classList.remove("hidden");
+      });
     });
   });
+
+  function obtenerNombreCategoriaPorId(id) {
+    for (let nombreCategoria in categorias) {
+      if (categorias[nombreCategoria].id === id) {
+        return nombreCategoria;
+      }
+    }
+    return null;
+  }
+
+  function eliminarCategoria(id) {
+    for (let nombreCategoria in categorias) {
+      if (categorias[nombreCategoria].id === id) {
+        delete categorias[nombreCategoria];
+        break;
+      }
+    }
+    movimientoCategoria(); // Actualizar lista de categorías
+    actualizarSelectores();
+  }
 
   // Cuando se hace clic en el botón "Editar" de la categoría
   categoria.querySelectorAll(".editar").forEach((el) => {
@@ -381,7 +440,3 @@ const generarTabla = () => {
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
-
-
-
-

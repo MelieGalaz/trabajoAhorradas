@@ -15,8 +15,10 @@
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!-- link generador de id CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
@@ -152,7 +154,7 @@
                             <th id="categoria">Categoria</th>
                             <th id="fecha">Fecha</th>
                             <th id="monto">Monto</th>
-                            <th >Acciones</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="tabody-operaciones">
@@ -161,8 +163,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="flex justify-center text-[#64c27b] gap-2 "> 
-                                <a href=""><i class="fi fi-sr-edit-alt"></i></a> 
+                            <td class="flex justify-center text-[#64c27b] gap-2 ">
+                                <a href=""><i class="fi fi-sr-edit-alt"></i></a>
                                 <a href=""><i class="fi fi-sr-trash"></i></a>
                             </td>
                         </tr>
@@ -309,6 +311,23 @@
                     class="w-full mt-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Guardar</button>
             </div>
         </div>
+
+        <div id="modal-eliminar"
+            class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden">
+            <div
+                class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
+                <span class="modal-close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
+                <p class="text-xl mb-4 text-white">Está por eliminar la categoría:</p>
+                <h2 id="eliminarCategoria" class="text-white text-2xl text-center"></h2> <!-- Cambiado a h2 -->
+                <button id="eliminarCategoriaBtn"
+                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
+                <!-- Cambiado id y color del botón -->
+                <button class="modal-btn-close w-full mt-2 h-10 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none
+                    focus:bg-gray-700 ">Cerrar</button>
+                <!-- Agregado botón de cerrar -->
+            </div>
+        </div>
+
 
 
     </main>
