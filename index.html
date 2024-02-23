@@ -5,6 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Arvo&family=Josefin+Sans&family=Kanit:wght@100;500&family=Lobster+Two:wght@700&family=Lumanosimo&family=Mukta:wght@500&family=Nunito:wght@300&family=Tilt+Neon&family=Ysabeau+Infant:wght@500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
@@ -22,22 +27,16 @@
     <!-- link generador de id CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
-    <link rel="icon" href="assets/inversion.png" type="image/x-icon" />
+    <link rel="icon" href="assets/logo-ahorradas-removebg-preview.png" type="image/x-icon" />
     <title>AhorrADAs</title>
 </head>
 
-
-
 <body class="bg-gradient-to-r from-[#c457c9]  to-[#96e0a0] min-h-screen flex flex-col justify-between">
-
-
     <header class=" ahorradas-title">
         <nav class=" flex w-full  lg:items-center bg-[#b240b8] lg:h-24 justify-between  lg:px-9 p-4 shadow-2xl">
-
             <div class="flex flex-shrink-0 items-center">
-                <h1 class="bg-[#b240b8]  text-white text-2xl lg:font-medium lg:text-3xl"><span><i
-                            class="fi fi-sr-wallet"></i></span>
-                    AhorrADAs</h1>
+                <img class="w-20" src="./assets/logo-ahorradas-removebg-preview.png" alt="">
+                <h1 class="bg-[#b240b8] font-['Agbalumo'] text-white text-2xl lg:font-medium lg:text-3xl">AhorrADAs</h1>
             </div>
             <div class="flex flex-col lg:flex-row relative">
                 <button id="hamburger" class="text-white focus:outline-none lg:hidden">
@@ -50,21 +49,21 @@
                 lg:left-auto
                 lg:relative lg:flex lg:flex-row lg:gap-4 lg:items-center" id="mobile-menu">
                     <li>
-                        <a href="#Balance" class="focus:ring-2 flex lg:bg-[#b240b8] lg:hover:bg-[#c7adff] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
+                        <a href="#Balance" class="focus:ring-2 text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
                             lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
                             <i class="fi fi-rr-chart-histogram "></i>
                             Balances
                         </a>
                     </li>
                     <li>
-                        <a href="#categorias" class="flex lg:bg-[#b240b8] lg:hover:bg-[#c7adff] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
+                        <a href="#categorias" class="text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
                             lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
                             <i class=" fi fi-sr-tags"></i>
                             Categorias
                         </a>
                     </li>
                     <li>
-                        <a href="#reportes" class="flex lg:bg-[#b240b8] lg:hover:bg-[#c7adff] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
+                        <a href="#reportes" class="text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
                             lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium lg:">
                             <i class=" fi fi-sr-chart-pie"></i>
                             Reportes
@@ -139,15 +138,17 @@
                 rounded-lg lg:w-2/4 ">
                 <h2 class="text-3xl text-center font-bold p-4">Operaciones</h2>
                 <button id="abrirNuevaOperacion"
-                    class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505] rounded-lg m-auto">+
+                    class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505] rounded-lg m-auto">+
                     Nueva operación</button>
-                <div class="imagen-operaciones h-4/5">
-                    <img src="./assets/mujer-dinero.PNG" alt="" />
+                <div class="imagen-operaciones">
+                    <div class="object-contain lg:w-80 lg:m-auto">
+                        <img src="/assets/operaciones-girl.jpeg" alt="" />
+                    </div>
                     <h3 class="text-xl font-bold text-center">Sin resultados</h3>
                     <p class="text-center">Cambia los filtros o agrega operaciones</p>
                 </div>
                 <!---------------------------tablas de operaciones  ---------------------------------------------------------->
-                <table id="tabla-data-operaciones" class="">
+                <table id="tabla-data-operaciones" class="hidden">
                     <thead class=" text-[#b240b8]">
                         <tr>
                             <th id="descripcion">Descripcion</th>
@@ -180,7 +181,7 @@
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
                 <div>
                     <div class="object-contain lg:w-80 lg:m-auto">
-                        <img src="assets/chica_finanza.jpg" alt="chica mirando reporte de finanzas">
+                        <img src="assets/reportes-girl.jpeg" alt="chica mirando reporte de finanzas">
                     </div>
                     <div>
                         <h2 class="font-normal text-2xl text-center lg:text-3xl">Operaciones insuficientes</h2>
@@ -292,7 +293,7 @@
                     <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
                 </div>
                 <div class=" flex self-end gap-3">
-                    <button id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#f0d1ef] hover:text-[#050505]
+                    <button id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
                     <button type="submit" class="nueva-operacion-agregar-btn
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
