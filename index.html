@@ -32,45 +32,51 @@
 </head>
 
 <body class="bg-gradient-to-r from-[#c457c9]  to-[#96e0a0] min-h-screen flex flex-col justify-between">
-    <header class=" ahorradas-title">
-        <nav class=" flex w-full  lg:items-center bg-[#b240b8] lg:h-24 justify-between  lg:px-9 p-4 shadow-2xl">
+    <header class=" ahorradas-title relative">
+        <nav class=" flex w-full  lg:items-center bg-[#b240b8] lg:h-24 justify-between  lg:px-9  shadow-2xl">
             <div class="flex flex-shrink-0 items-center">
                 <img class="w-20" src="./assets/logo-ahorradas-removebg-preview.png" alt="">
                 <h1 class="bg-[#b240b8] font-['Agbalumo'] text-white text-2xl lg:font-medium lg:text-3xl">AhorrADAs</h1>
             </div>
-            <div class="flex flex-col lg:flex-row relative">
-                <button id="hamburger" class="text-white focus:outline-none lg:hidden">
+            <div class="flex flex-col lg:flex-row ">
+                <button id="hamburger" class="text-white focus:outline-none lg:hidden p-4">
                     <i class="fi fi-br-menu-burger"></i>
 
                 </button>
-                <!-- <button><i class="fi fi-br-cross"></i></button> -->
-                <ul class=" hidden flex flex-col z-10 shadow-xl bg-violet-200 items-center gap-2 ml-[-183px] mt-[16px] bg-[white]
-                absolute bg-purple w-[215px] h-[158px] top-full justify-evenly lg:h-[100px] lg:bg-[#b240b8] lg:w-[0] lg:top-auto
-                lg:left-auto
-                lg:relative lg:flex lg:flex-row lg:gap-4 lg:items-center" id="mobile-menu">
-                    <li>
-                        <a href="#Balance" class="focus:ring-2 text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
-                            lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
-                            <i class="fi fi-rr-chart-histogram "></i>
-                            Balances
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#categorias" class="text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
-                            lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
-                            <i class=" fi fi-sr-tags"></i>
-                            Categorias
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#reportes" class="text-white flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
-                            lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium lg:">
-                            <i class=" fi fi-sr-chart-pie"></i>
-                            Reportes
-                        </a>
-                    </li>
-                </ul>
             </div>
+
+            <ul class=" hidden flex flex-col lg:static lg:justify-end z-10 shadow-xl bg-violet-200 items-center  
+                absolute bg-purple w-[100%]  top-full justify-evenly  lg:w-[0] 
+               
+                 lg:flex lg:flex-row  " id="mobile-menu">
+                <button id="boton-menu-cerrar"
+                    class="lg:hidden w-[320px] flex justify-end text-lime-600 text-[1rem] p-[5px]"><i
+                        class="fi fi-br-cross"></i></button>
+                <li>
+                    <a href="#Balance" class="focus:ring-2 text-lime-600 flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0]
+                        lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
+                    lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
+                        <i class="fi fi-rr-chart-histogram "></i>
+                        Balances
+                    </a>
+                </li>
+                <li>
+                    <a href="#categorias" class="text-lime-600 flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505] lg:text-white lg:w-[114px] gap-2
+                            lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium">
+                        <i class=" fi fi-sr-tags"></i>
+                        Categorias
+                    </a>
+                </li>
+                <li>
+                    <a href="#reportes" class="text-lime-600 flex lg:bg-[#b240b8] lg:hover:bg-[#96e0a0] lg:hover:text-[#050505]
+                        lg:text-white lg:w-[114px] gap-2
+                            lg:rounded-md px-3 py-2 font-bold lg:text-sm lg:font-medium lg:">
+                        <i class=" fi fi-sr-chart-pie"></i>
+                        Reportes
+                    </a>
+                </li>
+            </ul>
+
         </nav>
     </header>
     <main>

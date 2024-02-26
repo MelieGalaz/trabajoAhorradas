@@ -25,6 +25,9 @@ menuLinks.forEach((link) => {
     document.getElementById(targetId).classList.remove("hidden");
   });
 });
+document.getElementById("boton-menu-cerrar").addEventListener("click", () => {
+  menuHambueguesa.classList.add("hidden");
+});
 
 //*******************************cerrar y abrir nueva operacion*************************************** */
 const abrirNuevaOperacion = document.getElementById("abrirNuevaOperacion");
@@ -143,6 +146,7 @@ const movimientoCategoria = () => {
           actualizarSelectores();
           // Cerrar la ventana modal después de eliminar la categoría
           modalEliminar.classList.add("hidden");
+          categoria.classList.remove("hidden");
         });
 
       // Manejar evento de clic en el botón de cerrar de la ventana modal
@@ -199,7 +203,8 @@ const movimientoCategoria = () => {
       // Cuando se hace clic fuera de la ventana modal, también se cierra
       window.onclick = (event) => {
         if (event.target === modal) {
-          modal.classList.add("hidden"); // Ocultar la ventana modal
+          modal.classList.add("hidden");
+          // Ocultar la ventana modal
         }
       };
     });
