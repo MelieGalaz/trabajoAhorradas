@@ -7,7 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Arvo&family=Josefin+Sans&family=Kanit:wght@100;500&family=Lobster+Two:wght@700&family=Lumanosimo&family=Mukta:wght@500&family=Nunito:wght@300&family=Tilt+Neon&family=Ysabeau+Infant:wght@500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Arvo&family=Josefin+Sans&family=Kanit:wght@100;500&family=Lobster+Two:wght@700&family=Lumanosimo&family=Mukta:wght@500&family=Nunito:wght@300&family=Tilt+Neon&family=Ysabeau+Infant:wght@500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
@@ -18,8 +20,10 @@
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!-- link generador de id CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
@@ -136,20 +140,22 @@
                 <button id="abrirNuevaOperacion"
                     class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505] rounded-lg m-auto">+
                     Nueva operación</button>
-                <div class="h-4/5">
-                    <img src="./assets/operaciones-girl.jpeg" alt="mujer colocando ahorros en billetera" />
+                <div class="imagen-operaciones">
+                    <div class="object-contain lg:w-80 lg:m-auto">
+                        <img src="/assets/operaciones-girl.jpeg" alt="" />
+                    </div>
                     <h3 class="text-xl font-bold text-center">Sin resultados</h3>
                     <p class="text-center">Cambia los filtros o agrega operaciones</p>
                 </div>
                 <!---------------------------tablas de operaciones  ---------------------------------------------------------->
-                <table id="tabla-data-operaciones" class="">
+                <table id="tabla-data-operaciones" class="hidden">
                     <thead class=" text-[#b240b8]">
                         <tr>
                             <th id="descripcion">Descripcion</th>
                             <th id="categoria">Categoria</th>
                             <th id="fecha">Fecha</th>
                             <th id="monto">Monto</th>
-                            <th >Acciones</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="tabody-operaciones">
@@ -158,8 +164,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="flex justify-center text-[#64c27b] gap-2 "> 
-                                <a href=""><i class="fi fi-sr-edit-alt"></i></a> 
+                            <td class="flex justify-center text-[#64c27b] gap-2 ">
+                                <a href=""><i class="fi fi-sr-edit-alt"></i></a>
                                 <a href=""><i class="fi fi-sr-trash"></i></a>
                             </td>
                         </tr>
@@ -263,6 +269,7 @@
         <section id="categorias" class=" categoria hidden aCategorias">
 
         </section>
+        <!--------------------------------Nueva Operación-------------------------------->
         <section id="nuevaOperacion" class="hidden">
             <form class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
@@ -288,7 +295,8 @@
                 <div class=" flex self-end gap-3">
                     <button id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button type="submit" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505]
+                    <button type="submit" class="nueva-operacion-agregar-btn
+                    w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Agregar</button>
                 </div>
             </form>
@@ -303,9 +311,26 @@
                 <input type="text" id="nuevoNombreInput"
                     class="w-full h-10 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 px-4">
                 <button id="guardarNuevoNombre"
-                    class="w-full mt-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-[#96e0a0] hover:text-[#050505] focus:outline-none focus:bg-purple-700">Guardar</button>
+                    class="w-full mt-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Guardar</button>
             </div>
         </div>
+
+        <div id="modal-eliminar"
+            class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden">
+            <div
+                class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
+                <span class="modal-close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
+                <p class="text-xl mb-4 text-white">Está por eliminar la categoría:</p>
+                <h2 id="eliminarCategoria" class="text-white text-2xl text-center"></h2> <!-- Cambiado a h2 -->
+                <button id="eliminarCategoriaBtn"
+                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
+                <!-- Cambiado id y color del botón -->
+                <button class="modal-btn-close w-full mt-2 h-10 bg-purple-700 text-white rounded-lg hover:bg-gray-700 focus:outline-none
+                    focus:bg-purple-700 ">Cerrar</button>
+                <!-- Agregado botón de cerrar -->
+            </div>
+        </div>
+
 
 
     </main>
