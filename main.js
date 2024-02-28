@@ -268,9 +268,21 @@ const evaluarLocalStorage = () => {
 //boton de agregar al tocarlo lleva a balance
 nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
   nuevaOperacion.classList.add("hidden");
+  localStorage.setItem("imagenOperacionesHidden", "true");
   const imagenOperaciones = document.querySelector(".imagen-operaciones");
   imagenOperaciones.classList.add("hidden");
   const tablaOperaciones = document.getElementById("tabla-data-operaciones");
   tablaOperaciones.classList.remove("hidden");
   Balance.classList.remove("hidden");
 };
+document.addEventListener("DOMContentLoaded", () => {
+  // Verificar el estado almacenado y aplicar la clase 'hidden' si es necesario
+  const imagenOperacionesHidden = localStorage.getItem(
+    "imagenOperacionesHidden"
+  );
+  if (imagenOperacionesHidden === "true") {
+    document.querySelector(".imagen-operaciones").classList.add("hidden");
+    const tablaOperaciones = document.getElementById("tabla-data-operaciones");
+    tablaOperaciones.classList.remove("hidden");
+  }
+});
