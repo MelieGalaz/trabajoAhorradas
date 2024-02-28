@@ -18,6 +18,7 @@ menuLinks.forEach((link) => {
       document.getElementById(sectionId).classList.add("hidden");
       // modal.classList.add("hidden");
       nuevaOperacion.classList.add("hidden");
+      EditarOperacion.classList.add("hidden");
 
       menuHambueguesa.classList.toggle("hidden");
     });
@@ -53,7 +54,7 @@ document.getElementById("hamburger").addEventListener("click", () => {
 
 /*************************************************************** */
 
-const ArrayCategoria = [
+const ArrayCategoria = JSON.parse(localStorage.getItem("categorias")) || [
   "Comida",
   "Servicios",
   "Salidas",
@@ -65,8 +66,11 @@ const ArrayCategoria = [
 const actualizarSelectores = () => {
   const selecCat = document.getElementById("selecCat");
   const selecBalance = document.getElementById("selecBalance");
+  const selecEditarOperacion = document.getElementById("selecEditarOperacion");
   selecCat.innerHTML = "";
   selecBalance.innerHTML = "";
+  selecEditarOperacion.innerHTML = "";
+  localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
 
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
@@ -78,6 +82,11 @@ const actualizarSelectores = () => {
     optionBalance.value = categoria;
     optionBalance.textContent = categoria;
     selecBalance.appendChild(optionBalance);
+
+    const optionEditar = document.createElement("option");
+    optionEditar.value = categoria;
+    optionEditar.textContent = categoria;
+    selecEditarOperacion.appendChild(optionEditar);
   }
 };
 
@@ -162,6 +171,7 @@ const movimientoCategoria = () => {
         categoria.classList.remove("hidden");
       });
     });
+    localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
   });
 
   // Cuando se hace clic en el botón "Editar" de la categoría
@@ -264,8 +274,23 @@ const generarTabla = () => {
       </tr>
     `;
   });
-};
 
+  const EditarOperacion = document.getElementById("EditarOperacion");
+  // Selecciona el contenedor principal de los botones de edición
+
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+    });
+  });
+  document.getElementById("cancelar_editar_operacion").onclick = () => {
+    EditarOperacion.classList.add("hidden");
+    console.log("cancelar_editar_operacion");
+    Balance.classList.remove("hidden");
+  };
+};
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
