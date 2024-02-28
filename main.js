@@ -18,12 +18,16 @@ menuLinks.forEach((link) => {
       document.getElementById(sectionId).classList.add("hidden");
       // modal.classList.add("hidden");
       nuevaOperacion.classList.add("hidden");
+      EditarOperacion.classList.add("hidden");
 
       menuHambueguesa.classList.toggle("hidden");
     });
 
     document.getElementById(targetId).classList.remove("hidden");
   });
+});
+document.getElementById("boton-menu-cerrar").addEventListener("click", () => {
+  menuHambueguesa.classList.add("hidden");
 });
 
 //*******************************cerrar y abrir nueva operacion*************************************** */
@@ -50,7 +54,7 @@ document.getElementById("hamburger").addEventListener("click", () => {
 
 /*************************************************************** */
 
-const ArrayCategoria = [
+const ArrayCategoria = JSON.parse(localStorage.getItem("categorias")) || [
   "Comida",
   "Servicios",
   "Salidas",
@@ -62,8 +66,11 @@ const ArrayCategoria = [
 const actualizarSelectores = () => {
   const selecCat = document.getElementById("selecCat");
   const selecBalance = document.getElementById("selecBalance");
+  const selecEditarOperacion = document.getElementById("selecEditarOperacion");
   selecCat.innerHTML = "";
   selecBalance.innerHTML = "";
+  selecEditarOperacion.innerHTML = "";
+  localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
 
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
@@ -75,6 +82,11 @@ const actualizarSelectores = () => {
     optionBalance.value = categoria;
     optionBalance.textContent = categoria;
     selecBalance.appendChild(optionBalance);
+
+    const optionEditar = document.createElement("option");
+    optionEditar.value = categoria;
+    optionEditar.textContent = categoria;
+    selecEditarOperacion.appendChild(optionEditar);
   }
 };
 
@@ -143,6 +155,7 @@ const movimientoCategoria = () => {
           actualizarSelectores();
           // Cerrar la ventana modal después de eliminar la categoría
           modalEliminar.classList.add("hidden");
+          categoria.classList.remove("hidden");
         });
 
       // Manejar evento de clic en el botón de cerrar de la ventana modal
@@ -158,6 +171,7 @@ const movimientoCategoria = () => {
         categoria.classList.remove("hidden");
       });
     });
+    localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
   });
 
   // Cuando se hace clic en el botón "Editar" de la categoría
@@ -199,7 +213,8 @@ const movimientoCategoria = () => {
       // Cuando se hace clic fuera de la ventana modal, también se cierra
       window.onclick = (event) => {
         if (event.target === modal) {
-          modal.classList.add("hidden"); // Ocultar la ventana modal
+          modal.classList.add("hidden");
+          // Ocultar la ventana modal
         }
       };
     });
@@ -259,8 +274,23 @@ const generarTabla = () => {
       </tr>
     `;
   });
-};
 
+  const EditarOperacion = document.getElementById("EditarOperacion");
+  // Selecciona el contenedor principal de los botones de edición
+
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+    });
+  });
+  document.getElementById("cancelar_editar_operacion").onclick = () => {
+    EditarOperacion.classList.add("hidden");
+    console.log("cancelar_editar_operacion");
+    Balance.classList.remove("hidden");
+  };
+};
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
