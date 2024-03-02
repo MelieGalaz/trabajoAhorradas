@@ -28,6 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
     <link rel="icon" href="assets/logo-ahorradas-removebg-preview.png" type="image/x-icon" />
+
     <title>AhorrADAs</title>
 </head>
 
@@ -108,27 +109,27 @@
                             filtros</button>
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
-                        <label for="" class="text-xl">Tipo</label>
-                        <select name="" id="" class="h-10 rounded-lg p-2">
+                        <label for="filtro-ganacia-gasto" class="text-xl">Tipo</label>
+                        <select name="" id="filtro-ganacia-gasto" class="h-10 rounded-lg p-2">
                             <option value="">Todos</option>
                             <option value="">Ganancias</option>
                             <option value="">Gastos</option>
                         </select>
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
-                        <label for="" class=" categorias text-xl">Categoria</label>
+                        <label for="selecBalance" class=" categorias text-xl">Categoria</label>
                         <select name="" id="selecBalance" class="h-10 rounded-lg p-2">
                             <option value=""></option>
 
                         </select>
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
-                        <label for="" class="text-xl">Desde</label>
-                        <input type="date" class="h-10 rounded-lg p-2">
+                        <label for="fecha-filtro" class="text-xl">Desde</label>
+                        <input type="date" id="fecha-filtro" class="h-10 rounded-lg p-2">
                     </div>
                     <div class="flex flex-col gap-2 lg:gap-3">
-                        <label for="" class="text-xl">Ordenar por</label>
-                        <select name="" id="" class="h-10 rounded-lg p-2">
+                        <label for="ordenar-filtro" class="text-xl">Ordenar por</label>
+                        <select name="" id="ordenar-filtro" class="h-10 rounded-lg p-2">
                             <option value="">Mas recientes</option>
                             <option value="">Menos recientes</option>
                             <option value="">Mayor monto</option>
@@ -276,22 +277,22 @@
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Editar Operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
-                    <label for="descripcion" class="text-xl">Descripción</label>
-                    <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
-                    <label for="monto" class="text-xl">Monto</label>
-                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
-                    <label for="" class="text-xl">Tipo</label>
-                    <select name="" id="" class="h-10 rounded-lg p-2">
+                    <label for="descripcionForm-editar" class="text-xl">Descripción</label>
+                    <input type="text" id="descripcionForm-editar" class="h-10 rounded-lg p-2">
+                    <label for="montoForm-editar" class="text-xl">Monto</label>
+                    <input type="number" id="montoForm-editar" class="h-10 rounded-lg p-2">
+                    <label for="editar-gastos-ganacias" class="text-xl">Tipo</label>
+                    <select name="" id="editar-gastos-ganacias" class="h-10 rounded-lg p-2">
                         <option value="">Gastos</option>
                         <option value="">Ganancias</option>
                     </select>
-                    <label for="categoria" class="text-xl">Categoría</label>
+                    <label for="selecEditarOperacion" class="text-xl">Categoría</label>
                     <select name="categoria" id="selecEditarOperacion" class="  h-10 rounded-lg p-2">
                         <option value=""></option>
 
                     </select>
-                    <label for="fecha" class="text-xl">Fecha</label>
-                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
+                    <label for="fecha-editar-operacion" class="text-xl">Fecha</label>
+                    <input type="date" id="fecha-editar-operacion" class="h-10 rounded-lg p-2">
                 </div>
                 <div class=" flex self-end gap-3">
                     <button id="cancelar_editar_operacion" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
@@ -312,21 +313,21 @@
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
-                    <label for="descripcion" class="text-xl">Descripción</label>
+                    <label for="descripcionForm" class="text-xl">Descripción</label>
                     <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
-                    <label for="monto" class="text-xl">Monto</label>
+                    <label for="montoForm" class="text-xl">Monto</label>
                     <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
-                    <label for="" class="text-xl">Tipo</label>
-                    <select name="" id="" class="h-10 rounded-lg p-2">
+                    <label for="tipo-gasto-ganancia" class="text-xl">Tipo</label>
+                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2">
                         <option value="">Gastos</option>
                         <option value="">Ganancias</option>
                     </select>
-                    <label for="categoria" class="text-xl">Categoría</label>
+                    <label for="selecCat" class="text-xl">Categoría</label>
                     <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2">
                         <option value=""></option>
 
                     </select>
-                    <label for="fecha" class="text-xl">Fecha</label>
+                    <label for="fechaForm" class="text-xl">Fecha</label>
                     <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
                 </div>
                 <div class=" flex self-end gap-3">
