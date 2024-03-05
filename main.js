@@ -295,6 +295,7 @@ const generarTabla = () => {
     Balance.classList.remove("hidden");
   };
 };
+
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
@@ -309,6 +310,7 @@ nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
   tablaOperaciones.classList.remove("hidden");
   Balance.classList.remove("hidden");
 };
+
 document.addEventListener("DOMContentLoaded", () => {
   // Verificar el estado almacenado y aplicar la clase 'hidden' si es necesario
   const imagenOperacionesHidden = localStorage.getItem(
@@ -347,3 +349,16 @@ function fechaFormateada(f) {
 
   return ff;
 }
+
+/////////////////////////////filtros////////////////////////////////////////////
+
+const fitrosContenedor = document.getElementById("fitrosContenedor");
+
+document.getElementById("ocultarFitros").addEventListener("click", () => {
+  const fitrosContenedor = document.getElementById("fitrosContenedor");
+  if (fitrosContenedor.style.display === "block") {
+    fitrosContenedor.style.display = "none";
+  } else {
+    fitrosContenedor.style.display = "block";
+  }
+});
