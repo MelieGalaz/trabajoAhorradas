@@ -307,15 +307,19 @@ const generarTabla = () => {
       <tr>
           <td>${operacion.Descripcion}</td>
           <td>${operacion.Categoria}</td>
-          <td>${fechaFormateada(operacion.Fecha)}</td>
+          <td>${fechaFormateada(fechaFormateada(operacion.Fecha))}</td>
           <td>${operacion.Monto}</td>
           <td class="text-[#64c27b]"> 
             <button class="edit-btn" data-id="${
+              
               operacion.id
+            
             }"><i class="fi fi-sr-edit-alt"></i> 
             </button>
             <button class="delete-btn" onclick="eliminarOperacion('${
+              
               operacion.id
+            
             }')"><i class="fi fi-sr-trash"></i> 
             </button>
           </td>
@@ -339,6 +343,7 @@ const generarTabla = () => {
     Balance.classList.remove("hidden");
   };
 };
+
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
@@ -353,6 +358,7 @@ nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
   tablaOperaciones.classList.remove("hidden");
   Balance.classList.remove("hidden");
 };
+
 document.addEventListener("DOMContentLoaded", () => {
   // Verificar el estado almacenado y aplicar la clase 'hidden' si es necesario
   const imagenOperacionesHidden = localStorage.getItem(
@@ -428,3 +434,43 @@ const actualizarBalance = () => {
   <p class="text-xl font-bold">$${balanceTotal.toFixed(2)}</p>
 </div>`;
 };
+
+//Función para formatear la fecha en el formato deseado
+
+function fechaFormateada(f) {
+  let fc = new Date(f);
+  let ff;
+  let dia = fc.getDate();
+  let mes = fc.getMonth() + 1;
+  let anio = fc.getFullYear();
+
+  // Verificamos si estamos en el último día del mes
+  if (dia === new Date(anio, mes, 0).getDate()) {
+    // Si es el último día del mes, incrementamos el mes y reiniciamos el día a 1
+    mes += 1;
+    dia = 1;
+  } else {
+    // Si no es el último día del mes, simplemente incrementamos el día en 1
+    dia += 1;
+  }
+
+  // Formateamos la fecha en el formato deseado
+  ff = `${dia < 10 ? "0" + dia : dia}/`;
+  ff += `${mes < 10 ? "0" + mes : mes}/`;
+  ff += anio;
+
+  return ff;
+}
+
+/////////////////////////////filtros////////////////////////////////////////////
+
+const fitrosContenedor = document.getElementById("fitrosContenedor");
+
+document.getElementById("ocultarFitros").addEventListener("click", () => {
+  const fitrosContenedor = document.getElementById("fitrosContenedor");
+  if (fitrosContenedor.style.display === "block") {
+    fitrosContenedor.style.display = "none";
+  } else {
+    fitrosContenedor.style.display = "block";
+  }
+});
