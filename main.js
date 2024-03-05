@@ -228,6 +228,39 @@ document.addEventListener("DOMContentLoaded", () => {
   generarTabla();
 });
 
+const guardarTablaEnLocalStorage = (tablaData) => {
+  localStorage.setItem("tablaData", JSON.stringify(tablaData));
+};
+
+//Funcion para eliminar una operacion
+const eliminarOperacion = (id) => {
+  let tablaData = evaluarLocalStorage();
+  tablaData = tablaData.filter((operacion) => operacion.id !== id);
+  localStorage.removeItem("tablaData");
+  localStorage.setItem("tablaData", JSON.stringify(tablaData));
+  if (tablaData.length !== 0) {
+    generarTabla();
+  } else {
+    const imagenVista = () => {
+      const imagenOperaciones = document.querySelector(".imagen-operaciones");
+      imagenOperaciones.classList.remove("hidden");
+      const tablaOperaciones = document.getElementById(
+        "tabla-data-operaciones"
+      );
+      tablaOperaciones.classList.add("hidden");
+      localStorage.clear();
+    };
+    localStorage.setItem(imagenVista(), "true");
+  }
+  actualizarBalance();
+};
+document.querySelectorAll(".delete-btn").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const id = e.target.dataset.id;
+    eliminarOperacion(id);
+  });
+});
+
 document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -235,17 +268,25 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   const descripcion = document.getElementById("descripcionForm").value;
   const categoria = document.getElementById("selecCat").value;
   const fecha = document.getElementById("fechaForm").value;
-  const monto = document.getElementById("montoForm").value;
+  const monto = parseFloat(document.getElementById("montoForm").value);
+  const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
+  //Función para colocar el signo correspondiente en monto
+  const tipoMonto = (tipo, monto) => {
+    if (tipo === "Gastos") {
+      return -monto;
+    } else {
+      return monto;
+    }
+  };
   // OBJETO
   const operacion = {
     id: uuidv4(), // Asegúrate de tener una función uuidv4() disponible o reemplázala por otra forma de generar un ID único
     Descripcion: descripcion,
     Categoria: categoria,
     Fecha: fecha,
-    Monto: monto,
+    Monto: tipoMonto(tipo, monto),
   };
-
   // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
   let tablaData = evaluarLocalStorage();
   tablaData.push(operacion); // Agrega el objeto directamente
@@ -254,6 +295,7 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
 
   generarTabla();
+  actualizarBalance();
 });
 
 const generarTabla = () => {
@@ -265,11 +307,17 @@ const generarTabla = () => {
       <tr>
           <td>${operacion.Descripcion}</td>
           <td>${operacion.Categoria}</td>
-          <td>${operacion.Fecha}</td>
+          <td>${fechaFormateada(operacion.Fecha)}</td>
           <td>${operacion.Monto}</td>
           <td class="text-[#64c27b]"> 
-            <button class="edit-btn" data-id="${operacion.id}"><i class="fi fi-sr-edit-alt"></i> </button>
-            <button class="delete-btn" data-id="${operacion.id}"><i class="fi fi-sr-trash"></i> </button>
+            <button class="edit-btn" data-id="${
+              operacion.id
+            }"><i class="fi fi-sr-edit-alt"></i> 
+            </button>
+            <button class="delete-btn" onclick="eliminarOperacion('${
+              operacion.id
+            }')"><i class="fi fi-sr-trash"></i> 
+            </button>
           </td>
       </tr>
     `;
@@ -316,3 +364,67 @@ document.addEventListener("DOMContentLoaded", () => {
     tablaOperaciones.classList.remove("hidden");
   }
 });
+
+//Función para formatear la fecha en el formato deseado
+
+function fechaFormateada(f) {
+  let fc = new Date(f);
+  let ff;
+  let dia = fc.getDate();
+  let mes = fc.getMonth() + 1;
+  let anio = fc.getFullYear();
+
+  // Verificamos si estamos en el último día del mes
+  if (dia === new Date(anio, mes, 0).getDate()) {
+    // Si es el último día del mes, incrementamos el mes y reiniciamos el día a 1
+    mes += 1;
+    dia = 1;
+  } else {
+    // Si no es el último día del mes, simplemente incrementamos el día en 1
+    dia += 1;
+  }
+
+  // Formateamos la fecha en el formato deseado
+  ff = `${dia < 10 ? "0" + dia : dia}/`;
+  ff += `${mes < 10 ? "0" + mes : mes}/`;
+  ff += anio;
+
+  return ff;
+}
+// Función para actualizar el balance
+const actualizarBalance = () => {
+  const operacionesGuardadas = evaluarLocalStorage();
+
+  const ganancias = operacionesGuardadas.reduce((total, operacion) => {
+    if (parseFloat(operacion.Monto) > 0) {
+      return total + parseFloat(operacion.Monto);
+    }
+    return total;
+  }, 0);
+  document.getElementById(
+    "balance-ganancia"
+  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex p-2 justify-between gap-32">
+  <p class="text-xl">Ganancias</p>
+  <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
+</div>`;
+
+  const gastos = operacionesGuardadas.reduce((total, operacion) => {
+    if (parseFloat(operacion.Monto) < 0) {
+      return total + parseFloat(operacion.Monto);
+    }
+    return total;
+  }, 0);
+  document.getElementById(
+    "balance-gastos"
+  ).innerHTML = `<div id="balance-gastos" class="gastos flex p-2 justify-between gap-40">
+  <p class="text-xl">Gastos</p>
+  <p class="text-xl text-[red]">$${Math.abs(gastos).toFixed(2)}</p>
+</div>`;
+  const balanceTotal = ganancias + gastos;
+  document.getElementById(
+    "balance-total"
+  ).innerHTML = `<div id="balance-total" class="total flex p-2 justify-between gap-40">
+  <p class="text-xl">Total</p>
+  <p class="text-xl font-bold">$${balanceTotal.toFixed(2)}</p>
+</div>`;
+};
