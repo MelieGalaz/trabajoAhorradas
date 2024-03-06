@@ -321,15 +321,11 @@ function generarTabla(operaciones) {
           <td>${operacion.Monto}</td>
           <td class="text-[#64c27b]"> 
             <button class="edit-btn" data-id="${
-              
               operacion.id
-            
             }"><i class="fi fi-sr-edit-alt"></i> 
             </button>
             <button class="delete-btn" onclick="eliminarOperacion('${
-              
               operacion.id
-            
             }')"><i class="fi fi-sr-trash"></i> 
             </button>
           </td>
