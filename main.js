@@ -317,7 +317,7 @@ function generarTabla(operaciones) {
       <tr>
           <td>${operacion.Descripcion}</td>
           <td>${operacion.Categoria}</td>
-          <td>${fechaFormateada(fechaFormateada(operacion.Fecha))}</td>
+          <td>${fechaFormateada(operacion.Fecha)}</td>
           <td>${operacion.Monto}</td>
           <td class="text-[#64c27b]"> 
             <button class="edit-btn" data-id="${
@@ -334,7 +334,7 @@ function generarTabla(operaciones) {
   });
 
   const EditarOperacion = document.getElementById("EditarOperacion");
-  const Balance = document.getElementById("Balance");
+  // const Balance = document.getElementById("Balance");
 
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
     el.addEventListener("click", (event) => {
@@ -350,7 +350,7 @@ function generarTabla(operaciones) {
   };
 }
 
-// Agrega un listener al cambio de selección en selecBalance
+//Agrega un listener al cambio de selección en selecBalance
 document.getElementById("selecBalance").addEventListener("change", (event) => {
   const filtroSeleccionado = event.target.value;
   generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
@@ -411,7 +411,7 @@ function fechaFormateada(f) {
 
   return ff;
 }
-// Función para actualizar el balance
+//Función para actualizar el balance
 const actualizarBalance = () => {
   const operacionesGuardadas = evaluarLocalStorage();
 
@@ -477,7 +477,7 @@ function fechaFormateada(f) {
 }
 
 /////////////////////////////filtros////////////////////////////////////////////
-const ocultarFitros = document.getElementById("ocultarFitros");
+//const ocultarFitros = document.getElementById("ocultarFitros");
 
 document.getElementById("ocultarFitros").addEventListener("click", () => {
   const fitrosContenedor = document.getElementById("fitrosContenedor");
@@ -523,8 +523,8 @@ document.getElementById("selecBalance").addEventListener("change", function () {
   const fechaSeleccionada = filtroFechaInput.value
     ? new Date(filtroFechaInput.value)
     : null;
-  const filtroOrdenar = document.getElementById("filtro-ordenar");
-  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada, filtroOrdenar);
+  // const filtroOrdenar = document.getElementById("filtro-ordenar");
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
 
 const filtroFechaInput = document.getElementById("filtro-fecha");
@@ -533,6 +533,6 @@ filtroFechaInput.addEventListener("change", function () {
   const categoriaSeleccionada = document.getElementById("selecBalance").value;
 
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+  console.log(categoriaSeleccionada, fechaSeleccionada);
 });
-
-filtroOrdenar.addEventListener("change", function () {});
+console.log(categoriaSeleccionada, fechaSeleccionada);
