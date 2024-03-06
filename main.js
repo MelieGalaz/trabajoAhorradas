@@ -68,10 +68,17 @@ const actualizarSelectores = () => {
   const selecBalance = document.getElementById("selecBalance");
   const selecEditarOperacion = document.getElementById("selecEditarOperacion");
   selecCat.innerHTML = "";
-  selecBalance.innerHTML = "";
+  selecBalance.innerHTML = ""; // Limpiar el contenido previo
   selecEditarOperacion.innerHTML = "";
   localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
 
+  // Agregar la opción "Todas" al select de balance
+  const optionTodas = document.createElement("option");
+  optionTodas.value = "Todas";
+  optionTodas.textContent = "Todas";
+  selecBalance.appendChild(optionTodas);
+
+  // Iterar sobre el array de categorías para agregarlas al select
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
     optionCat.value = categoria;
@@ -255,12 +262,15 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
 
   generarTabla();
 });
+window.addEventListener("load", function () {
+  generarTabla(evaluarLocalStorage());
+});
 
-const generarTabla = () => {
-  const operacionesGuardadas = evaluarLocalStorage();
+// Modifica la función generarTabla para aceptar un parámetro filtro
+function generarTabla(operaciones) {
   const tableBody = document.getElementById("tabody-operaciones");
   tableBody.innerHTML = "";
-  operacionesGuardadas.forEach((operacion) => {
+  operaciones.forEach((operacion) => {
     tableBody.innerHTML += `
       <tr>
           <td>${operacion.Descripcion}</td>
@@ -280,7 +290,7 @@ const generarTabla = () => {
   });
 
   const EditarOperacion = document.getElementById("EditarOperacion");
-  // Selecciona el contenedor principal de los botones de edición
+  const Balance = document.getElementById("Balance");
 
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
     el.addEventListener("click", (event) => {
@@ -294,11 +304,19 @@ const generarTabla = () => {
     console.log("cancelar_editar_operacion");
     Balance.classList.remove("hidden");
   };
-};
+}
+
+// Agrega un listener al cambio de selección en selecBalance
+document.getElementById("selecBalance").addEventListener("change", (event) => {
+  const filtroSeleccionado = event.target.value;
+  generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
+});
 
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
+
+// Aquí deberías tener definida la función fechaFormateada
 
 //boton de agregar al tocarlo lleva a balance
 nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
@@ -351,8 +369,7 @@ function fechaFormateada(f) {
 }
 
 /////////////////////////////filtros////////////////////////////////////////////
-
-const fitrosContenedor = document.getElementById("fitrosContenedor");
+const ocultarFitros = document.getElementById("ocultarFitros");
 
 document.getElementById("ocultarFitros").addEventListener("click", () => {
   const fitrosContenedor = document.getElementById("fitrosContenedor");
@@ -362,3 +379,52 @@ document.getElementById("ocultarFitros").addEventListener("click", () => {
     fitrosContenedor.style.display = "block";
   }
 });
+function filtrarPorCategoriaYFecha(
+  objetos,
+  categoriaSeleccionada,
+  fechaSeleccionada
+) {
+  return objetos.filter(function (objeto) {
+    const categoriaValida =
+      categoriaSeleccionada === "Todas" ||
+      objeto.Categoria === categoriaSeleccionada;
+    const fechaValida =
+      !fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada;
+    return categoriaValida && fechaValida;
+  });
+}
+
+function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
+  // Obtener el arreglo de operaciones almacenado en localStorage
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+
+  // Filtrar las operaciones por categoría y fecha seleccionadas
+  const operacionesFiltradas = filtrarPorCategoriaYFecha(
+    operaciones,
+    categoriaSeleccionada,
+    fechaSeleccionada
+  );
+
+  // Mostrar las operaciones filtradas en la tabla
+  generarTabla(operacionesFiltradas);
+}
+
+document.getElementById("selecBalance").addEventListener("change", function () {
+  const categoriaSeleccionada = this.value;
+  const filtroFechaInput = document.getElementById("filtro-fecha");
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
+  const filtroOrdenar = document.getElementById("filtro-ordenar");
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada, filtroOrdenar);
+});
+
+const filtroFechaInput = document.getElementById("filtro-fecha");
+filtroFechaInput.addEventListener("change", function () {
+  const fechaSeleccionada = this.value ? new Date(this.value) : null;
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
+
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
+
+filtroOrdenar.addEventListener("change", function () {});
