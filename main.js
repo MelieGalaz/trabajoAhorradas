@@ -232,13 +232,14 @@ movimientoCategoria();
 actualizarSelectores();
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarTabla();
+  const operaciones = evaluarLocalStorage(); // Inicializa las operaciones aquí
+  generarTabla(operaciones);
 });
 
 const guardarTablaEnLocalStorage = (tablaData) => {
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
 };
-
+const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
 //Funcion para eliminar una operacion
 const eliminarOperacion = (id) => {
   let tablaData = evaluarLocalStorage();
@@ -300,10 +301,11 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
 
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
+  generarTabla(tablaData);
 
-  generarTabla(operacionesGuardadas);
   actualizarBalance();
 });
+
 window.addEventListener("load", function () {
   generarTabla(evaluarLocalStorage());
 });
@@ -358,6 +360,7 @@ document.getElementById("selecBalance").addEventListener("change", (event) => {
 
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
+  filtrarOrdenar();
 };
 
 //boton de agregar al tocarlo lleva a balance
@@ -469,22 +472,20 @@ function filtrarPorCategoriaYFecha(
       categoriaSeleccionada === "Todas" ||
       objeto.Categoria === categoriaSeleccionada;
     const fechaValida =
-      !fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada;
-    return categoriaValida && fechaValida;
+      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
+      (categoriaSeleccionada === "Todas" || categoriaValida);
+    return fechaValida;
   });
 }
 
+console.log(operaciones);
 function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
-  // Obtener el arreglo de operaciones almacenado en localStorage
-  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
-
   // Filtrar las operaciones por categoría y fecha seleccionadas
   const operacionesFiltradas = filtrarPorCategoriaYFecha(
     operaciones,
     categoriaSeleccionada,
     fechaSeleccionada
   );
-
   // Mostrar las operaciones filtradas en la tabla
   generarTabla(operacionesFiltradas);
 }
@@ -506,3 +507,55 @@ filtroFechaInput.addEventListener("change", function () {
 
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
+let operacionFiltroFitros = [];
+console.log(operacionFiltroFitros);
+function filtrarOrdenar() {
+  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
+  switch (filtroSeleccionado) {
+    case "masRecientes":
+      operacionFiltroFitros.sort(
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+      );
+      break;
+    case "MenosRecientes":
+      operacionFiltroFitros.sort(
+        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+      );
+      break;
+    case "MayorMonto":
+      operacionFiltroFitros.sort((a, b) => b.Monto - a.Monto);
+      break;
+    case "ManorMonto":
+      operacionFiltroFitros.sort((a, b) => a.Monto - b.Monto);
+      break;
+    case "A/Z":
+      operacionFiltroFitros.sort((a, b) =>
+        a.Descripcion.localeCompare(b.Descripcion)
+      );
+      break;
+    case "Z/A":
+      operacionFiltroFitros.sort((a, b) =>
+        b.Descripcion.localeCompare(a.Descripcion)
+      );
+      break;
+    default:
+      break;
+  }
+  generarTabla(operacionFiltroFitros);
+}
+
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", filtrarOrdenar);
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", filtrarOrdenar);
+
+// Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
+function cargarDatosIniciales() {
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+  operacionFiltroFitros = operaciones.slice();
+  generarTabla(operacionFiltroFitros);
+  filtrarOrdenar();
+}
+window.addEventListener("load", cargarDatosIniciales);
