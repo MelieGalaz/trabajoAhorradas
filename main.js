@@ -301,7 +301,7 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
 
-  generarTabla();
+  generarTabla(operacionesGuardadas);
   actualizarBalance();
 });
 window.addEventListener("load", function () {
@@ -360,8 +360,6 @@ const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
 };
 
-// Aquí deberías tener definida la función fechaFormateada
-
 //boton de agregar al tocarlo lleva a balance
 nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
   nuevaOperacion.classList.add("hidden");
@@ -385,32 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-//Función para formatear la fecha en el formato deseado
-
-function fechaFormateada(f) {
-  let fc = new Date(f);
-  let ff;
-  let dia = fc.getDate();
-  let mes = fc.getMonth() + 1;
-  let anio = fc.getFullYear();
-
-  // Verificamos si estamos en el último día del mes
-  if (dia === new Date(anio, mes, 0).getDate()) {
-    // Si es el último día del mes, incrementamos el mes y reiniciamos el día a 1
-    mes += 1;
-    dia = 1;
-  } else {
-    // Si no es el último día del mes, simplemente incrementamos el día en 1
-    dia += 1;
-  }
-
-  // Formateamos la fecha en el formato deseado
-  ff = `${dia < 10 ? "0" + dia : dia}/`;
-  ff += `${mes < 10 ? "0" + mes : mes}/`;
-  ff += anio;
-
-  return ff;
-}
 //Función para actualizar el balance
 const actualizarBalance = () => {
   const operacionesGuardadas = evaluarLocalStorage();
@@ -477,7 +449,7 @@ function fechaFormateada(f) {
 }
 
 /////////////////////////////filtros////////////////////////////////////////////
-//const ocultarFitros = document.getElementById("ocultarFitros");
+const ocultarFitros = document.getElementById("ocultarFitros");
 
 document.getElementById("ocultarFitros").addEventListener("click", () => {
   const fitrosContenedor = document.getElementById("fitrosContenedor");
@@ -523,7 +495,7 @@ document.getElementById("selecBalance").addEventListener("change", function () {
   const fechaSeleccionada = filtroFechaInput.value
     ? new Date(filtroFechaInput.value)
     : null;
-  // const filtroOrdenar = document.getElementById("filtro-ordenar");
+
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
 
@@ -533,6 +505,4 @@ filtroFechaInput.addEventListener("change", function () {
   const categoriaSeleccionada = document.getElementById("selecBalance").value;
 
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-  console.log(categoriaSeleccionada, fechaSeleccionada);
 });
-console.log(categoriaSeleccionada, fechaSeleccionada);
