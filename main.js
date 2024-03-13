@@ -1,4 +1,4 @@
-//***********************cerrar y abrir secciones******************************************* */
+/**************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
 
@@ -198,32 +198,23 @@ const movimientoCategoria = () => {
       // Rellenar el campo de entrada con el nombre actual de la categoría
       nuevoNombreInput.value = ArrayCategoria[index];
 
-      // Cuando se hace clic en el botón "Guardar"
-      guardarNuevoNombre.onclick = () => {
+      guardarNuevoNombre.addEventListener("click", () => {
         const nuevoNombre = nuevoNombreInput.value.trim();
         if (nuevoNombre !== "") {
           ArrayCategoria[index] = nuevoNombre;
           modal.classList.add("hidden");
-          categorias.classList.remove("hidden"); // Ocultar la ventana modal
-          movimientoCategoria(); // Actualiza la lista de categorías
-          actualizarSelectores(); // Actualiza los selectores
+          categorias.classList.remove("hidden");
+          movimientoCategoria();
+          actualizarSelectores();
         }
-      };
+      });
 
       // Cuando se hace clic en la 'x' para cerrar la ventana modal
-      modal.querySelector(".close").onclick = () => {
+      modal.querySelector(".close").addEventListener("click", () => {
         modal.classList.add("hidden");
         categorias.classList.remove("hidden");
         // Ocultar la ventana modal
-      };
-
-      // Cuando se hace clic fuera de la ventana modal, también se cierra
-      window.onclick = (event) => {
-        if (event.target === modal) {
-          modal.classList.add("hidden");
-          // Ocultar la ventana modal
-        }
-      };
+      });
     });
   });
 };
@@ -232,7 +223,7 @@ movimientoCategoria();
 actualizarSelectores();
 
 document.addEventListener("DOMContentLoaded", () => {
-  const operaciones = evaluarLocalStorage(); // Inicializa las operaciones aquí
+  const operaciones = evaluarLocalStorage();
   generarTabla(operaciones);
 });
 
@@ -317,11 +308,17 @@ function generarTabla(operaciones) {
   operaciones.forEach((operacion) => {
     tableBody.innerHTML += `
       <tr>
-          <td>${operacion.Descripcion}</td>
-          <td>${operacion.Categoria}</td>
-          <td>${fechaFormateada(operacion.Fecha)}</td>
-          <td>${operacion.Monto}</td>
-          <td class="text-[#64c27b]"> 
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Descripcion
+          }</td>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Categoria
+          }</td>
+          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+            operacion.Fecha
+          )}</td>
+          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
+          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
             <button class="edit-btn" data-id="${
               operacion.id
             }"><i class="fi fi-sr-edit-alt"></i> 
@@ -398,7 +395,7 @@ const actualizarBalance = () => {
   }, 0);
   document.getElementById(
     "balance-ganancia"
-  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex p-2 justify-between gap-32">
+  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
   <p class="text-xl">Ganancias</p>
   <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
 </div>`;
@@ -411,14 +408,14 @@ const actualizarBalance = () => {
   }, 0);
   document.getElementById(
     "balance-gastos"
-  ).innerHTML = `<div id="balance-gastos" class="gastos flex p-2 justify-between gap-40">
+  ).innerHTML = `<div id="balance-gastos" class="gastos flex w-72 lg:w-80 p-2  justify-between ">
   <p class="text-xl">Gastos</p>
   <p class="text-xl text-[red]">$${Math.abs(gastos).toFixed(2)}</p>
 </div>`;
   const balanceTotal = ganancias + gastos;
   document.getElementById(
     "balance-total"
-  ).innerHTML = `<div id="balance-total" class="total flex p-2 justify-between gap-40">
+  ).innerHTML = `<div id="balance-total" class="total flex w-72 lg:w-80 p-2   justify-between ">
   <p class="text-xl">Total</p>
   <p class="text-xl font-bold">$${balanceTotal.toFixed(2)}</p>
 </div>`;
@@ -508,7 +505,6 @@ filtroFechaInput.addEventListener("change", function () {
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
 let operacionFiltroFitros = [];
-console.log(operacionFiltroFitros);
 function filtrarOrdenar() {
   const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
   switch (filtroSeleccionado) {
@@ -543,7 +539,6 @@ function filtrarOrdenar() {
   }
   generarTabla(operacionFiltroFitros);
 }
-
 document
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
