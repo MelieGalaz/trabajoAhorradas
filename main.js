@@ -1,7 +1,7 @@
-/***********cerrar y abrir secciones******************************************* */
+/**************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
-const EditarOperacion = document.getElementById("EditarOperacion");
+
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -235,24 +235,24 @@ const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
 
 //Funcion para mostrar u ocultar la imagen y la tabla segun los datos en el localStorage
 
-const actualizarInterfaz = () =>{
+const actualizarInterfaz = () => {
   const tablaData = evaluarLocalStorage();
   const imagenReportes = document.getElementById("imagen-reportes");
   const tablaReportes = document.getElementById("tablas-reportes");
-  if(tablaData.length >0){
+  if (tablaData.length > 0) {
     //si hay datos en el localStorage, muestra la tabla y oculta la imagen
     imagenReportes.classList.add("hidden");
     tablaReportes.classList.remove("hidden");
     mostrarTablaReportes();
-  }else{
+  } else {
     //si no hay datos en el localStorage, muestra la imagen y oculta la tabla
-    imagenReportes.classList.remove("hidden")
+    imagenReportes.classList.remove("hidden");
     tablaReportes.classList.add("hidden");
   }
-}
+};
 
 //Llamar a actualizar interfaz al cargar la pagina
- window.addEventListener('load', actualizarInterfaz);
+window.addEventListener("load", actualizarInterfaz);
 
 //Funcion para eliminar una operacion
 const eliminarOperacion = (id) => {
@@ -291,7 +291,6 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   const descripcion = document.getElementById("descripcionForm").value;
   const categoria = document.getElementById("selecCat").value;
   const fecha = document.getElementById("fechaForm").value;
-
   const monto = parseFloat(document.getElementById("montoForm").value);
   const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
@@ -310,23 +309,15 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
     Categoria: categoria,
     Fecha: fecha,
     Monto: tipoMonto(tipo, monto),
-    Tipo: tipo,
   };
   // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
   let tablaData = evaluarLocalStorage();
   tablaData.push(operacion); // Agrega el objeto directamente
-  operaciones.push(nuevaOperacion);
 
-  // Filtrar las operaciones según el tipo seleccionado
-  const tipoSeleccionado = document.getElementById("tipo-gasto-ganancia").value;
-  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
-
-  // Generar la tabla con las operaciones filtradas
-  generarTabla(operacionesFiltradas);
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
   generarTabla();
-  
+
   actualizarBalance();
   mostrarTablaReportes();
 });
@@ -336,13 +327,12 @@ window.addEventListener("load", function () {
 });
 
 // Modifica la función generarTabla para aceptar un parámetro filtro
-<<<<<<< HEAD
-  const generarTabla = () => {
-    const operacionesGuardadas = evaluarLocalStorage();
-    const tableBody = document.getElementById("tabody-operaciones");
-    tableBody.innerHTML = "";
-    operacionesGuardadas.forEach((operacion) => {
-      tableBody.innerHTML += `
+const generarTabla = () => {
+  const operacionesGuardadas = evaluarLocalStorage();
+  const tableBody = document.getElementById("tabody-operaciones");
+  tableBody.innerHTML = "";
+  operacionesGuardadas.forEach((operacion) => {
+    tableBody.innerHTML += `
         <tr>
             <td>${operacion.Descripcion}</td>
             <td>${operacion.Categoria}</td>
@@ -360,164 +350,141 @@ window.addEventListener("load", function () {
             </td>
         </tr>
       `;
-=======
-function generarTabla(operaciones) {
-  const tableBody = document.getElementById("tabody-operaciones");
-  tableBody.innerHTML = "";
-  operaciones.forEach((operacion) => {
-    tableBody.innerHTML += `
-      <tr>
-          <td class="text-center text-xs lg:text-base">${
-            operacion.Descripcion
-          }</td>
-          <td class="text-center text-xs lg:text-base">${
-            operacion.Categoria
-          }</td>
-          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
-            operacion.Fecha
-          )}</td>
-          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
-          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
-            <button class="edit-btn" data-id="${
-              operacion.id
-            }"><i class="fi fi-sr-edit-alt"></i> 
-            </button>
-            <button class="delete-btn" onclick="eliminarOperacion('${
-              operacion.id
-            }')"><i class="fi fi-sr-trash"></i> 
-            </button>
-          </td>
-      </tr>
-    `;
   });
 
-  // const Balance = document.getElementById("Balance");
+  // Obtener los valores de la tabla
+  const obtenerValoresDeTabla = (idOperacion) => {
+    const operacion = {};
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
 
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
+
+      if (id === idOperacion) {
+        operacion.Descripcion = row.cells[0].textContent;
+        operacion.Categoria = row.cells[1].textContent;
+        operacion.Fecha = row.cells[2].textContent;
+        operacion.Monto = parseFloat(row.cells[3].textContent);
+        operacion.Id = id;
+      }
+    });
+    return operacion;
+  };
+
+  // Rellenar el formulario
+  const llenarFormularioEdicion = (operacion) => {
+    // Asignar el ID de la operación como un atributo de datos al botón de edición
+    const editButton = document.getElementById("editarOperacionBtn");
+    editButton.setAttribute("data-id", operacion.Id);
+    document.getElementById("descripcionForm-editar").value =
+      operacion.Descripcion;
+    document.getElementById("montoForm-editar").value = operacion.Monto;
+    document.getElementById("fecha-editar-operacion").value = fechaFormateada(
+      operacion.Fecha
+    );
+    const categoriaSelect = document.getElementById("selecEditarOperacion");
+    const tipoSelect = document.getElementById("editar-gastos-ganacias");
+    if (operacion.monto < 0) {
+      tipoSelect.value = "Gastos";
+    } else {
+      tipoSelect.value = "Ganancias";
+    }
+    categoriaSelect.value = operacion.Categoria;
+  };
+
+  // Abrir el formulario de edición
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
       EditarOperacion.classList.remove("hidden");
       Balance.classList.add("hidden");
->>>>>>> 2c032db570abf0ac17dfce06810a6e1a9fd22b47
+      const idOperacion = el.getAttribute("data-id");
+      console.log(idOperacion);
+      const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
+      llenarFormularioEdicion(operacionSeleccionada);
     });
+  });
 
-    // Obtener los valores de la tabla
-    const obtenerValoresDeTabla = (idOperacion) => {
-      const operacion = {};
-      const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+  const editarOperacion = () => {
+    // Obtener el ID de la operación que se está editando desde el botón de edición
+    const idOperacion = document
+      .getElementById("editarOperacionBtn")
+      .getAttribute("data-id");
 
-      tableRows.forEach((row) => {
-        const id = row.querySelector(".edit-btn").getAttribute("data-id");
+    // Obtener los nuevos valores del formulario de edición
+    const tipoSeleccionado = document.getElementById(
+      "editar-gastos-ganacias"
+    ).value;
+    const nuevaDescripcion = document.getElementById(
+      "descripcionForm-editar"
+    ).value;
+    const nuevaCategoria = document.getElementById(
+      "selecEditarOperacion"
+    ).value;
+    const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
+    const nuevoMonto = parseFloat(
+      document.getElementById("montoForm-editar").value
+    );
 
-        if (id === idOperacion) {
-          operacion.Descripcion = row.cells[0].textContent;
-          operacion.Categoria = row.cells[1].textContent;
-          operacion.Fecha = row.cells[2].textContent;
-          operacion.Monto = parseFloat(row.cells[3].textContent);
-          operacion.Id = id;
-        }
-      });
-      return operacion;
-    };
+    // Cambiar el signo del monto según el tipo seleccionado
+    const nuevoMontoConSigno =
+      tipoSeleccionado === "Gastos"
+        ? -Math.abs(nuevoMonto)
+        : Math.abs(nuevoMonto);
 
-    // Rellenar el formulario
-    const llenarFormularioEdicion = (operacion) => {
-      // Asignar el ID de la operación como un atributo de datos al botón de edición
-      const editButton = document.getElementById("editarOperacionBtn");
-      editButton.setAttribute("data-id", operacion.Id);
-      document.getElementById("descripcionForm-editar").value = operacion.Descripcion;
-      document.getElementById("montoForm-editar").value = operacion.Monto;
-      document.getElementById("fecha-editar-operacion").value = fechaFormateada(operacion.Fecha);
-      const categoriaSelect = document.getElementById("selecEditarOperacion");
-      const tipoSelect = document.getElementById("editar-gastos-ganacias");
-      if (operacion.monto < 0) {
-        tipoSelect.value = "Gastos";
-      } else {
-        tipoSelect.value = "Ganancias";
+    // Actualizar la fila correspondiente en la tabla con los nuevos valores
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
+      if (id === idOperacion) {
+        row.cells[0].textContent = nuevaDescripcion;
+        row.cells[1].textContent = nuevaCategoria;
+        row.cells[2].textContent = fechaFormateada(nuevaFecha);
+        row.cells[3].textContent = nuevoMontoConSigno;
       }
-      categoriaSelect.value = operacion.Categoria;
-    };
-
-    // Abrir el formulario de edición
-    tableBody.querySelectorAll(".edit-btn").forEach((el) => {
-      el.addEventListener("click", (event) => {
-        event.preventDefault();
-        EditarOperacion.classList.remove("hidden");
-        Balance.classList.add("hidden");
-        const idOperacion = el.getAttribute("data-id");
-        console.log(idOperacion);
-        const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
-        llenarFormularioEdicion(operacionSeleccionada);
-      });
     });
 
-    const editarOperacion = () => {
-      // Obtener el ID de la operación que se está editando desde el botón de edición
-      const idOperacion = document
-        .getElementById("editarOperacionBtn")
-        .getAttribute("data-id");
+    // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
+    let operacionesGuardadas = evaluarLocalStorage();
+    operacionesGuardadas = operacionesGuardadas.map((operacion) => {
+      if (operacion.id === idOperacion) {
+        return {
+          ...operacion,
+          Descripcion: nuevaDescripcion,
+          Categoria: nuevaCategoria,
+          Fecha: nuevaFecha,
+          Monto: nuevoMontoConSigno,
+        };
+      } else {
+        return operacion;
+      }
+    });
 
-      // Obtener los nuevos valores del formulario de edición
-      const tipoSeleccionado = document.getElementById("editar-gastos-ganacias").value;
-      const nuevaDescripcion = document.getElementById("descripcionForm-editar").value;
-      const nuevaCategoria = document.getElementById("selecEditarOperacion").value;
-      const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
-      const nuevoMonto = parseFloat(document.getElementById("montoForm-editar").value);
+    // Guardar los cambios en el almacenamiento local
+    localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
 
-      // Cambiar el signo del monto según el tipo seleccionado
-      const nuevoMontoConSigno = tipoSeleccionado === "Gastos" ? -Math.abs(nuevoMonto): Math.abs(nuevoMonto);
+    // Ocultar el formulario de edición después de guardar los cambios
+    document.getElementById("EditarOperacion").classList.add("hidden");
+    // Mostrar la tabla después de guardar los cambios
+    Balance.classList.remove("hidden");
 
-      // Actualizar la fila correspondiente en la tabla con los nuevos valores
-      const tableRows = document.querySelectorAll("#tabody-operaciones tr");
-      tableRows.forEach((row) => {
-        const id = row.querySelector(".edit-btn").getAttribute("data-id");
-        if (id === idOperacion) {
-          row.cells[0].textContent = nuevaDescripcion;
-          row.cells[1].textContent = nuevaCategoria;
-          row.cells[2].textContent = fechaFormateada(nuevaFecha);
-          row.cells[3].textContent = nuevoMontoConSigno;
-        }
-      });
-
-      // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
-      let operacionesGuardadas = evaluarLocalStorage();
-      operacionesGuardadas = operacionesGuardadas.map((operacion) => {
-        if (operacion.id === idOperacion) {
-          return {
-            ...operacion,
-            Descripcion: nuevaDescripcion,
-            Categoria: nuevaCategoria,
-            Fecha: nuevaFecha,
-            Monto: nuevoMontoConSigno,
-          };
-        } else {
-          return operacion;
-        }
-      });
-
-      // Guardar los cambios en el almacenamiento local
-      localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
-
-      // Ocultar el formulario de edición después de guardar los cambios
-      document.getElementById("EditarOperacion").classList.add("hidden");
-      // Mostrar la tabla después de guardar los cambios
-      Balance.classList.remove("hidden");
-
-      actualizarBalance();
-    };
-
-    document.getElementById("editarOperacionBtn").addEventListener("click", (event) => {
-        event.preventDefault();
-        editarOperacion();
-      });
-
-    // Cancelar la edición
-    document.getElementById("cancelar_editar_operacion").onclick = () => {
-      EditarOperacion.classList.add("hidden");
-      console.log("cancelar_editar_operacion");
-      Balance.classList.remove("hidden");
-    };
+    actualizarBalance();
   };
+
+  document
+    .getElementById("editarOperacionBtn")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      editarOperacion();
+    });
+
+  // Cancelar la edición
+  document.getElementById("cancelar_editar_operacion").onclick = () => {
+    EditarOperacion.classList.add("hidden");
+    console.log("cancelar_editar_operacion");
+    Balance.classList.remove("hidden");
+  };
+};
 
 //Agrega un listener al cambio de selección en selecBalance
 document.getElementById("selecBalance").addEventListener("change", (event) => {
@@ -563,7 +530,9 @@ const actualizarBalance = () => {
     }
     return total;
   }, 0);
-  document.getElementById("balance-ganancia").innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
+  document.getElementById(
+    "balance-ganancia"
+  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
   <p class="text-xl">Ganancias</p>
   <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
 </div>`;
@@ -589,8 +558,8 @@ const actualizarBalance = () => {
 </div>`;
 };
 
-//llamar actualizarBalance al cargar la pagina 
-window.addEventListener('load', actualizarBalance);
+//llamar actualizarBalance al cargar la pagina
+window.addEventListener("load", actualizarBalance);
 
 //Función para formatear la fecha en el formato deseado
 
@@ -710,7 +679,6 @@ document
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 document
-
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 
@@ -721,23 +689,6 @@ function cargarDatosIniciales() {
   generarTabla();
   filtrarOrdenar();
 }
-document.getElementById("filtro-tipo").addEventListener("change", function () {
-  const tipoSeleccionado = this.value;
-
-  // Filtrar las operaciones por tipo seleccionado
-  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
-
-  // Generar la tabla con las operaciones filtradas
-  generarTabla(operacionesFiltradas);
-});
-
-// Función para filtrar las operaciones por tipo
-function filtrarPorTipo(objetos, tipoSeleccionado) {
-  return objetos.filter(function (objeto) {
-    return tipoSeleccionado === "todo" || tipoSeleccionado === objeto.tipo;
-  });
-}
-
 window.addEventListener("load", cargarDatosIniciales);
 
 /*----------------------------Tabla Reportes---------------------------------*/
@@ -757,18 +708,19 @@ const obtenerCategoriaConMayorGanancia = () => {
       if (!gananciasPorCategoria[operacion.Categoria]) {
         gananciasPorCategoria[operacion.Categoria] = {
           total: 0,
-          categoriaMayorGanancia: null
+          categoriaMayorGanancia: null,
         };
       }
       gananciasPorCategoria[operacion.Categoria].total += operacion.Monto;
       if (
         !gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia ||
         gananciasPorCategoria[operacion.Categoria].total >
-        gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia.total
+          gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia
+            .total
       ) {
         gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia = {
           total: gananciasPorCategoria[operacion.Categoria].total,
-          categoria: operacion.Categoria
+          categoria: operacion.Categoria,
         };
       }
     }
@@ -793,7 +745,7 @@ const obtenerCategoriaConMayorGanancia = () => {
   localStorage.setItem("categoriaMayorGanancia", categoriaMayorGanancia);
   return {
     categoria: categoriaMayorGanancia,
-    montoTotal: mayorGanancia
+    montoTotal: mayorGanancia,
   };
 };
 
@@ -812,18 +764,18 @@ const obtenerCategoriaConMayorGasto = () => {
       if (!gastosPorCategoria[operacion.Categoria]) {
         gastosPorCategoria[operacion.Categoria] = {
           total: 0,
-          categoriaMayorGasto: null
+          categoriaMayorGasto: null,
         };
       }
       gastosPorCategoria[operacion.Categoria].total += operacion.Monto;
       if (
         !gastosPorCategoria[operacion.Categoria].categoriaMayorGasto ||
         gastosPorCategoria[operacion.Categoria].total <
-        gastosPorCategoria[operacion.Categoria].categoriaMayorGasto.total
+          gastosPorCategoria[operacion.Categoria].categoriaMayorGasto.total
       ) {
         gastosPorCategoria[operacion.Categoria].categoriaMayorGasto = {
           total: gastosPorCategoria[operacion.Categoria].total,
-          categoria: operacion.Categoria
+          categoria: operacion.Categoria,
         };
       }
     }
@@ -835,11 +787,9 @@ const obtenerCategoriaConMayorGasto = () => {
   for (const categoria in gastosPorCategoria) {
     if (gastosPorCategoria.hasOwnProperty(categoria)) {
       if (
-        gastosPorCategoria[categoria].categoriaMayorGasto.total <
-        mayorGasto
+        gastosPorCategoria[categoria].categoriaMayorGasto.total < mayorGasto
       ) {
-        mayorGasto =
-          gastosPorCategoria[categoria].categoriaMayorGasto.total;
+        mayorGasto = gastosPorCategoria[categoria].categoriaMayorGasto.total;
         categoriaMayorGasto =
           gastosPorCategoria[categoria].categoriaMayorGasto.categoria;
       }
@@ -848,7 +798,7 @@ const obtenerCategoriaConMayorGasto = () => {
   localStorage.setItem("categoriaMayorGasto", categoriaMayorGasto);
   return {
     categoriaGastos: categoriaMayorGasto,
-    montoTotalGastos: mayorGasto
+    montoTotalGastos: mayorGasto,
   };
 };
 
@@ -874,7 +824,8 @@ const obtenerCategoriaConMayorBalance = () => {
     if (balancePorCategoria.hasOwnProperty(categoria)) {
       const balance = balancePorCategoria[categoria];
       const distanciaBalance = Math.abs(balance);
-      if (distanciaBalance < mayorBalance) { // Verificamos si la distancia es menor a la anterior
+      if (distanciaBalance < mayorBalance) {
+        // Verificamos si la distancia es menor a la anterior
         mayorBalance = distanciaBalance;
         categoriaMayorBalance = categoria;
       }
@@ -883,7 +834,7 @@ const obtenerCategoriaConMayorBalance = () => {
   localStorage.setItem("categoriaMayorBalance", categoriaMayorBalance);
   return {
     categoriaBalance: categoriaMayorBalance,
-    balanceTotal: mayorBalance
+    balanceTotal: mayorBalance,
   };
 };
 
@@ -921,7 +872,7 @@ const obtenerMesConMayorGanancia = () => {
   localStorage.setItem("mesMayorGanancia", mesMayorGanancia);
   return {
     mes: mesMayorGanancia,
-    montoTotalMes: mayorGanancia
+    montoTotalMes: mayorGanancia,
   };
 };
 
@@ -959,7 +910,7 @@ const obtenerMesConMayorGasto = () => {
   localStorage.setItem("mesMayorGasto", mesMayorGasto);
   return {
     mesGasto: mesMayorGasto,
-    montoTotalGastoMes: mayorGasto
+    montoTotalGastoMes: mayorGasto,
   };
 };
 
@@ -974,7 +925,7 @@ const calcularTotalesPorCategoria = () => {
       totalesPorCategoria[operacion.Categoria] = {
         ganancias: 0,
         gastos: 0,
-        balance: 0
+        balance: 0,
       };
     }
 
@@ -1005,12 +956,12 @@ const calcularTotalesPorMes = () => {
   operacionesGuardadas.forEach((operacion) => {
     const fecha = new Date(operacion.Fecha);
     const mes = `${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
-    
+
     if (!totalesPorMes[mes]) {
       totalesPorMes[mes] = {
         ganancias: 0,
         gastos: 0,
-        balance: 0
+        balance: 0,
       };
     }
 
@@ -1034,10 +985,10 @@ const calcularTotalesPorMes = () => {
 // Función para mostrar la tabla de Reportes
 const mostrarTablaReportes = () => {
   const { categoria, montoTotal } = obtenerCategoriaConMayorGanancia();
-  const {categoriaGastos, montoTotalGastos} = obtenerCategoriaConMayorGasto();
-  const {categoriaBalance, balanceTotal} = obtenerCategoriaConMayorBalance();
-  const {mes, montoTotalMes} = obtenerMesConMayorGanancia();
-  const {mesGasto, montoTotalGastoMes} = obtenerMesConMayorGasto();
+  const { categoriaGastos, montoTotalGastos } = obtenerCategoriaConMayorGasto();
+  const { categoriaBalance, balanceTotal } = obtenerCategoriaConMayorBalance();
+  const { mes, montoTotalMes } = obtenerMesConMayorGanancia();
+  const { mesGasto, montoTotalGastoMes } = obtenerMesConMayorGasto();
   const totalesPorCategoria = calcularTotalesPorCategoria();
   const totalesPorMes = calcularTotalesPorMes();
   const tablaReportesBody = document.getElementById("tablas-reportes");
@@ -1079,8 +1030,8 @@ const mostrarTablaReportes = () => {
       </tbody>
     </table>
   `;
-    // Crear el HTML para la tabla de totales por categoría
-    let tablaTotalesPorCategoriaHTML = `
+  // Crear el HTML para la tabla de totales por categoría
+  let tablaTotalesPorCategoriaHTML = `
       <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por categoría</h3>
       <table class="">
         <thead class="text-[#b240b8] gap-60">
@@ -1093,12 +1044,12 @@ const mostrarTablaReportes = () => {
         </thead>
         <tbody class="gap-36 ">
     `;
-  
-    // Agregar filas para cada categoría
-    for (const categoria in totalesPorCategoria) {
-      if (totalesPorCategoria.hasOwnProperty(categoria)) {
-        const { ganancias, gastos, balance } = totalesPorCategoria[categoria];
-        tablaTotalesPorCategoriaHTML += `
+
+  // Agregar filas para cada categoría
+  for (const categoria in totalesPorCategoria) {
+    if (totalesPorCategoria.hasOwnProperty(categoria)) {
+      const { ganancias, gastos, balance } = totalesPorCategoria[categoria];
+      tablaTotalesPorCategoriaHTML += `
           <tr>
             <td>${categoria}</td>
             <td>$${ganancias.toFixed(2)}</td>
@@ -1106,19 +1057,19 @@ const mostrarTablaReportes = () => {
             <td>$${balance.toFixed(2)}</td>
           </tr>
         `;
-      }
     }
-  
-    // Cerrar la tabla
-    tablaTotalesPorCategoriaHTML += `
+  }
+
+  // Cerrar la tabla
+  tablaTotalesPorCategoriaHTML += `
         </tbody>
       </table>
     `;
-  
-    // Agregar la tabla de totales por categoría al final del cuerpo de la tabla de reportes
-    tablaReportesBody.innerHTML += tablaTotalesPorCategoriaHTML;
 
-     // Crear el HTML para la tabla de totales por mes
+  // Agregar la tabla de totales por categoría al final del cuerpo de la tabla de reportes
+  tablaReportesBody.innerHTML += tablaTotalesPorCategoriaHTML;
+
+  // Crear el HTML para la tabla de totales por mes
   let tablaTotalesPorMesHTML = `
   <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por mes</h3>
   <table class="">
@@ -1154,10 +1105,3 @@ const mostrarTablaReportes = () => {
   // Agregar la tabla de totales por mes al final del cuerpo de la tabla de reportes
   tablaReportesBody.innerHTML += tablaTotalesPorMesHTML;
 };
-
-
-
-
-
-
-
