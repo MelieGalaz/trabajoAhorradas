@@ -1,4 +1,4 @@
-//***********************cerrar y abrir secciones******************************************* */
+/**************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
 
@@ -68,10 +68,17 @@ const actualizarSelectores = () => {
   const selecBalance = document.getElementById("selecBalance");
   const selecEditarOperacion = document.getElementById("selecEditarOperacion");
   selecCat.innerHTML = "";
-  selecBalance.innerHTML = "";
+  selecBalance.innerHTML = ""; // Limpiar el contenido previo
   selecEditarOperacion.innerHTML = "";
   localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
 
+  // Agregar la opción "Todas" al select de balance
+  const optionTodas = document.createElement("option");
+  optionTodas.value = "Todas";
+  optionTodas.textContent = "Todas";
+  selecBalance.appendChild(optionTodas);
+
+  // Iterar sobre el array de categorías para agregarlas al select
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
     optionCat.value = categoria;
@@ -191,32 +198,23 @@ const movimientoCategoria = () => {
       // Rellenar el campo de entrada con el nombre actual de la categoría
       nuevoNombreInput.value = ArrayCategoria[index];
 
-      // Cuando se hace clic en el botón "Guardar"
-      guardarNuevoNombre.onclick = () => {
+      guardarNuevoNombre.addEventListener("click", () => {
         const nuevoNombre = nuevoNombreInput.value.trim();
         if (nuevoNombre !== "") {
           ArrayCategoria[index] = nuevoNombre;
           modal.classList.add("hidden");
-          categorias.classList.remove("hidden"); // Ocultar la ventana modal
-          movimientoCategoria(); // Actualiza la lista de categorías
-          actualizarSelectores(); // Actualiza los selectores
+          categorias.classList.remove("hidden");
+          movimientoCategoria();
+          actualizarSelectores();
         }
-      };
+      });
 
       // Cuando se hace clic en la 'x' para cerrar la ventana modal
-      modal.querySelector(".close").onclick = () => {
+      modal.querySelector(".close").addEventListener("click", () => {
         modal.classList.add("hidden");
         categorias.classList.remove("hidden");
         // Ocultar la ventana modal
-      };
-
-      // Cuando se hace clic fuera de la ventana modal, también se cierra
-      window.onclick = (event) => {
-        if (event.target === modal) {
-          modal.classList.add("hidden");
-          // Ocultar la ventana modal
-        }
-      };
+      });
     });
   });
 };
@@ -225,13 +223,14 @@ movimientoCategoria();
 actualizarSelectores();
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarTabla();
+  const operaciones = evaluarLocalStorage();
+  generarTabla(operaciones);
 });
 
 const guardarTablaEnLocalStorage = (tablaData) => {
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
 };
-
+const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
 //Funcion para eliminar una operacion
 const eliminarOperacion = (id) => {
   let tablaData = evaluarLocalStorage();
@@ -293,33 +292,39 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
 
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
+  generarTabla(tablaData);
 
-  generarTabla();
   actualizarBalance();
 });
 
-const generarTabla = () => {
-  const operacionesGuardadas = evaluarLocalStorage();
+window.addEventListener("load", function () {
+  generarTabla(evaluarLocalStorage());
+});
+
+// Modifica la función generarTabla para aceptar un parámetro filtro
+function generarTabla(operaciones) {
   const tableBody = document.getElementById("tabody-operaciones");
   tableBody.innerHTML = "";
-  operacionesGuardadas.forEach((operacion) => {
+  operaciones.forEach((operacion) => {
     tableBody.innerHTML += `
       <tr>
-          <td>${operacion.Descripcion}</td>
-          <td>${operacion.Categoria}</td>
-          <td>${fechaFormateada(fechaFormateada(operacion.Fecha))}</td>
-          <td>${operacion.Monto}</td>
-          <td class="text-[#64c27b]"> 
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Descripcion
+          }</td>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Categoria
+          }</td>
+          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+            operacion.Fecha
+          )}</td>
+          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
+          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
             <button class="edit-btn" data-id="${
-              
               operacion.id
-            
             }"><i class="fi fi-sr-edit-alt"></i> 
             </button>
             <button class="delete-btn" onclick="eliminarOperacion('${
-              
               operacion.id
-            
             }')"><i class="fi fi-sr-trash"></i> 
             </button>
           </td>
@@ -328,7 +333,7 @@ const generarTabla = () => {
   });
 
   const EditarOperacion = document.getElementById("EditarOperacion");
-  // Selecciona el contenedor principal de los botones de edición
+  // const Balance = document.getElementById("Balance");
 
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
     el.addEventListener("click", (event) => {
@@ -342,10 +347,17 @@ const generarTabla = () => {
     console.log("cancelar_editar_operacion");
     Balance.classList.remove("hidden");
   };
-};
+}
+
+//Agrega un listener al cambio de selección en selecBalance
+document.getElementById("selecBalance").addEventListener("change", (event) => {
+  const filtroSeleccionado = event.target.value;
+  generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
+});
 
 const evaluarLocalStorage = () => {
   return JSON.parse(localStorage.getItem("tablaData")) || [];
+  filtrarOrdenar();
 };
 
 //boton de agregar al tocarlo lleva a balance
@@ -371,33 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-//Función para formatear la fecha en el formato deseado
-
-function fechaFormateada(f) {
-  let fc = new Date(f);
-  let ff;
-  let dia = fc.getDate();
-  let mes = fc.getMonth() + 1;
-  let anio = fc.getFullYear();
-
-  // Verificamos si estamos en el último día del mes
-  if (dia === new Date(anio, mes, 0).getDate()) {
-    // Si es el último día del mes, incrementamos el mes y reiniciamos el día a 1
-    mes += 1;
-    dia = 1;
-  } else {
-    // Si no es el último día del mes, simplemente incrementamos el día en 1
-    dia += 1;
-  }
-
-  // Formateamos la fecha en el formato deseado
-  ff = `${dia < 10 ? "0" + dia : dia}/`;
-  ff += `${mes < 10 ? "0" + mes : mes}/`;
-  ff += anio;
-
-  return ff;
-}
-// Función para actualizar el balance
+//Función para actualizar el balance
 const actualizarBalance = () => {
   const operacionesGuardadas = evaluarLocalStorage();
 
@@ -409,7 +395,7 @@ const actualizarBalance = () => {
   }, 0);
   document.getElementById(
     "balance-ganancia"
-  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex p-2 justify-between gap-32">
+  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
   <p class="text-xl">Ganancias</p>
   <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
 </div>`;
@@ -422,14 +408,14 @@ const actualizarBalance = () => {
   }, 0);
   document.getElementById(
     "balance-gastos"
-  ).innerHTML = `<div id="balance-gastos" class="gastos flex p-2 justify-between gap-40">
+  ).innerHTML = `<div id="balance-gastos" class="gastos flex w-72 lg:w-80 p-2  justify-between ">
   <p class="text-xl">Gastos</p>
   <p class="text-xl text-[red]">$${Math.abs(gastos).toFixed(2)}</p>
 </div>`;
   const balanceTotal = ganancias + gastos;
   document.getElementById(
     "balance-total"
-  ).innerHTML = `<div id="balance-total" class="total flex p-2 justify-between gap-40">
+  ).innerHTML = `<div id="balance-total" class="total flex w-72 lg:w-80 p-2   justify-between ">
   <p class="text-xl">Total</p>
   <p class="text-xl font-bold">$${balanceTotal.toFixed(2)}</p>
 </div>`;
@@ -463,8 +449,7 @@ function fechaFormateada(f) {
 }
 
 /////////////////////////////filtros////////////////////////////////////////////
-
-const fitrosContenedor = document.getElementById("fitrosContenedor");
+const ocultarFitros = document.getElementById("ocultarFitros");
 
 document.getElementById("ocultarFitros").addEventListener("click", () => {
   const fitrosContenedor = document.getElementById("fitrosContenedor");
@@ -474,3 +459,98 @@ document.getElementById("ocultarFitros").addEventListener("click", () => {
     fitrosContenedor.style.display = "block";
   }
 });
+function filtrarPorCategoriaYFecha(
+  objetos,
+  categoriaSeleccionada,
+  fechaSeleccionada
+) {
+  return objetos.filter(function (objeto) {
+    const categoriaValida =
+      categoriaSeleccionada === "Todas" ||
+      objeto.Categoria === categoriaSeleccionada;
+    const fechaValida =
+      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
+      (categoriaSeleccionada === "Todas" || categoriaValida);
+    return fechaValida;
+  });
+}
+
+console.log(operaciones);
+function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
+  // Filtrar las operaciones por categoría y fecha seleccionadas
+  const operacionesFiltradas = filtrarPorCategoriaYFecha(
+    operaciones,
+    categoriaSeleccionada,
+    fechaSeleccionada
+  );
+  // Mostrar las operaciones filtradas en la tabla
+  generarTabla(operacionesFiltradas);
+}
+
+document.getElementById("selecBalance").addEventListener("change", function () {
+  const categoriaSeleccionada = this.value;
+  const filtroFechaInput = document.getElementById("filtro-fecha");
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
+
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
+
+const filtroFechaInput = document.getElementById("filtro-fecha");
+filtroFechaInput.addEventListener("change", function () {
+  const fechaSeleccionada = this.value ? new Date(this.value) : null;
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
+
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
+let operacionFiltroFitros = [];
+function filtrarOrdenar() {
+  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
+  switch (filtroSeleccionado) {
+    case "masRecientes":
+      operacionFiltroFitros.sort(
+        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
+      );
+      break;
+    case "MenosRecientes":
+      operacionFiltroFitros.sort(
+        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+      );
+      break;
+    case "MayorMonto":
+      operacionFiltroFitros.sort((a, b) => b.Monto - a.Monto);
+      break;
+    case "ManorMonto":
+      operacionFiltroFitros.sort((a, b) => a.Monto - b.Monto);
+      break;
+    case "A/Z":
+      operacionFiltroFitros.sort((a, b) =>
+        a.Descripcion.localeCompare(b.Descripcion)
+      );
+      break;
+    case "Z/A":
+      operacionFiltroFitros.sort((a, b) =>
+        b.Descripcion.localeCompare(a.Descripcion)
+      );
+      break;
+    default:
+      break;
+  }
+  generarTabla(operacionFiltroFitros);
+}
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", filtrarOrdenar);
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", filtrarOrdenar);
+
+// Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
+function cargarDatosIniciales() {
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+  operacionFiltroFitros = operaciones.slice();
+  generarTabla(operacionFiltroFitros);
+  filtrarOrdenar();
+}
+window.addEventListener("load", cargarDatosIniciales);
