@@ -1,7 +1,7 @@
-/**************cerrar y abrir secciones******************************************* */
+/***********cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
-
+const EditarOperacion = document.getElementById("EditarOperacion");
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -291,6 +291,7 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   const descripcion = document.getElementById("descripcionForm").value;
   const categoria = document.getElementById("selecCat").value;
   const fecha = document.getElementById("fechaForm").value;
+
   const monto = parseFloat(document.getElementById("montoForm").value);
   const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
@@ -309,11 +310,19 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
     Categoria: categoria,
     Fecha: fecha,
     Monto: tipoMonto(tipo, monto),
+    Tipo: tipo,
   };
   // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
   let tablaData = evaluarLocalStorage();
   tablaData.push(operacion); // Agrega el objeto directamente
+  operaciones.push(nuevaOperacion);
 
+  // Filtrar las operaciones según el tipo seleccionado
+  const tipoSeleccionado = document.getElementById("tipo-gasto-ganancia").value;
+  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
+
+  // Generar la tabla con las operaciones filtradas
+  generarTabla(operacionesFiltradas);
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
   generarTabla();
@@ -327,6 +336,7 @@ window.addEventListener("load", function () {
 });
 
 // Modifica la función generarTabla para aceptar un parámetro filtro
+<<<<<<< HEAD
   const generarTabla = () => {
     const operacionesGuardadas = evaluarLocalStorage();
     const tableBody = document.getElementById("tabody-operaciones");
@@ -350,6 +360,45 @@ window.addEventListener("load", function () {
             </td>
         </tr>
       `;
+=======
+function generarTabla(operaciones) {
+  const tableBody = document.getElementById("tabody-operaciones");
+  tableBody.innerHTML = "";
+  operaciones.forEach((operacion) => {
+    tableBody.innerHTML += `
+      <tr>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Descripcion
+          }</td>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Categoria
+          }</td>
+          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+            operacion.Fecha
+          )}</td>
+          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
+          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
+            <button class="edit-btn" data-id="${
+              operacion.id
+            }"><i class="fi fi-sr-edit-alt"></i> 
+            </button>
+            <button class="delete-btn" onclick="eliminarOperacion('${
+              operacion.id
+            }')"><i class="fi fi-sr-trash"></i> 
+            </button>
+          </td>
+      </tr>
+    `;
+  });
+
+  // const Balance = document.getElementById("Balance");
+
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+>>>>>>> 2c032db570abf0ac17dfce06810a6e1a9fd22b47
     });
 
     // Obtener los valores de la tabla
@@ -661,6 +710,7 @@ document
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 document
+
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 
@@ -671,6 +721,23 @@ function cargarDatosIniciales() {
   generarTabla();
   filtrarOrdenar();
 }
+document.getElementById("filtro-tipo").addEventListener("change", function () {
+  const tipoSeleccionado = this.value;
+
+  // Filtrar las operaciones por tipo seleccionado
+  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
+
+  // Generar la tabla con las operaciones filtradas
+  generarTabla(operacionesFiltradas);
+});
+
+// Función para filtrar las operaciones por tipo
+function filtrarPorTipo(objetos, tipoSeleccionado) {
+  return objetos.filter(function (objeto) {
+    return tipoSeleccionado === "todo" || tipoSeleccionado === objeto.tipo;
+  });
+}
+
 window.addEventListener("load", cargarDatosIniciales);
 
 /*----------------------------Tabla Reportes---------------------------------*/
