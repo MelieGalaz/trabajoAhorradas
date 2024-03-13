@@ -26,7 +26,6 @@
         href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!-- link generador de id CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
     <link rel="icon" href="assets/logo-ahorradas-removebg-preview.png" type="image/x-icon" />
 
     <title>AhorrADAs</title>
@@ -189,7 +188,7 @@
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
-                <div>
+                <div id="imagen-reportes" class="hidden">
                     <div class="object-contain lg:w-80 lg:m-auto">
                         <img src="assets/reportes-girl.jpeg" alt="chica mirando reporte de finanzas">
                     </div>
@@ -199,7 +198,7 @@
                     </div>
                 </div>
                 <!-- -------------------------tablas de reporte------------------------------------------- -->
-                <div class="hidden">
+                <div id="tablas-reportes" class="hidden">
                     <table>
                         <thead class="text-[#b240b8]">
                             <tr>
@@ -300,7 +299,7 @@
                 <div class=" flex self-end gap-3">
                     <button id="cancelar_editar_operacion" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button type="submit" class=" editarBtnOperacion
+                    <button type="submit" id="editarOperacionBtn" class=" editarBtnOperacion
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Editar</button>
                 </div>
