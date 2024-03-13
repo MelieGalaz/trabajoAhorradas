@@ -1,7 +1,7 @@
-/**************cerrar y abrir secciones******************************************* */
+/***********cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
-
+const EditarOperacion = document.getElementById("EditarOperacion");
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -267,6 +267,7 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   const descripcion = document.getElementById("descripcionForm").value;
   const categoria = document.getElementById("selecCat").value;
   const fecha = document.getElementById("fechaForm").value;
+
   const monto = parseFloat(document.getElementById("montoForm").value);
   const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
@@ -285,11 +286,19 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
     Categoria: categoria,
     Fecha: fecha,
     Monto: tipoMonto(tipo, monto),
+    Tipo: tipo,
   };
   // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
   let tablaData = evaluarLocalStorage();
   tablaData.push(operacion); // Agrega el objeto directamente
+  operaciones.push(nuevaOperacion);
 
+  // Filtrar las operaciones según el tipo seleccionado
+  const tipoSeleccionado = document.getElementById("tipo-gasto-ganancia").value;
+  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
+
+  // Generar la tabla con las operaciones filtradas
+  generarTabla(operacionesFiltradas);
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
   generarTabla(tablaData);
@@ -332,7 +341,6 @@ function generarTabla(operaciones) {
     `;
   });
 
-  const EditarOperacion = document.getElementById("EditarOperacion");
   // const Balance = document.getElementById("Balance");
 
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
@@ -543,6 +551,7 @@ document
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 document
+
   .getElementById("filtro-ordenar")
   .addEventListener("change", filtrarOrdenar);
 
@@ -553,4 +562,21 @@ function cargarDatosIniciales() {
   generarTabla(operacionFiltroFitros);
   filtrarOrdenar();
 }
+document.getElementById("filtro-tipo").addEventListener("change", function () {
+  const tipoSeleccionado = this.value;
+
+  // Filtrar las operaciones por tipo seleccionado
+  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
+
+  // Generar la tabla con las operaciones filtradas
+  generarTabla(operacionesFiltradas);
+});
+
+// Función para filtrar las operaciones por tipo
+function filtrarPorTipo(objetos, tipoSeleccionado) {
+  return objetos.filter(function (objeto) {
+    return tipoSeleccionado === "todo" || tipoSeleccionado === objeto.tipo;
+  });
+}
+
 window.addEventListener("load", cargarDatosIniciales);
