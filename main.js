@@ -225,7 +225,7 @@ movimientoCategoria();
 actualizarSelectores();
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarTabla();
+  generarTabla(evaluarLocalStorage());
 });
 
 const guardarTablaEnLocalStorage = (tablaData) => {
@@ -261,7 +261,7 @@ const eliminarOperacion = (id) => {
   localStorage.removeItem("tablaData");
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
   if (tablaData.length !== 0) {
-    generarTabla();
+    generarTabla(evaluarLocalStorage());
   } else {
     const imagenVista = () => {
       const imagenOperaciones = document.querySelector(".imagen-operaciones");
@@ -316,185 +316,232 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
 
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
-  generarTabla();
+  generarTabla(evaluarLocalStorage());
 
   actualizarBalance();
   mostrarTablaReportes();
 });
 
-window.addEventListener("load", function () {
-  generarTabla();
-});
-
 // Modifica la función generarTabla para aceptar un parámetro filtro
-const generarTabla = () => {
-  const operacionesGuardadas = evaluarLocalStorage();
+// const generarTabla = () => {
+//   const operacionesGuardadas = evaluarLocalStorage();
+//   const tableBody = document.getElementById("tabody-operaciones");
+//   tableBody.innerHTML = "";
+//   operacionesGuardadas.forEach((operacion) => {
+//     tableBody.innerHTML += `
+//         <tr>
+//             <td class="text-center text-xs lg:text-base">${
+//               operacion.Descripcion
+//             }</td>
+//             <td class="text-center text-xs lg:text-base">${
+//               operacion.Categoria
+//             }</td>
+//             <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+//               operacion.Fecha
+//             )}</td>
+//             <td class="text-center text-xs lg:text-base">${operacion.Monto}</td>
+//             <td class="text-[#64c27b] text-center text-xs lg:text-base">
+//               <button class="edit-btn" data-id="${operacion.id}">
+//                 <i class="fi fi-sr-edit-alt"></i>
+//               </button>
+//               <button class="delete-btn" onclick="eliminarOperacion('${
+//                 operacion.id
+//               }')">
+//                 <i class="fi fi-sr-trash"></i>
+//               </button>
+//             </td>
+//         </tr>
+//       `;
+//   });
+
+//   // Obtener los valores de la tabla
+//   const obtenerValoresDeTabla = (idOperacion) => {
+//     const operacion = {};
+//     const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+
+//     tableRows.forEach((row) => {
+//       const id = row.querySelector(".edit-btn").getAttribute("data-id");
+
+//       if (id === idOperacion) {
+//         operacion.Descripcion = row.cells[0].textContent;
+//         operacion.Categoria = row.cells[1].textContent;
+//         operacion.Fecha = row.cells[2].textContent;
+//         operacion.Monto = parseFloat(row.cells[3].textContent);
+//         operacion.Id = id;
+//       }
+//     });
+//     return operacion;
+//   };
+
+//   // Rellenar el formulario
+//   const llenarFormularioEdicion = (operacion) => {
+//     // Asignar el ID de la operación como un atributo de datos al botón de edición
+//     const editButton = document.getElementById("editarOperacionBtn");
+//     editButton.setAttribute("data-id", operacion.Id);
+//     document.getElementById("descripcionForm-editar").value =
+//       operacion.Descripcion;
+//     document.getElementById("montoForm-editar").value = operacion.Monto;
+//     document.getElementById("fecha-editar-operacion").value = fechaFormateada(
+//       operacion.Fecha
+//     );
+//     const categoriaSelect = document.getElementById("selecEditarOperacion");
+//     const tipoSelect = document.getElementById("editar-gastos-ganacias");
+//     if (operacion.monto < 0) {
+//       tipoSelect.value = "Gastos";
+//     } else {
+//       tipoSelect.value = "Ganancias";
+//     }
+//     categoriaSelect.value = operacion.Categoria;
+//   };
+
+//   // Abrir el formulario de edición
+//   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+//     el.addEventListener("click", (event) => {
+//       event.preventDefault();
+//       EditarOperacion.classList.remove("hidden");
+//       Balance.classList.add("hidden");
+//       const idOperacion = el.getAttribute("data-id");
+//       console.log(idOperacion);
+//       const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
+//       llenarFormularioEdicion(operacionSeleccionada);
+//     });
+//   });
+
+//   const editarOperacion = () => {
+//     // Obtener el ID de la operación que se está editando desde el botón de edición
+//     const idOperacion = document
+//       .getElementById("editarOperacionBtn")
+//       .getAttribute("data-id");
+
+//     // Obtener los nuevos valores del formulario de edición
+//     const tipoSeleccionado = document.getElementById(
+//       "editar-gastos-ganacias"
+//     ).value;
+//     const nuevaDescripcion = document.getElementById(
+//       "descripcionForm-editar"
+//     ).value;
+//     const nuevaCategoria = document.getElementById(
+//       "selecEditarOperacion"
+//     ).value;
+//     const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
+//     const nuevoMonto = parseFloat(
+//       document.getElementById("montoForm-editar").value
+//     );
+
+//     // Cambiar el signo del monto según el tipo seleccionado
+//     const nuevoMontoConSigno =
+//       tipoSeleccionado === "Gastos"
+//         ? -Math.abs(nuevoMonto)
+//         : Math.abs(nuevoMonto);
+
+//     // Actualizar la fila correspondiente en la tabla con los nuevos valores
+//     const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+//     tableRows.forEach((row) => {
+//       const id = row.querySelector(".edit-btn").getAttribute("data-id");
+//       if (id === idOperacion) {
+//         row.cells[0].textContent = nuevaDescripcion;
+//         row.cells[1].textContent = nuevaCategoria;
+//         row.cells[2].textContent = fechaFormateada(nuevaFecha);
+//         row.cells[3].textContent = nuevoMontoConSigno;
+//       }
+//     });
+
+//     // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
+//     let operacionesGuardadas = evaluarLocalStorage();
+//     operacionesGuardadas = operacionesGuardadas.map((operacion) => {
+//       if (operacion.id === idOperacion) {
+//         return {
+//           ...operacion,
+//           Descripcion: nuevaDescripcion,
+//           Categoria: nuevaCategoria,
+//           Fecha: nuevaFecha,
+//           Monto: nuevoMontoConSigno,
+//         };
+//       } else {
+//         return operacion;
+//       }
+//     });
+
+//     // Guardar los cambios en el almacenamiento local
+//     localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
+
+//     // Ocultar el formulario de edición después de guardar los cambios
+//     document.getElementById("EditarOperacion").classList.add("hidden");
+//     // Mostrar la tabla después de guardar los cambios
+//     Balance.classList.remove("hidden");
+
+//     actualizarBalance();
+//   };
+
+//   document
+//     .getElementById("editarOperacionBtn")
+//     .addEventListener("click", (event) => {
+//       event.preventDefault();
+//       editarOperacion();
+//     });
+
+//   // Cancelar la edición
+//   document.getElementById("cancelar_editar_operacion").onclick = () => {
+//     EditarOperacion.classList.add("hidden");
+//     console.log("cancelar_editar_operacion");
+//     Balance.classList.remove("hidden");
+//   };
+// };
+function generarTabla(operaciones) {
   const tableBody = document.getElementById("tabody-operaciones");
   tableBody.innerHTML = "";
-  operacionesGuardadas.forEach((operacion) => {
+  operaciones.forEach((operacion) => {
     tableBody.innerHTML += `
-        <tr>
-            <td>${operacion.Descripcion}</td>
-            <td>${operacion.Categoria}</td>
-            <td>${fechaFormateada(operacion.Fecha)}</td>
-            <td>${operacion.Monto}</td>
-            <td class="text-[#64c27b]"> 
-              <button class="edit-btn" data-id="${operacion.id}">
-                <i class="fi fi-sr-edit-alt"></i> 
-              </button>
-              <button class="delete-btn" onclick="eliminarOperacion('${
-                operacion.id
-              }')">
-                <i class="fi fi-sr-trash"></i> 
-              </button>
-            </td>
-        </tr>
-      `;
+      <tr>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Descripcion
+          }</td>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Categoria
+          }</td>
+          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+            operacion.Fecha
+          )}</td>
+          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
+          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
+            <button class="edit-btn" data-id="${
+              operacion.id
+            }"><i class="fi fi-sr-edit-alt"></i> 
+            </button>
+            <button class="delete-btn" onclick="eliminarOperacion('${
+              operacion.id
+            }')"><i class="fi fi-sr-trash"></i> 
+            </button>
+          </td>
+      </tr>
+    `;
   });
 
-  // Obtener los valores de la tabla
-  const obtenerValoresDeTabla = (idOperacion) => {
-    const operacion = {};
-    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+  // const Balance = document.getElementById("Balance");
 
-    tableRows.forEach((row) => {
-      const id = row.querySelector(".edit-btn").getAttribute("data-id");
-
-      if (id === idOperacion) {
-        operacion.Descripcion = row.cells[0].textContent;
-        operacion.Categoria = row.cells[1].textContent;
-        operacion.Fecha = row.cells[2].textContent;
-        operacion.Monto = parseFloat(row.cells[3].textContent);
-        operacion.Id = id;
-      }
-    });
-    return operacion;
-  };
-
-  // Rellenar el formulario
-  const llenarFormularioEdicion = (operacion) => {
-    // Asignar el ID de la operación como un atributo de datos al botón de edición
-    const editButton = document.getElementById("editarOperacionBtn");
-    editButton.setAttribute("data-id", operacion.Id);
-    document.getElementById("descripcionForm-editar").value =
-      operacion.Descripcion;
-    document.getElementById("montoForm-editar").value = operacion.Monto;
-    document.getElementById("fecha-editar-operacion").value = fechaFormateada(
-      operacion.Fecha
-    );
-    const categoriaSelect = document.getElementById("selecEditarOperacion");
-    const tipoSelect = document.getElementById("editar-gastos-ganacias");
-    if (operacion.monto < 0) {
-      tipoSelect.value = "Gastos";
-    } else {
-      tipoSelect.value = "Ganancias";
-    }
-    categoriaSelect.value = operacion.Categoria;
-  };
-
-  // Abrir el formulario de edición
   tableBody.querySelectorAll(".edit-btn").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
       EditarOperacion.classList.remove("hidden");
       Balance.classList.add("hidden");
-      const idOperacion = el.getAttribute("data-id");
-      console.log(idOperacion);
-      const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
-      llenarFormularioEdicion(operacionSeleccionada);
     });
   });
-
-  const editarOperacion = () => {
-    // Obtener el ID de la operación que se está editando desde el botón de edición
-    const idOperacion = document
-      .getElementById("editarOperacionBtn")
-      .getAttribute("data-id");
-
-    // Obtener los nuevos valores del formulario de edición
-    const tipoSeleccionado = document.getElementById(
-      "editar-gastos-ganacias"
-    ).value;
-    const nuevaDescripcion = document.getElementById(
-      "descripcionForm-editar"
-    ).value;
-    const nuevaCategoria = document.getElementById(
-      "selecEditarOperacion"
-    ).value;
-    const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
-    const nuevoMonto = parseFloat(
-      document.getElementById("montoForm-editar").value
-    );
-
-    // Cambiar el signo del monto según el tipo seleccionado
-    const nuevoMontoConSigno =
-      tipoSeleccionado === "Gastos"
-        ? -Math.abs(nuevoMonto)
-        : Math.abs(nuevoMonto);
-
-    // Actualizar la fila correspondiente en la tabla con los nuevos valores
-    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
-    tableRows.forEach((row) => {
-      const id = row.querySelector(".edit-btn").getAttribute("data-id");
-      if (id === idOperacion) {
-        row.cells[0].textContent = nuevaDescripcion;
-        row.cells[1].textContent = nuevaCategoria;
-        row.cells[2].textContent = fechaFormateada(nuevaFecha);
-        row.cells[3].textContent = nuevoMontoConSigno;
-      }
-    });
-
-    // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
-    let operacionesGuardadas = evaluarLocalStorage();
-    operacionesGuardadas = operacionesGuardadas.map((operacion) => {
-      if (operacion.id === idOperacion) {
-        return {
-          ...operacion,
-          Descripcion: nuevaDescripcion,
-          Categoria: nuevaCategoria,
-          Fecha: nuevaFecha,
-          Monto: nuevoMontoConSigno,
-        };
-      } else {
-        return operacion;
-      }
-    });
-
-    // Guardar los cambios en el almacenamiento local
-    localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
-
-    // Ocultar el formulario de edición después de guardar los cambios
-    document.getElementById("EditarOperacion").classList.add("hidden");
-    // Mostrar la tabla después de guardar los cambios
-    Balance.classList.remove("hidden");
-
-    actualizarBalance();
-  };
-
-  document
-    .getElementById("editarOperacionBtn")
-    .addEventListener("click", (event) => {
-      event.preventDefault();
-      editarOperacion();
-    });
-
-  // Cancelar la edición
   document.getElementById("cancelar_editar_operacion").onclick = () => {
     EditarOperacion.classList.add("hidden");
     console.log("cancelar_editar_operacion");
     Balance.classList.remove("hidden");
   };
-};
+}
 
-//Agrega un listener al cambio de selección en selecBalance
-document.getElementById("selecBalance").addEventListener("change", (event) => {
-  const filtroSeleccionado = event.target.value;
-  generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
-});
+// //Agrega un listener al cambio de selección en selecBalance
+// document.getElementById("selecBalance").addEventListener("change", (event) => {
+//   const filtroSeleccionado = event.target.value;
+//   generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
+// });
 
 const evaluarLocalStorage = () => {
+  console.log(JSON.parse(localStorage.getItem("tablaData")));
   return JSON.parse(localStorage.getItem("tablaData")) || [];
-  filtrarOrdenar();
 };
 
 //boton de agregar al tocarlo lleva a balance
@@ -582,114 +629,9 @@ function fechaFormateada(f) {
 
   // Formateamos la fecha en el formato deseado
   ff = `${anio}-${mes < 10 ? "0" + mes : mes}-${dia < 10 ? "0" + dia : dia}`;
+  // ff = `${dia < 10 ? "0" + dia : dia}-${mes < 10 ? "0" + mes : mes}-${anio}`;
   return ff;
 }
-
-/////////////////////////////filtros////////////////////////////////////////////
-const ocultarFitros = document.getElementById("ocultarFitros");
-
-document.getElementById("ocultarFitros").addEventListener("click", () => {
-  const fitrosContenedor = document.getElementById("fitrosContenedor");
-  if (fitrosContenedor.style.display === "block") {
-    fitrosContenedor.style.display = "none";
-  } else {
-    fitrosContenedor.style.display = "block";
-  }
-});
-function filtrarPorCategoriaYFecha(
-  objetos,
-  categoriaSeleccionada,
-  fechaSeleccionada
-) {
-  return objetos.filter(function (objeto) {
-    const categoriaValida =
-      categoriaSeleccionada === "Todas" ||
-      objeto.Categoria === categoriaSeleccionada;
-    const fechaValida =
-      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
-      (categoriaSeleccionada === "Todas" || categoriaValida);
-    return fechaValida;
-  });
-}
-
-function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
-  // Filtrar las operaciones por categoría y fecha seleccionadas
-  const operacionesFiltradas = filtrarPorCategoriaYFecha(
-    operaciones,
-    categoriaSeleccionada,
-    fechaSeleccionada
-  );
-  // Mostrar las operaciones filtradas en la tabla
-  generarTabla(operacionesFiltradas);
-}
-
-document.getElementById("selecBalance").addEventListener("change", function () {
-  const categoriaSeleccionada = this.value;
-  const filtroFechaInput = document.getElementById("filtro-fecha");
-  const fechaSeleccionada = filtroFechaInput.value
-    ? new Date(filtroFechaInput.value)
-    : null;
-
-  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-});
-
-const filtroFechaInput = document.getElementById("filtro-fecha");
-filtroFechaInput.addEventListener("change", function () {
-  const fechaSeleccionada = this.value ? new Date(this.value) : null;
-  const categoriaSeleccionada = document.getElementById("selecBalance").value;
-
-  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-});
-let operacionFiltroFitros = [];
-function filtrarOrdenar() {
-  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
-  switch (filtroSeleccionado) {
-    case "masRecientes":
-      operacionFiltroFitros.sort(
-        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-      );
-      break;
-    case "MenosRecientes":
-      operacionFiltroFitros.sort(
-        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
-      );
-      break;
-    case "MayorMonto":
-      operacionFiltroFitros.sort((a, b) => b.Monto - a.Monto);
-      break;
-    case "ManorMonto":
-      operacionFiltroFitros.sort((a, b) => a.Monto - b.Monto);
-      break;
-    case "A/Z":
-      operacionFiltroFitros.sort((a, b) =>
-        a.Descripcion.localeCompare(b.Descripcion)
-      );
-      break;
-    case "Z/A":
-      operacionFiltroFitros.sort((a, b) =>
-        b.Descripcion.localeCompare(a.Descripcion)
-      );
-      break;
-    default:
-      break;
-  }
-  generarTabla();
-}
-document
-  .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
-document
-  .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
-
-// Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
-function cargarDatosIniciales() {
-  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
-  operacionFiltroFitros = operaciones.slice();
-  generarTabla();
-  filtrarOrdenar();
-}
-window.addEventListener("load", cargarDatosIniciales);
 
 /*----------------------------Tabla Reportes---------------------------------*/
 
@@ -1105,3 +1047,125 @@ const mostrarTablaReportes = () => {
   // Agregar la tabla de totales por mes al final del cuerpo de la tabla de reportes
   tablaReportesBody.innerHTML += tablaTotalesPorMesHTML;
 };
+/////////////////////////////filtros////////////////////////////////////////////
+const ocultarFitros = document.getElementById("ocultarFitros");
+let operacionFiltroFitros = [];
+
+document.getElementById("ocultarFitros").addEventListener("click", () => {
+  const fitrosContenedor = document.getElementById("fitrosContenedor");
+  if (fitrosContenedor.style.display === "block") {
+    fitrosContenedor.style.display = "none";
+  } else {
+    fitrosContenedor.style.display = "block";
+  }
+});
+function filtrarPorCategoriaYFecha(
+  objetos,
+  categoriaSeleccionada,
+  fechaSeleccionada
+) {
+  return objetos.filter(function (objeto) {
+    const categoriaValida =
+      categoriaSeleccionada === "Todas" ||
+      objeto.Categoria === categoriaSeleccionada;
+    const fechaValida =
+      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
+      (categoriaSeleccionada === "Todas" || categoriaValida);
+    return fechaValida;
+  });
+}
+
+function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
+  // Filtrar las operaciones por categoría y fecha seleccionadas
+  const operacionesFiltradas = filtrarPorCategoriaYFecha(
+    operaciones,
+    categoriaSeleccionada,
+    fechaSeleccionada
+  );
+  // Mostrar las operaciones filtradas en la tabla
+  generarTabla(operacionesFiltradas);
+}
+
+document.getElementById("selecBalance").addEventListener("change", function () {
+  const categoriaSeleccionada = this.value;
+  const filtroFechaInput = document.getElementById("filtro-fecha");
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
+
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
+
+const filtroFechaInput = document.getElementById("filtro-fecha");
+filtroFechaInput.addEventListener("change", function () {
+  const fechaSeleccionada = this.value ? new Date(this.value) : null;
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
+
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
+
+function filtrarOrdenar(operaciones) {
+  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
+  console.log(operaciones);
+  switch (filtroSeleccionado) {
+    case "masRecientes":
+      generarTabla(
+        operaciones.sort((a, b) => new Date(a.Fecha) - new Date(b.Fecha))
+      );
+      break;
+    case "MenosRecientes":
+      generarTabla(
+        operaciones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha))
+      );
+      break;
+    case "MayorMonto":
+      generarTabla(operaciones.sort((a, b) => b.Monto - a.Monto));
+
+      break;
+    case "ManorMonto":
+      generarTabla(operaciones.sort((a, b) => a.Monto - b.Monto));
+
+      break;
+    case "A/Z":
+      generarTabla(
+        operaciones.sort((a, b) => a.Descripcion.localeCompare(b.Descripcion))
+      );
+
+      break;
+    case "Z/A":
+      generarTabla(
+        operaciones.sort((a, b) => b.Descripcion.localeCompare(a.Descripcion))
+      );
+
+      break;
+  }
+}
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", () =>
+    filtrarOrdenar(JSON.parse(localStorage.getItem("tablaData")))
+  );
+
+// Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
+function cargarDatosIniciales() {
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+  filtrarYGenerarTabla("Todas", null);
+  filtrarOrdenar(operaciones);
+  console.log(operaciones);
+}
+// document.getElementById("filtro-tipo").addEventListener("change", function () {
+//   const tipoSeleccionado = this.value;
+//   const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
+
+//   // Generar la tabla con las operaciones filtradas
+//   generarTabla();
+// });
+
+// Función para filtrar las operaciones por tipo
+// function filtrarPorTipo(objetos, tipoSeleccionado) {
+//   return objetos.filter(function (objeto) {
+//     return tipoSeleccionado === "todo" || tipoSeleccionado === objeto.tipo;
+//   });
+// }
+
+window.addEventListener("load", cargarDatosIniciales);
