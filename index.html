@@ -105,11 +105,11 @@
                 ">
                     <div class="flex flex-row justify-between items-center gap-2 lg:gap-3">
                         <h2 class="text-3xl text-center font-bold ">Filtros</h2>
-                        <button id="ocultarFitros"
+                        <button id="ocultarFiltros"
                             class="text-[#c402f5] font-medium hover:text-[#7830db] hover:text-shadow-lg">Ocultar
                             filtros</button>
                     </div>
-                    <div id="fitrosContenedor" class="block">
+                    <div id="filtrosContenedor" class="block">
                         <div class="flex flex-col gap-2 lg:gap-3">
                             <label for="filtro-tipo" class="text-xl">Tipo</label>
                             <select name="" id="filtro-tipo" class="h-10 rounded-lg p-2">
@@ -363,7 +363,7 @@
             <div
                 class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
                 <span class="modal-close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
-                <p class="text-xl mb-4 text-white">Está por eliminar la categoría:</p>
+                <p class="text-xl mb-4 text-white text-center">Está por eliminar la categoría:</p>
                 <h2 id="eliminarCategoria" class="text-white text-2xl text-center"></h2> <!-- Cambiado a h2 -->
                 <button id="eliminarCategoriaBtn"
                     class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
@@ -373,22 +373,19 @@
                 <!-- Agregado botón de cerrar -->
             </div>
         </div>
-        <!-- <div id="modal-eliminar-operacion-tabla"
+        <div id="modal-eliminar-operacion-tabla"
             class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden">
             <div
                 class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
-                <span
-                    class="modal-close-operacion text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
-                <p class="text-xl mb-4 text-white">Está por eliminar la categoría:</p>
-                <h2 id="eliminarOperacion" class="text-white text-2xl text-center"></h2>Cambiado a h2 -->
-        <!-- <button id="delete-btn"
-                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button> -->
-        <!-- Cambiado id y color del botón -->
-        <!-- <button class="modal-btn-close-operacion w-full mt-2 h-10 bg-purple-700 text-white rounded-lg hover:bg-gray-700 focus:outline-none
-                    focus:bg-purple-700 ">Cerrar</button> -->
-        <!-- Agregado botón de cerrar -->
-        <!-- </div>
-        </div>  -->
+                <span class="text-4xl top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
+                <p class="text-xl mb-4 text-white text-center">Seguro quiere eliminar la operación</p>
+                <h2 id="eliminarOperacion" class="text-white text-2xl text-center"></h2>
+                <button id="delete-btn-modal"
+                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
+                <button class="modal-close-operacion w-full mt-2 h-10 bg-purple-700 text-white rounded-lg hover:bg-gray-700
+                    focus:outline-none focus:bg-purple-700">Cerrar</button>
+            </div>
+        </div>
     </main>
     <footer class=" bg-[#b240b8]   shadow-2xl mt-[35px]">
         <h3 class="flex  items-center justify-center

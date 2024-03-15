@@ -253,12 +253,27 @@ const eliminarOperacion = (id) => {
   }
   actualizarBalance();
 };
-document.querySelectorAll(".delete-btn").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const id = e.target.dataset.id;
+
+const modalEliminarOperacionTabla = document.getElementById(
+  "modal-eliminar-operacion-tabla"
+);
+const deleteBtnModal = document.getElementById("delete-btn-modal");
+const mostrarModalEliminar = (id) => {
+  modalEliminarOperacionTabla.classList.remove("hidden");
+  Balance.classList.add("hidden");
+
+  deleteBtnModal.addEventListener("click", () => {
     eliminarOperacion(id);
+    modalEliminarOperacionTabla.classList.add("hidden");
+    Balance.classList.remove("hidden");
   });
-});
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-operacion ")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
+};
 
 document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -304,6 +319,7 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   generarTabla(tablaData);
 
   actualizarBalance();
+  mostrarTablaReportes();
 });
 
 window.addEventListener("load", function () {
@@ -332,14 +348,148 @@ function generarTabla(operaciones) {
               operacion.id
             }"><i class="fi fi-sr-edit-alt"></i> 
             </button>
-            <button class="delete-btn" onclick="eliminarOperacion('${
+            <button class="delete-btn" onclick="mostrarModalEliminar('${
               operacion.id
-            }')"><i class="fi fi-sr-trash"></i> 
+            }')"('${operacion.id}')"><i class="fi fi-sr-trash"></i> 
             </button>
           </td>
       </tr>
     `;
   });
+  // Obtener los valores de la tabla
+  const obtenerValoresDeTabla = (idOperacion) => {
+    const operacion = {};
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
+
+      if (id === idOperacion) {
+        operacion.Descripcion = row.cells[0].textContent;
+        operacion.Categoria = row.cells[1].textContent;
+        operacion.Fecha = row.cells[2].textContent;
+        operacion.Monto = parseFloat(row.cells[3].textContent);
+        operacion.Id = id;
+      }
+    });
+    return operacion;
+  };
+
+  // Rellenar el formulario
+  const llenarFormularioEdicion = (operacion) => {
+    // Asignar el ID de la operación como un atributo de datos al botón de edición
+    const editButton = document.getElementById("editarOperacionBtn");
+    editButton.setAttribute("data-id", operacion.Id);
+    document.getElementById("descripcionForm-editar").value =
+      operacion.Descripcion;
+    document.getElementById("montoForm-editar").value = operacion.Monto;
+    document.getElementById("fecha-editar-operacion").value = fechaFormateada(
+      operacion.Fecha
+    );
+    const categoriaSelect = document.getElementById("selecEditarOperacion");
+    const tipoSelect = document.getElementById("editar-gastos-ganacias");
+    if (operacion.monto < 0) {
+      tipoSelect.value = "Gastos";
+    } else {
+      tipoSelect.value = "Ganancias";
+    }
+    categoriaSelect.value = operacion.Categoria;
+  };
+  const EditarOperacion = document.getElementById("EditarOperacion");
+  // Abrir el formulario de edición
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+      const idOperacion = el.getAttribute("data-id");
+      console.log(idOperacion);
+      const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
+      llenarFormularioEdicion(operacionSeleccionada);
+    });
+  });
+
+  const editarOperacion = () => {
+    // Obtener el ID de la operación que se está editando desde el botón de edición
+    const idOperacion = document
+      .getElementById("editarOperacionBtn")
+      .getAttribute("data-id");
+
+    // Obtener los nuevos valores del formulario de edición
+    const tipoSeleccionado = document.getElementById(
+      "editar-gastos-ganacias"
+    ).value;
+    const nuevaDescripcion = document.getElementById(
+      "descripcionForm-editar"
+    ).value;
+    const nuevaCategoria = document.getElementById(
+      "selecEditarOperacion"
+    ).value;
+    const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
+    const nuevoMonto = parseFloat(
+      document.getElementById("montoForm-editar").value
+    );
+
+    // Cambiar el signo del monto según el tipo seleccionado
+    const nuevoMontoConSigno =
+      tipoSeleccionado === "Gastos"
+        ? -Math.abs(nuevoMonto)
+        : Math.abs(nuevoMonto);
+
+    // Actualizar la fila correspondiente en la tabla con los nuevos valores
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
+      if (id === idOperacion) {
+        row.cells[0].textContent = nuevaDescripcion;
+        row.cells[1].textContent = nuevaCategoria;
+        row.cells[2].textContent = fechaFormateada(nuevaFecha);
+        row.cells[3].textContent = nuevoMontoConSigno;
+      }
+    });
+
+    // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
+    let operacionesGuardadas = evaluarLocalStorage();
+    operacionesGuardadas = operacionesGuardadas.map((operacion) => {
+      if (operacion.id === idOperacion) {
+        return {
+          ...operacion,
+          Descripcion: nuevaDescripcion,
+          Categoria: nuevaCategoria,
+          Fecha: nuevaFecha,
+          Monto: nuevoMontoConSigno,
+        };
+      } else {
+        return operacion;
+      }
+    });
+
+    // Guardar los cambios en el almacenamiento local
+    localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
+
+    // Ocultar el formulario de edición después de guardar los cambios
+    document.getElementById("EditarOperacion").classList.add("hidden");
+    // Mostrar la tabla después de guardar los cambios
+    Balance.classList.remove("hidden");
+
+    actualizarBalance();
+  };
+
+  document
+    .getElementById("editarOperacionBtn")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      editarOperacion();
+    });
+
+  // Cancelar la edición
+  document
+    .getElementById("cancelar_editar_operacion")
+    .addEventListener("click", () => {
+      EditarOperacion.classList.add("hidden");
+      console.log("cancelar_editar_operacion");
+      Balance.classList.remove("hidden");
+    });
 
   // const Balance = document.getElementById("Balance");
 
@@ -350,12 +500,20 @@ function generarTabla(operaciones) {
       Balance.classList.add("hidden");
     });
   });
-  document.getElementById("cancelar_editar_operacion").onclick = () => {
-    EditarOperacion.classList.add("hidden");
-    console.log("cancelar_editar_operacion");
-    Balance.classList.remove("hidden");
-  };
+
+  document
+    .getElementById("cancelar_editar_operacion")
+    .addEventListener("click", () => {
+      EditarOperacion.classList.add("hidden");
+      console.log("cancelar_editar_operacion");
+      Balance.classList.remove("hidden");
+    });
 }
+document.getElementById("cancelar_editar_operacion").onclick = () => {
+  EditarOperacion.classList.add("hidden");
+  console.log("cancelar_editar_operacion");
+  Balance.classList.remove("hidden");
+};
 
 //Agrega un listener al cambio de selección en selecBalance
 document.getElementById("selecBalance").addEventListener("change", (event) => {
@@ -369,15 +527,17 @@ const evaluarLocalStorage = () => {
 };
 
 //boton de agregar al tocarlo lleva a balance
-nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
-  nuevaOperacion.classList.add("hidden");
-  localStorage.setItem("imagenOperacionesHidden", "true");
-  const imagenOperaciones = document.querySelector(".imagen-operaciones");
-  imagenOperaciones.classList.add("hidden");
-  const tablaOperaciones = document.getElementById("tabla-data-operaciones");
-  tablaOperaciones.classList.remove("hidden");
-  Balance.classList.remove("hidden");
-};
+nuevaOperacion
+  .querySelector(".nueva-operacion-agregar-btn")
+  .addEventListener("click", () => {
+    nuevaOperacion.classList.add("hidden");
+    localStorage.setItem("imagenOperacionesHidden", "true");
+    const imagenOperaciones = document.querySelector(".imagen-operaciones");
+    imagenOperaciones.classList.add("hidden");
+    const tablaOperaciones = document.getElementById("tabla-data-operaciones");
+    tablaOperaciones.classList.remove("hidden");
+    Balance.classList.remove("hidden");
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
   // Verificar el estado almacenado y aplicar la clase 'hidden' si es necesario
@@ -453,26 +613,30 @@ function fechaFormateada(f) {
   ff += `${mes < 10 ? "0" + mes : mes}/`;
   ff += anio;
 
+  // ff = `${anio}-${mes < 10 ? "0" + mes : mes}-${dia < 10 ? "0" + dia : dia}`;
+  ff = `${dia < 10 ? "0" + dia : dia}-${mes < 10 ? "0" + mes : mes}-${anio}`;
   return ff;
 }
 
 /////////////////////////////filtros////////////////////////////////////////////
 const ocultarFitros = document.getElementById("ocultarFitros");
+//let operacionFiltroFitros = [];
 
-document.getElementById("ocultarFitros").addEventListener("click", () => {
-  const fitrosContenedor = document.getElementById("fitrosContenedor");
-  if (fitrosContenedor.style.display === "block") {
-    fitrosContenedor.style.display = "none";
+document.getElementById("ocultarFiltros").addEventListener("click", () => {
+  const filtrosContenedor = document.getElementById("filtrosContenedor");
+  if (filtrosContenedor.style.display === "block") {
+    filtrosContenedor.style.display = "none";
   } else {
-    fitrosContenedor.style.display = "block";
+    filtrosContenedor.style.display = "block";
   }
 });
-function filtrarPorCategoriaYFecha(
+
+const filtrarPorCategoriaYFecha = (
   objetos,
   categoriaSeleccionada,
   fechaSeleccionada
-) {
-  return objetos.filter(function (objeto) {
+) => {
+  return objetos.filter((objeto) => {
     const categoriaValida =
       categoriaSeleccionada === "Todas" ||
       objeto.Categoria === categoriaSeleccionada;
@@ -481,9 +645,8 @@ function filtrarPorCategoriaYFecha(
       (categoriaSeleccionada === "Todas" || categoriaValida);
     return fechaValida;
   });
-}
+};
 
-console.log(operaciones);
 function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
   // Filtrar las operaciones por categoría y fecha seleccionadas
   const operacionesFiltradas = filtrarPorCategoriaYFecha(
@@ -491,29 +654,43 @@ function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
     categoriaSeleccionada,
     fechaSeleccionada
   );
-  // Mostrar las operaciones filtradas en la tabla
   generarTabla(operacionesFiltradas);
 }
 
-document.getElementById("selecBalance").addEventListener("change", function () {
-  const categoriaSeleccionada = this.value;
+// document.getElementById("selecBalance").addEventListener("change", function () {
+//   const categoriaSeleccionada = this.value;
+//   const filtroFechaInput = document.getElementById("filtro-fecha");
+//   const fechaSeleccionada = filtroFechaInput.value
+//     ? new Date(filtroFechaInput.value)
+//     : null;
+//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+// });
+
+// const filtroFechaInput = document.getElementById("filtro-fecha");
+// filtroFechaInput.addEventListener("change", function () {
+//   const fechaSeleccionada = this.value ? new Date(this.value) : null;
+//   const categoriaSeleccionada = document.getElementById("selecBalance").value;
+//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+// });
+document.getElementById("selecBalance").addEventListener("change", () => {
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
   const filtroFechaInput = document.getElementById("filtro-fecha");
   const fechaSeleccionada = filtroFechaInput.value
     ? new Date(filtroFechaInput.value)
     : null;
-
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
 
 const filtroFechaInput = document.getElementById("filtro-fecha");
-filtroFechaInput.addEventListener("change", function () {
-  const fechaSeleccionada = this.value ? new Date(this.value) : null;
+filtroFechaInput.addEventListener("change", () => {
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
   const categoriaSeleccionada = document.getElementById("selecBalance").value;
-
   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
 });
-let operacionFiltroFitros = [];
-function filtrarOrdenar() {
+
+function filtrarOrdenar(operaciones) {
   const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
   switch (filtroSeleccionado) {
     case "masRecientes":
@@ -522,61 +699,39 @@ function filtrarOrdenar() {
       );
       break;
     case "MenosRecientes":
-      operacionFiltroFitros.sort(
-        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
+      generarTabla(
+        operaciones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha))
       );
       break;
     case "MayorMonto":
-      operacionFiltroFitros.sort((a, b) => b.Monto - a.Monto);
+      generarTabla(operaciones.sort((a, b) => b.Monto - a.Monto));
       break;
     case "ManorMonto":
-      operacionFiltroFitros.sort((a, b) => a.Monto - b.Monto);
+      generarTabla(operaciones.sort((a, b) => a.Monto - b.Monto));
       break;
     case "A/Z":
-      operacionFiltroFitros.sort((a, b) =>
-        a.Descripcion.localeCompare(b.Descripcion)
+      generarTabla(
+        operaciones.sort((a, b) => a.Descripcion.localeCompare(b.Descripcion))
       );
       break;
     case "Z/A":
-      operacionFiltroFitros.sort((a, b) =>
-        b.Descripcion.localeCompare(a.Descripcion)
+      operaciones(
+        operaciones.sort((a, b) => b.Descripcion.localeCompare(a.Descripcion))
       );
       break;
-    default:
-      break;
   }
-  generarTabla(operacionFiltroFitros);
 }
 document
   .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
-document
-
-  .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
+  .addEventListener("change", () =>
+    filtrarOrdenar(JSON.parse(localStorage.getItem("tablaData")))
+  );
 
 // Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
 function cargarDatosIniciales() {
   const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
-  operacionFiltroFitros = operaciones.slice();
-  generarTabla(operacionFiltroFitros);
-  filtrarOrdenar();
-}
-document.getElementById("filtro-tipo").addEventListener("change", function () {
-  const tipoSeleccionado = this.value;
-
-  // Filtrar las operaciones por tipo seleccionado
-  const operacionesFiltradas = filtrarPorTipo(operaciones, tipoSeleccionado);
-
-  // Generar la tabla con las operaciones filtradas
-  generarTabla(operacionesFiltradas);
-});
-
-// Función para filtrar las operaciones por tipo
-function filtrarPorTipo(objetos, tipoSeleccionado) {
-  return objetos.filter(function (objeto) {
-    return tipoSeleccionado === "todo" || tipoSeleccionado === objeto.tipo;
-  });
+  filtrarYGenerarTabla("Todas", null);
+  filtrarOrdenar(operaciones);
 }
 
 window.addEventListener("load", cargarDatosIniciales);
