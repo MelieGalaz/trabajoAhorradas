@@ -297,6 +297,18 @@ const mostrarModalEliminar = (id) => {
       modalEliminarOperacionTabla.classList.add("hidden");
       Balance.classList.remove("hidden");
     });
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-X")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-X")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
 };
 
 document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
@@ -1133,11 +1145,6 @@ const filtrarOrdenar = (operaciones) => {
   }
 };
 
-// document
-//   .getElementById("filtro-ordenar")
-//   .addEventListener("change", function () {
-//     filtrarOrdenar(JSON.parse(localStorage.getItem("tablaData")));
-//   });
 document.getElementById("filtro-ordenar").addEventListener("change", () => {
   filtrarOrdenar(JSON.parse(localStorage.getItem("tablaData")));
 });
@@ -1147,5 +1154,22 @@ const cargarDatosIniciales = () => {
   filtrarYGenerarTabla("Todas", null);
   filtrarOrdenar(operaciones);
 };
+const filtrarOperacionesTipo = (tipoOperacion) => {
+  console.log(tipoOperacion);
+  const operacionesTipo = operaciones.filter(
+    (operacion) => operacion.tipo === tipoOperacion
+  );
+  generarTabla(evaluarLocalStorage(operacionesTipo));
+};
+const filtroTipo = document.getElementById("filtro-tipo");
+filtroTipo.addEventListener("change", (e) => {
+  filtrarOperacionesTipo(e.target.value);
+});
+if (operaciones.monto < 0) {
+  filtroTipo.value = "Gastos";
+} else {
+  filtroTipo.value = "Ganancias";
+}
+filtroTipo.value = operaciones.Categoria;
 
 window.addEventListener("load", cargarDatosIniciales);
