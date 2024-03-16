@@ -1165,11 +1165,5 @@ const filtroTipo = document.getElementById("filtro-tipo");
 filtroTipo.addEventListener("change", (e) => {
   filtrarOperacionesTipo(e.target.value);
 });
-if (operaciones.monto < 0) {
-  filtroTipo.value = "Gastos";
-} else {
-  filtroTipo.value = "Ganancias";
-}
-filtroTipo.value = operaciones.Categoria;
 
 window.addEventListener("load", cargarDatosIniciales);
