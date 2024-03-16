@@ -26,7 +26,6 @@
         href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!-- link generador de id CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
     <link rel="icon" href="assets/logo-ahorradas-removebg-preview.png" type="image/x-icon" />
 
     <title>AhorrADAs</title>
@@ -174,8 +173,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="flex justify-center text-[#64c27b] gap-2 ">
-                                <a href=""><i class="fi fi-sr-edit-alt"></i></a>
+                            <td class=" flex justify-center text-[#64c27b] gap-2 ">
+                                <a href=""><i class=" fi fi-sr-edit-alt"></i></a>
                                 <a href=""><i class="fi fi-sr-trash"></i></a>
                             </td>
                         </tr>
@@ -189,7 +188,7 @@
             <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Reportes</h2>
-                <div>
+                <div id="imagen-reportes" class="hidden">
                     <div class="object-contain lg:w-80 lg:m-auto">
                         <img src="assets/reportes-girl.jpeg" alt="chica mirando reporte de finanzas">
                     </div>
@@ -199,11 +198,11 @@
                     </div>
                 </div>
                 <!-- -------------------------tablas de reporte------------------------------------------- -->
-                <div class="hidden">
-                    <table>
+                <div id="tablas-reportes" class="hidden w-full">
+                    <table class="w-full">
                         <thead class="text-[#b240b8]">
                             <tr>
-                                <th class="font-bold text-2xl">Resumen</th>
+                                <th class="font-bold   text-base ">Resumen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -235,9 +234,9 @@
                         </tbody>
                     </table>
                     <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por categoria</h3>
-                    <table class="">
+                    <table class="w-full">
                         <thead class="text-[#b240b8]">
-                            <tr>
+                            <tr class="w-full">
                                 <th>Categoria</th>
                                 <th>Ganancias</th>
                                 <th>Gastos</th>
@@ -254,9 +253,9 @@
                         </tbody>
                     </table>
                     <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por mes</h3>
-                    <table>
-                        <thead class="text-[#b240b8]">
-                            <tr>
+                    <table class="w-full">
+                        <thead class="text-[#b240b8] w-full">
+                            <tr class="w-full">
                                 <th>Mes</th>
                                 <th>Ganancias</th>
                                 <th>Gastos</th>
@@ -300,7 +299,7 @@
                 <div class=" flex self-end gap-3">
                     <button id="cancelar_editar_operacion" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button type="submit" class=" editarBtnOperacion
+                    <button type="submit" id="editarOperacionBtn" class=" editarBtnOperacion
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Editar</button>
                 </div>
