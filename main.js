@@ -1,4 +1,4 @@
-/**************cerrar y abrir secciones******************************************* */
+/**********************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
 
@@ -225,7 +225,7 @@ movimientoCategoria();
 actualizarSelectores();
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarTabla();
+  generarTabla(evaluarLocalStorage());
 });
 
 const guardarTablaEnLocalStorage = (tablaData) => {
@@ -235,24 +235,24 @@ const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
 
 //Funcion para mostrar u ocultar la imagen y la tabla segun los datos en el localStorage
 
-const actualizarInterfaz = () =>{
+const actualizarInterfaz = () => {
   const tablaData = evaluarLocalStorage();
   const imagenReportes = document.getElementById("imagen-reportes");
   const tablaReportes = document.getElementById("tablas-reportes");
-  if(tablaData.length >0){
+  if (tablaData.length > 0) {
     //si hay datos en el localStorage, muestra la tabla y oculta la imagen
     imagenReportes.classList.add("hidden");
     tablaReportes.classList.remove("hidden");
     mostrarTablaReportes();
-  }else{
+  } else {
     //si no hay datos en el localStorage, muestra la imagen y oculta la tabla
-    imagenReportes.classList.remove("hidden")
+    imagenReportes.classList.remove("hidden");
     tablaReportes.classList.add("hidden");
   }
-}
+};
 
 //Llamar a actualizar interfaz al cargar la pagina
- window.addEventListener('load', actualizarInterfaz);
+window.addEventListener("load", actualizarInterfaz);
 
 //Funcion para eliminar una operacion
 const eliminarOperacion = (id) => {
@@ -261,7 +261,7 @@ const eliminarOperacion = (id) => {
   localStorage.removeItem("tablaData");
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
   if (tablaData.length !== 0) {
-    generarTabla();
+    generarTabla(evaluarLocalStorage());
   } else {
     const imagenVista = () => {
       const imagenOperaciones = document.querySelector(".imagen-operaciones");
@@ -277,12 +277,39 @@ const eliminarOperacion = (id) => {
   actualizarBalance();
   actualizarInterfaz();
 };
-document.querySelectorAll(".delete-btn").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const id = e.target.dataset.id;
+
+const modalEliminarOperacionTabla = document.getElementById(
+  "modal-eliminar-operacion-tabla"
+);
+const deleteBtnModal = document.getElementById("delete-btn-modal");
+const mostrarModalEliminar = (id) => {
+  modalEliminarOperacionTabla.classList.remove("hidden");
+  Balance.classList.add("hidden");
+
+  deleteBtnModal.addEventListener("click", () => {
     eliminarOperacion(id);
+    modalEliminarOperacionTabla.classList.add("hidden");
+    Balance.classList.remove("hidden");
   });
-});
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-operacion ")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-X")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
+  modalEliminarOperacionTabla
+    .querySelector(".modal-close-X")
+    .addEventListener("click", () => {
+      modalEliminarOperacionTabla.classList.add("hidden");
+      Balance.classList.remove("hidden");
+    });
+};
 
 document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -316,181 +343,212 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
 
   // Actualizar localStorage
   localStorage.setItem("tablaData", JSON.stringify(tablaData));
-  generarTabla();
-  
+  generarTabla(evaluarLocalStorage());
+
   actualizarBalance();
   mostrarTablaReportes();
 });
 
-window.addEventListener("load", function () {
-  generarTabla();
-});
+function generarTabla(operaciones) {
+  const tableBody = document.getElementById("tabody-operaciones");
+  tableBody.innerHTML = "";
+  operaciones.forEach((operacion) => {
+    tableBody.innerHTML += `
+      <tr class="border border-slate-400">
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Descripcion
+          }</td>
+          <td class="text-center text-xs lg:text-base">${
+            operacion.Categoria
+          }</td>
+          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+            operacion.Fecha
+          )}</td>
+          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
+          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
+            <button class="edit-btn" data-id="${
+              operacion.id
+            }"><i class="fi fi-sr-edit-alt"></i> 
+            </button>
+            <button class="delete-btn" onclick="mostrarModalEliminar('${
+              operacion.id
+            }')"('${operacion.id}')"><i class="fi fi-sr-trash"></i> 
+            </button>
+          </td>
+      </tr>
+    `;
+  });
+  // Obtener los valores de la tabla
+  const obtenerValoresDeTabla = (idOperacion) => {
+    const operacion = {};
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
 
-// Modifica la función generarTabla para aceptar un parámetro filtro
-  const generarTabla = () => {
-    const operacionesGuardadas = evaluarLocalStorage();
-    const tableBody = document.getElementById("tabody-operaciones");
-    tableBody.innerHTML = "";
-    operacionesGuardadas.forEach((operacion) => {
-      tableBody.innerHTML += `
-        <tr>
-            <td>${operacion.Descripcion}</td>
-            <td>${operacion.Categoria}</td>
-            <td>${fechaFormateada(operacion.Fecha)}</td>
-            <td>${operacion.Monto}</td>
-            <td class="text-[#64c27b]"> 
-              <button class="edit-btn" data-id="${operacion.id}">
-                <i class="fi fi-sr-edit-alt"></i> 
-              </button>
-              <button class="delete-btn" onclick="eliminarOperacion('${
-                operacion.id
-              }')">
-                <i class="fi fi-sr-trash"></i> 
-              </button>
-            </td>
-        </tr>
-      `;
-    });
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
 
-    // Obtener los valores de la tabla
-    const obtenerValoresDeTabla = (idOperacion) => {
-      const operacion = {};
-      const tableRows = document.querySelectorAll("#tabody-operaciones tr");
-
-      tableRows.forEach((row) => {
-        const id = row.querySelector(".edit-btn").getAttribute("data-id");
-
-        if (id === idOperacion) {
-          operacion.Descripcion = row.cells[0].textContent;
-          operacion.Categoria = row.cells[1].textContent;
-          operacion.Fecha = row.cells[2].textContent;
-          operacion.Monto = parseFloat(row.cells[3].textContent);
-          operacion.Id = id;
-        }
-      });
-      return operacion;
-    };
-
-    // Rellenar el formulario
-    const llenarFormularioEdicion = (operacion) => {
-      // Asignar el ID de la operación como un atributo de datos al botón de edición
-      const editButton = document.getElementById("editarOperacionBtn");
-      editButton.setAttribute("data-id", operacion.Id);
-      document.getElementById("descripcionForm-editar").value = operacion.Descripcion;
-      document.getElementById("montoForm-editar").value = operacion.Monto;
-      document.getElementById("fecha-editar-operacion").value = fechaFormateada(operacion.Fecha);
-      const categoriaSelect = document.getElementById("selecEditarOperacion");
-      const tipoSelect = document.getElementById("editar-gastos-ganacias");
-      if (operacion.monto < 0) {
-        tipoSelect.value = "Gastos";
-      } else {
-        tipoSelect.value = "Ganancias";
+      if (id === idOperacion) {
+        operacion.Descripcion = row.cells[0].textContent;
+        operacion.Categoria = row.cells[1].textContent;
+        operacion.Fecha = row.cells[2].textContent;
+        operacion.Monto = parseFloat(row.cells[3].textContent);
+        operacion.Id = id;
       }
-      categoriaSelect.value = operacion.Categoria;
-    };
+    });
+    return operacion;
+  };
 
-    // Abrir el formulario de edición
-    tableBody.querySelectorAll(".edit-btn").forEach((el) => {
-      el.addEventListener("click", (event) => {
-        event.preventDefault();
-        EditarOperacion.classList.remove("hidden");
-        Balance.classList.add("hidden");
-        const idOperacion = el.getAttribute("data-id");
-        console.log(idOperacion);
-        const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
-        llenarFormularioEdicion(operacionSeleccionada);
-      });
+  // Rellenar el formulario
+  const llenarFormularioEdicion = (operacion) => {
+    // Asignar el ID de la operación como un atributo de datos al botón de edición
+    const editButton = document.getElementById("editarOperacionBtn");
+    editButton.setAttribute("data-id", operacion.Id);
+    document.getElementById("descripcionForm-editar").value =
+      operacion.Descripcion;
+    document.getElementById("montoForm-editar").value = operacion.Monto;
+    document.getElementById("fecha-editar-operacion").value = fechaFormateada(
+      operacion.Fecha
+    );
+    const categoriaSelect = document.getElementById("selecEditarOperacion");
+    const tipoSelect = document.getElementById("editar-gastos-ganacias");
+    if (operacion.monto < 0) {
+      tipoSelect.value = "Gastos";
+    } else {
+      tipoSelect.value = "Ganancias";
+    }
+    categoriaSelect.value = operacion.Categoria;
+  };
+  const EditarOperacion = document.getElementById("EditarOperacion");
+  // Abrir el formulario de edición
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+      const idOperacion = el.getAttribute("data-id");
+      console.log(idOperacion);
+      const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
+      llenarFormularioEdicion(operacionSeleccionada);
+    });
+  });
+
+  const editarOperacion = () => {
+    // Obtener el ID de la operación que se está editando desde el botón de edición
+    const idOperacion = document
+      .getElementById("editarOperacionBtn")
+      .getAttribute("data-id");
+
+    // Obtener los nuevos valores del formulario de edición
+    const tipoSeleccionado = document.getElementById(
+      "editar-gastos-ganacias"
+    ).value;
+    const nuevaDescripcion = document.getElementById(
+      "descripcionForm-editar"
+    ).value;
+    const nuevaCategoria = document.getElementById(
+      "selecEditarOperacion"
+    ).value;
+    const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
+    const nuevoMonto = parseFloat(
+      document.getElementById("montoForm-editar").value
+    );
+
+    // Cambiar el signo del monto según el tipo seleccionado
+    const nuevoMontoConSigno =
+      tipoSeleccionado === "Gastos"
+        ? -Math.abs(nuevoMonto)
+        : Math.abs(nuevoMonto);
+
+    // Actualizar la fila correspondiente en la tabla con los nuevos valores
+    const tableRows = document.querySelectorAll("#tabody-operaciones tr");
+    tableRows.forEach((row) => {
+      const id = row.querySelector(".edit-btn").getAttribute("data-id");
+      if (id === idOperacion) {
+        row.cells[0].textContent = nuevaDescripcion;
+        row.cells[1].textContent = nuevaCategoria;
+        row.cells[2].textContent = fechaFormateada(nuevaFecha);
+        row.cells[3].textContent = nuevoMontoConSigno;
+      }
     });
 
-    const editarOperacion = () => {
-      // Obtener el ID de la operación que se está editando desde el botón de edición
-      const idOperacion = document
-        .getElementById("editarOperacionBtn")
-        .getAttribute("data-id");
+    // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
+    let operacionesGuardadas = evaluarLocalStorage();
+    operacionesGuardadas = operacionesGuardadas.map((operacion) => {
+      if (operacion.id === idOperacion) {
+        return {
+          ...operacion,
+          Descripcion: nuevaDescripcion,
+          Categoria: nuevaCategoria,
+          Fecha: nuevaFecha,
+          Monto: nuevoMontoConSigno,
+        };
+      } else {
+        return operacion;
+      }
+    });
 
-      // Obtener los nuevos valores del formulario de edición
-      const tipoSeleccionado = document.getElementById("editar-gastos-ganacias").value;
-      const nuevaDescripcion = document.getElementById("descripcionForm-editar").value;
-      const nuevaCategoria = document.getElementById("selecEditarOperacion").value;
-      const nuevaFecha = document.getElementById("fecha-editar-operacion").value;
-      const nuevoMonto = parseFloat(document.getElementById("montoForm-editar").value);
+    // Guardar los cambios en el almacenamiento local
+    localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
 
-      // Cambiar el signo del monto según el tipo seleccionado
-      const nuevoMontoConSigno = tipoSeleccionado === "Gastos" ? -Math.abs(nuevoMonto): Math.abs(nuevoMonto);
+    // Ocultar el formulario de edición después de guardar los cambios
+    document.getElementById("EditarOperacion").classList.add("hidden");
+    // Mostrar la tabla después de guardar los cambios
+    Balance.classList.remove("hidden");
 
-      // Actualizar la fila correspondiente en la tabla con los nuevos valores
-      const tableRows = document.querySelectorAll("#tabody-operaciones tr");
-      tableRows.forEach((row) => {
-        const id = row.querySelector(".edit-btn").getAttribute("data-id");
-        if (id === idOperacion) {
-          row.cells[0].textContent = nuevaDescripcion;
-          row.cells[1].textContent = nuevaCategoria;
-          row.cells[2].textContent = fechaFormateada(nuevaFecha);
-          row.cells[3].textContent = nuevoMontoConSigno;
-        }
-      });
+    actualizarBalance();
+  };
 
-      // Obtener y actualizar los datos de operaciones guardadas en el almacenamiento local
-      let operacionesGuardadas = evaluarLocalStorage();
-      operacionesGuardadas = operacionesGuardadas.map((operacion) => {
-        if (operacion.id === idOperacion) {
-          return {
-            ...operacion,
-            Descripcion: nuevaDescripcion,
-            Categoria: nuevaCategoria,
-            Fecha: nuevaFecha,
-            Monto: nuevoMontoConSigno,
-          };
-        } else {
-          return operacion;
-        }
-      });
+  document
+    .getElementById("editarOperacionBtn")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      editarOperacion();
+    });
 
-      // Guardar los cambios en el almacenamiento local
-      localStorage.setItem("tablaData", JSON.stringify(operacionesGuardadas));
-
-      // Ocultar el formulario de edición después de guardar los cambios
-      document.getElementById("EditarOperacion").classList.add("hidden");
-      // Mostrar la tabla después de guardar los cambios
-      Balance.classList.remove("hidden");
-
-      actualizarBalance();
-    };
-
-    document.getElementById("editarOperacionBtn").addEventListener("click", (event) => {
-        event.preventDefault();
-        editarOperacion();
-      });
-
-    // Cancelar la edición
-    document.getElementById("cancelar_editar_operacion").onclick = () => {
+  // Cancelar la edición
+  document
+    .getElementById("cancelar_editar_operacion")
+    .addEventListener("click", () => {
       EditarOperacion.classList.add("hidden");
       console.log("cancelar_editar_operacion");
       Balance.classList.remove("hidden");
-    };
-  };
+    });
 
-//Agrega un listener al cambio de selección en selecBalance
-document.getElementById("selecBalance").addEventListener("change", (event) => {
-  const filtroSeleccionado = event.target.value;
-  generarTabla(filtroSeleccionado); // Genera la tabla con el filtro seleccionado
-});
+  // const Balance = document.getElementById("Balance");
+
+  tableBody.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      EditarOperacion.classList.remove("hidden");
+      Balance.classList.add("hidden");
+    });
+  });
+
+  document
+    .getElementById("cancelar_editar_operacion")
+    .addEventListener("click", () => {
+      EditarOperacion.classList.add("hidden");
+      console.log("cancelar_editar_operacion");
+      Balance.classList.remove("hidden");
+    });
+}
 
 const evaluarLocalStorage = () => {
+  console.log(JSON.parse(localStorage.getItem("tablaData")));
   return JSON.parse(localStorage.getItem("tablaData")) || [];
-  filtrarOrdenar();
 };
 
 //boton de agregar al tocarlo lleva a balance
-nuevaOperacion.querySelector(".nueva-operacion-agregar-btn").onclick = () => {
-  nuevaOperacion.classList.add("hidden");
-  localStorage.setItem("imagenOperacionesHidden", "true");
-  const imagenOperaciones = document.querySelector(".imagen-operaciones");
-  imagenOperaciones.classList.add("hidden");
-  const tablaOperaciones = document.getElementById("tabla-data-operaciones");
-  tablaOperaciones.classList.remove("hidden");
-  Balance.classList.remove("hidden");
-};
+nuevaOperacion
+  .querySelector(".nueva-operacion-agregar-btn")
+  .addEventListener("click", () => {
+    nuevaOperacion.classList.add("hidden");
+    localStorage.setItem("imagenOperacionesHidden", "true");
+    const imagenOperaciones = document.querySelector(".imagen-operaciones");
+    imagenOperaciones.classList.add("hidden");
+    const tablaOperaciones = document.getElementById("tabla-data-operaciones");
+    tablaOperaciones.classList.remove("hidden");
+    Balance.classList.remove("hidden");
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
   // Verificar el estado almacenado y aplicar la clase 'hidden' si es necesario
@@ -514,7 +572,9 @@ const actualizarBalance = () => {
     }
     return total;
   }, 0);
-  document.getElementById("balance-ganancia").innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
+  document.getElementById(
+    "balance-ganancia"
+  ).innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
   <p class="text-xl">Ganancias</p>
   <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
 </div>`;
@@ -540,8 +600,8 @@ const actualizarBalance = () => {
 </div>`;
 };
 
-//llamar actualizarBalance al cargar la pagina 
-window.addEventListener('load', actualizarBalance);
+//llamar actualizarBalance al cargar la pagina
+window.addEventListener("load", actualizarBalance);
 
 //Función para formatear la fecha en el formato deseado
 
@@ -563,115 +623,10 @@ function fechaFormateada(f) {
   }
 
   // Formateamos la fecha en el formato deseado
-  ff = `${anio}-${mes < 10 ? "0" + mes : mes}-${dia < 10 ? "0" + dia : dia}`;
+  // ff = `${anio}-${mes < 10 ? "0" + mes : mes}-${dia < 10 ? "0" + dia : dia}`;
+  ff = `${dia < 10 ? "0" + dia : dia}-${mes < 10 ? "0" + mes : mes}-${anio}`;
   return ff;
 }
-
-/////////////////////////////filtros////////////////////////////////////////////
-const ocultarFitros = document.getElementById("ocultarFitros");
-
-document.getElementById("ocultarFitros").addEventListener("click", () => {
-  const fitrosContenedor = document.getElementById("fitrosContenedor");
-  if (fitrosContenedor.style.display === "block") {
-    fitrosContenedor.style.display = "none";
-  } else {
-    fitrosContenedor.style.display = "block";
-  }
-});
-function filtrarPorCategoriaYFecha(
-  objetos,
-  categoriaSeleccionada,
-  fechaSeleccionada
-) {
-  return objetos.filter(function (objeto) {
-    const categoriaValida =
-      categoriaSeleccionada === "Todas" ||
-      objeto.Categoria === categoriaSeleccionada;
-    const fechaValida =
-      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
-      (categoriaSeleccionada === "Todas" || categoriaValida);
-    return fechaValida;
-  });
-}
-
-function filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada) {
-  // Filtrar las operaciones por categoría y fecha seleccionadas
-  const operacionesFiltradas = filtrarPorCategoriaYFecha(
-    operaciones,
-    categoriaSeleccionada,
-    fechaSeleccionada
-  );
-  // Mostrar las operaciones filtradas en la tabla
-  generarTabla(operacionesFiltradas);
-}
-
-document.getElementById("selecBalance").addEventListener("change", function () {
-  const categoriaSeleccionada = this.value;
-  const filtroFechaInput = document.getElementById("filtro-fecha");
-  const fechaSeleccionada = filtroFechaInput.value
-    ? new Date(filtroFechaInput.value)
-    : null;
-
-  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-});
-
-const filtroFechaInput = document.getElementById("filtro-fecha");
-filtroFechaInput.addEventListener("change", function () {
-  const fechaSeleccionada = this.value ? new Date(this.value) : null;
-  const categoriaSeleccionada = document.getElementById("selecBalance").value;
-
-  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-});
-let operacionFiltroFitros = [];
-function filtrarOrdenar() {
-  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
-  switch (filtroSeleccionado) {
-    case "masRecientes":
-      operacionFiltroFitros.sort(
-        (a, b) => new Date(a.Fecha) - new Date(b.Fecha)
-      );
-      break;
-    case "MenosRecientes":
-      operacionFiltroFitros.sort(
-        (a, b) => new Date(b.Fecha) - new Date(a.Fecha)
-      );
-      break;
-    case "MayorMonto":
-      operacionFiltroFitros.sort((a, b) => b.Monto - a.Monto);
-      break;
-    case "ManorMonto":
-      operacionFiltroFitros.sort((a, b) => a.Monto - b.Monto);
-      break;
-    case "A/Z":
-      operacionFiltroFitros.sort((a, b) =>
-        a.Descripcion.localeCompare(b.Descripcion)
-      );
-      break;
-    case "Z/A":
-      operacionFiltroFitros.sort((a, b) =>
-        b.Descripcion.localeCompare(a.Descripcion)
-      );
-      break;
-    default:
-      break;
-  }
-  generarTabla();
-}
-document
-  .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
-document
-  .getElementById("filtro-ordenar")
-  .addEventListener("change", filtrarOrdenar);
-
-// Función para cargar los datos iniciales y luego llamar a filtrarOrdenar
-function cargarDatosIniciales() {
-  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
-  operacionFiltroFitros = operaciones.slice();
-  generarTabla();
-  filtrarOrdenar();
-}
-window.addEventListener("load", cargarDatosIniciales);
 
 /*----------------------------Tabla Reportes---------------------------------*/
 
@@ -690,18 +645,19 @@ const obtenerCategoriaConMayorGanancia = () => {
       if (!gananciasPorCategoria[operacion.Categoria]) {
         gananciasPorCategoria[operacion.Categoria] = {
           total: 0,
-          categoriaMayorGanancia: null
+          categoriaMayorGanancia: null,
         };
       }
       gananciasPorCategoria[operacion.Categoria].total += operacion.Monto;
       if (
         !gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia ||
         gananciasPorCategoria[operacion.Categoria].total >
-        gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia.total
+          gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia
+            .total
       ) {
         gananciasPorCategoria[operacion.Categoria].categoriaMayorGanancia = {
           total: gananciasPorCategoria[operacion.Categoria].total,
-          categoria: operacion.Categoria
+          categoria: operacion.Categoria,
         };
       }
     }
@@ -726,7 +682,7 @@ const obtenerCategoriaConMayorGanancia = () => {
   localStorage.setItem("categoriaMayorGanancia", categoriaMayorGanancia);
   return {
     categoria: categoriaMayorGanancia,
-    montoTotal: mayorGanancia
+    montoTotal: mayorGanancia,
   };
 };
 
@@ -745,18 +701,18 @@ const obtenerCategoriaConMayorGasto = () => {
       if (!gastosPorCategoria[operacion.Categoria]) {
         gastosPorCategoria[operacion.Categoria] = {
           total: 0,
-          categoriaMayorGasto: null
+          categoriaMayorGasto: null,
         };
       }
       gastosPorCategoria[operacion.Categoria].total += operacion.Monto;
       if (
         !gastosPorCategoria[operacion.Categoria].categoriaMayorGasto ||
         gastosPorCategoria[operacion.Categoria].total <
-        gastosPorCategoria[operacion.Categoria].categoriaMayorGasto.total
+          gastosPorCategoria[operacion.Categoria].categoriaMayorGasto.total
       ) {
         gastosPorCategoria[operacion.Categoria].categoriaMayorGasto = {
           total: gastosPorCategoria[operacion.Categoria].total,
-          categoria: operacion.Categoria
+          categoria: operacion.Categoria,
         };
       }
     }
@@ -768,11 +724,9 @@ const obtenerCategoriaConMayorGasto = () => {
   for (const categoria in gastosPorCategoria) {
     if (gastosPorCategoria.hasOwnProperty(categoria)) {
       if (
-        gastosPorCategoria[categoria].categoriaMayorGasto.total <
-        mayorGasto
+        gastosPorCategoria[categoria].categoriaMayorGasto.total < mayorGasto
       ) {
-        mayorGasto =
-          gastosPorCategoria[categoria].categoriaMayorGasto.total;
+        mayorGasto = gastosPorCategoria[categoria].categoriaMayorGasto.total;
         categoriaMayorGasto =
           gastosPorCategoria[categoria].categoriaMayorGasto.categoria;
       }
@@ -781,7 +735,7 @@ const obtenerCategoriaConMayorGasto = () => {
   localStorage.setItem("categoriaMayorGasto", categoriaMayorGasto);
   return {
     categoriaGastos: categoriaMayorGasto,
-    montoTotalGastos: mayorGasto
+    montoTotalGastos: mayorGasto,
   };
 };
 
@@ -807,7 +761,8 @@ const obtenerCategoriaConMayorBalance = () => {
     if (balancePorCategoria.hasOwnProperty(categoria)) {
       const balance = balancePorCategoria[categoria];
       const distanciaBalance = Math.abs(balance);
-      if (distanciaBalance < mayorBalance) { // Verificamos si la distancia es menor a la anterior
+      if (distanciaBalance < mayorBalance) {
+        // Verificamos si la distancia es menor a la anterior
         mayorBalance = distanciaBalance;
         categoriaMayorBalance = categoria;
       }
@@ -816,7 +771,7 @@ const obtenerCategoriaConMayorBalance = () => {
   localStorage.setItem("categoriaMayorBalance", categoriaMayorBalance);
   return {
     categoriaBalance: categoriaMayorBalance,
-    balanceTotal: mayorBalance
+    balanceTotal: mayorBalance,
   };
 };
 
@@ -854,7 +809,7 @@ const obtenerMesConMayorGanancia = () => {
   localStorage.setItem("mesMayorGanancia", mesMayorGanancia);
   return {
     mes: mesMayorGanancia,
-    montoTotalMes: mayorGanancia
+    montoTotalMes: mayorGanancia,
   };
 };
 
@@ -892,7 +847,7 @@ const obtenerMesConMayorGasto = () => {
   localStorage.setItem("mesMayorGasto", mesMayorGasto);
   return {
     mesGasto: mesMayorGasto,
-    montoTotalGastoMes: mayorGasto
+    montoTotalGastoMes: mayorGasto,
   };
 };
 
@@ -907,7 +862,7 @@ const calcularTotalesPorCategoria = () => {
       totalesPorCategoria[operacion.Categoria] = {
         ganancias: 0,
         gastos: 0,
-        balance: 0
+        balance: 0,
       };
     }
 
@@ -938,12 +893,12 @@ const calcularTotalesPorMes = () => {
   operacionesGuardadas.forEach((operacion) => {
     const fecha = new Date(operacion.Fecha);
     const mes = `${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
-    
+
     if (!totalesPorMes[mes]) {
       totalesPorMes[mes] = {
         ganancias: 0,
         gastos: 0,
-        balance: 0
+        balance: 0,
       };
     }
 
@@ -967,100 +922,100 @@ const calcularTotalesPorMes = () => {
 // Función para mostrar la tabla de Reportes
 const mostrarTablaReportes = () => {
   const { categoria, montoTotal } = obtenerCategoriaConMayorGanancia();
-  const {categoriaGastos, montoTotalGastos} = obtenerCategoriaConMayorGasto();
-  const {categoriaBalance, balanceTotal} = obtenerCategoriaConMayorBalance();
-  const {mes, montoTotalMes} = obtenerMesConMayorGanancia();
-  const {mesGasto, montoTotalGastoMes} = obtenerMesConMayorGasto();
+  const { categoriaGastos, montoTotalGastos } = obtenerCategoriaConMayorGasto();
+  const { categoriaBalance, balanceTotal } = obtenerCategoriaConMayorBalance();
+  const { mes, montoTotalMes } = obtenerMesConMayorGanancia();
+  const { mesGasto, montoTotalGastoMes } = obtenerMesConMayorGasto();
   const totalesPorCategoria = calcularTotalesPorCategoria();
   const totalesPorMes = calcularTotalesPorMes();
   const tablaReportesBody = document.getElementById("tablas-reportes");
 
   // Crear el HTML para la nueva fila
   tablaReportesBody.innerHTML = `
-    <table>
-      <thead class="text-[#b240b8]">
-        <tr>
-          <th class="font-bold text-2xl">Resumen</th>
+    <table class="w-full">
+      <thead class="">
+        <tr >
+          <th class="font-bold text-xl text-black text-left py-3 lg:text-2xl">Resumen</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="flex gap-36">
-          <td class="text-[#b240b8] font-bold">Categoría con mayor ganancia</td>
-          <td>${categoria}</td>
-          <td>$${montoTotal.toFixed(2)}</td>
+      <tbody class="">
+        <tr class=" border border-slate-400  ">
+          <td class="text-[#b240b8] text-sm font-bold ">Categoría con mayor ganancia</td>
+          <td class="text-sm text-center" >${categoria}</td>
+          <td class="text-sm text-center">$${montoTotal.toFixed(2)}</td>
         </tr>
-        <tr class="flex gap-36">
-          <td class="text-[#b240b8] font-bold">Categoria con mayor gasto</td>
-          <td>${categoriaGastos}</td>
-          <td>$${montoTotalGastos.toFixed(2)}</td>
+        <tr class=" border border-slate-400 ">
+          <td class="text-[#b240b8] text-sm font-bold">Categoria con mayor gasto</td>
+          <td class="text-sm text-center">${categoriaGastos}</td>
+          <td class="text-sm text-center">$${montoTotalGastos.toFixed(2)}</td>
         </tr>
-        <tr class="flex gap-36">
-          <td class="text-[#b240b8] font-bold">Categoria con mayor balance</td>
-          <td>${categoriaBalance}</td>
-          <td>$${balanceTotal.toFixed(2)}</td>
+        <tr class=" border border-slate-400 ">
+          <td class="text-[#b240b8] text-sm font-bold ">Categoria con mayor balance</td>
+          <td class="text-sm text-center">${categoriaBalance}</td>
+          <td class="text-sm text-center">$${balanceTotal.toFixed(2)}</td>
         </tr>
-        <tr class="flex gap-36">
-          <td class="text-[#b240b8] font-bold">Mes con mayor ganancia</td>
-          <td>${mes}</td>
-          <td>$${montoTotalMes.toFixed(2)}</td>
+        <tr class=" border border-slate-400 ">
+          <td class="text-[#b240b8] text-sm font-bold ">Mes con mayor ganancia</td>
+          <td class="text-sm text-center">${mes}</td>
+          <td class="text-sm text-center">$${montoTotalMes.toFixed(2)}</td>
         </tr>
-        <tr>
-          <td class="text-[#b240b8] font-bold">Mes con mayor gasto</td>
-          <td>${mesGasto}</td>
-         <td>$${montoTotalGastoMes.toFixed(2)}</td>
+        <tr class=" border border-slate-400 ">
+          <td class="text-[#b240b8] text-sm  font-bold ">Mes con mayor gasto</td>
+          <td class="text-sm text-center">${mesGasto}</td>
+         <td class="text-sm text-center">$${montoTotalGastoMes.toFixed(2)}</td>
         </tr>
       </tbody>
     </table>
   `;
-    // Crear el HTML para la tabla de totales por categoría
-    let tablaTotalesPorCategoriaHTML = `
-      <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por categoría</h3>
-      <table class="">
-        <thead class="text-[#b240b8] gap-60">
-          <tr class="">
-            <th>Categoría</th>
-            <th>Ganancias</th>
-            <th>Gastos</th>
-            <th>Balance</th>
+  // Crear el HTML para la tabla de totales por categoría
+  let tablaTotalesPorCategoriaHTML = `
+      <h3 class="font-bold text-xl text-black text-left py-3">Totales por categoría</h3>
+      <table class="w-full">
+        <thead class="text-[#b240b8] ">
+          <tr class="   border border-slate-400  w-full">
+            <th class="text-[#b240b8] text-sm  font-bold ">Categoría</th>
+            <th class="text-[#b240b8] text-sm    font-bold ">Ganancias</th>
+            <th class="text-[#b240b8] text-sm   font-bold ">Gastos</th>
+            <th class="text-[#b240b8] text-sm   font-bold ">Balance</th>
           </tr>
         </thead>
-        <tbody class="gap-36 ">
+        <tbody class="" >
     `;
-  
-    // Agregar filas para cada categoría
-    for (const categoria in totalesPorCategoria) {
-      if (totalesPorCategoria.hasOwnProperty(categoria)) {
-        const { ganancias, gastos, balance } = totalesPorCategoria[categoria];
-        tablaTotalesPorCategoriaHTML += `
-          <tr>
-            <td>${categoria}</td>
-            <td>$${ganancias.toFixed(2)}</td>
-            <td>$${gastos.toFixed(2)}</td>
-            <td>$${balance.toFixed(2)}</td>
+
+  // Agregar filas para cada categoría
+  for (const categoria in totalesPorCategoria) {
+    if (totalesPorCategoria.hasOwnProperty(categoria)) {
+      const { ganancias, gastos, balance } = totalesPorCategoria[categoria];
+      tablaTotalesPorCategoriaHTML += `
+          <tr class=" border border-slate-400  w-full">
+            <td class="text-sm text-center ">${categoria}</td>
+            <td class="text-sm text-center ">$${ganancias.toFixed(2)}</td>
+            <td class="text-sm text-center ">$${gastos.toFixed(2)}</td>
+            <td class="text-sm text-center " >$${balance.toFixed(2)}</td>
           </tr>
         `;
-      }
     }
-  
-    // Cerrar la tabla
-    tablaTotalesPorCategoriaHTML += `
+  }
+
+  // Cerrar la tabla
+  tablaTotalesPorCategoriaHTML += `
         </tbody>
       </table>
     `;
-  
-    // Agregar la tabla de totales por categoría al final del cuerpo de la tabla de reportes
-    tablaReportesBody.innerHTML += tablaTotalesPorCategoriaHTML;
 
-     // Crear el HTML para la tabla de totales por mes
+  // Agregar la tabla de totales por categoría al final del cuerpo de la tabla de reportes
+  tablaReportesBody.innerHTML += tablaTotalesPorCategoriaHTML;
+
+  // Crear el HTML para la tabla de totales por mes
   let tablaTotalesPorMesHTML = `
-  <h3 class="text-[#b240b8] font-bold text-center text-2xl">Totales por mes</h3>
-  <table class="">
-    <thead class="text-[#b240b8]">
-      <tr>
-        <th>Mes</th>
-        <th>Ganancias</th>
-        <th>Gastos</th>
-        <th>Balance</th>
+  <h3 class="font-bold text-xl text-black text-left py-3">Totales por mes</h3>
+  <table class="w-full">
+    <thead class="text-[#b240b8] ">
+      <tr class=" border border-slate-400 w-full">
+        <th class="text-[#b240b8] text-sm   font-bold ">Mes</th>
+        <th class="text-[#b240b8] text-sm  font-bold ">Ganancias</th>
+        <th class="text-[#b240b8] text-sm   font-bold ">Gastos</th>
+        <th class="text-[#b240b8] text-sm  font-bold ">Balance</th>
       </tr>
     </thead>
     <tbody>`;
@@ -1070,11 +1025,11 @@ const mostrarTablaReportes = () => {
     if (totalesPorMes.hasOwnProperty(mes)) {
       const { ganancias, gastos, balance } = totalesPorMes[mes];
       tablaTotalesPorMesHTML += `
-        <tr>
-          <td>${mes}</td>
-          <td>$${ganancias.toFixed(2)}</td>
-          <td>$${gastos.toFixed(2)}</td>
-          <td>$${balance.toFixed(2)}</td>
+        <tr class=" border border-slate-400 ">
+          <td class="text-sm text-center  ">${mes}</td>
+          <td class="text-sm  text-center ">$${ganancias.toFixed(2)}</td>
+          <td class="text-sm text-center  ">$${gastos.toFixed(2)}</td>
+          <td class="text-sm  text-center ">$${balance.toFixed(2)}</td>
         </tr>`;
     }
   }
@@ -1087,10 +1042,128 @@ const mostrarTablaReportes = () => {
   // Agregar la tabla de totales por mes al final del cuerpo de la tabla de reportes
   tablaReportesBody.innerHTML += tablaTotalesPorMesHTML;
 };
+/////////////////////////////filtros////////////////////////////////////////////
+const ocultarFitros = document.getElementById("ocultarFitros");
+//let operacionFiltroFitros = [];
 
+document.getElementById("ocultarFiltros").addEventListener("click", () => {
+  const filtrosContenedor = document.getElementById("filtrosContenedor");
+  if (filtrosContenedor.style.display === "block") {
+    filtrosContenedor.style.display = "none";
+  } else {
+    filtrosContenedor.style.display = "block";
+  }
+});
 
+const filtrarPorCategoriaYFecha = (
+  objetos,
+  categoriaSeleccionada,
+  fechaSeleccionada
+) => {
+  return objetos.filter((objeto) => {
+    const categoriaValida =
+      categoriaSeleccionada === "Todas" ||
+      objeto.Categoria === categoriaSeleccionada;
+    const fechaValida =
+      (!fechaSeleccionada || new Date(objeto.Fecha) >= fechaSeleccionada) &&
+      (categoriaSeleccionada === "Todas" || categoriaValida);
+    return fechaValida;
+  });
+};
 
+const filtrarYGenerarTabla = (categoriaSeleccionada, fechaSeleccionada) => {
+  const operacionesFiltradas = filtrarPorCategoriaYFecha(
+    operaciones,
+    categoriaSeleccionada,
+    fechaSeleccionada
+  );
+  generarTabla(operacionesFiltradas);
+};
 
+// document.getElementById("selecBalance").addEventListener("change", function () {
+//   const categoriaSeleccionada = this.value;
+//   const filtroFechaInput = document.getElementById("filtro-fecha");
+//   const fechaSeleccionada = filtroFechaInput.value
+//     ? new Date(filtroFechaInput.value)
+//     : null;
+//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+// });
 
+// const filtroFechaInput = document.getElementById("filtro-fecha");
+// filtroFechaInput.addEventListener("change", function () {
+//   const fechaSeleccionada = this.value ? new Date(this.value) : null;
+//   const categoriaSeleccionada = document.getElementById("selecBalance").value;
+//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+// });
+document.getElementById("selecBalance").addEventListener("change", () => {
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
+  const filtroFechaInput = document.getElementById("filtro-fecha");
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
 
+const filtroFechaInput = document.getElementById("filtro-fecha");
+filtroFechaInput.addEventListener("change", () => {
+  const fechaSeleccionada = filtroFechaInput.value
+    ? new Date(filtroFechaInput.value)
+    : null;
+  const categoriaSeleccionada = document.getElementById("selecBalance").value;
+  filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
+});
 
+const filtrarOrdenar = (operaciones) => {
+  const filtroSeleccionado = document.getElementById("filtro-ordenar").value;
+  switch (filtroSeleccionado) {
+    case "masRecientes":
+      generarTabla(
+        operaciones.sort((a, b) => new Date(a.Fecha) - new Date(b.Fecha))
+      );
+      break;
+    case "MenosRecientes":
+      generarTabla(
+        operaciones.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha))
+      );
+      break;
+    case "MayorMonto":
+      generarTabla(operaciones.sort((a, b) => b.Monto - a.Monto));
+      break;
+    case "ManorMonto":
+      generarTabla(operaciones.sort((a, b) => a.Monto - b.Monto));
+      break;
+    case "A/Z":
+      generarTabla(
+        operaciones.sort((a, b) => a.Descripcion.localeCompare(b.Descripcion))
+      );
+      break;
+    case "Z/A":
+      generarTabla(
+        operaciones.sort((a, b) => b.Descripcion.localeCompare(a.Descripcion))
+      );
+      break;
+  }
+};
+
+document.getElementById("filtro-ordenar").addEventListener("change", () => {
+  filtrarOrdenar(JSON.parse(localStorage.getItem("tablaData")));
+});
+
+const cargarDatosIniciales = () => {
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+  filtrarYGenerarTabla("Todas", null);
+  filtrarOrdenar(operaciones);
+};
+const filtrarOperacionesTipo = (tipoOperacion) => {
+  console.log(tipoOperacion);
+  const operacionesTipo = operaciones.filter(
+    (operacion) => operacion.tipo === tipoOperacion
+  );
+  generarTabla(evaluarLocalStorage(operacionesTipo));
+};
+const filtroTipo = document.getElementById("filtro-tipo");
+filtroTipo.addEventListener("change", (e) => {
+  filtrarOperacionesTipo(e.target.value);
+});
+
+window.addEventListener("load", cargarDatosIniciales);
