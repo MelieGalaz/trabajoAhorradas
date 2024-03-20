@@ -1154,16 +1154,29 @@ const cargarDatosIniciales = () => {
   filtrarYGenerarTabla("Todas", null);
   filtrarOrdenar(operaciones);
 };
+
+
 const filtrarOperacionesTipo = (tipoOperacion) => {
-  console.log(tipoOperacion);
-  const operacionesTipo = operaciones.filter(
-    (operacion) => operacion.tipo === tipoOperacion
-  );
-  generarTabla(evaluarLocalStorage(operacionesTipo));
+  const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
+  let operacionesFiltradas = [];
+
+  if (tipoOperacion === "gastos") {
+    operacionesFiltradas = operaciones.filter(
+      (operacion) => parseFloat(operacion.Monto) < 0
+    );
+  } else if (tipoOperacion === "ganancias") {
+    operacionesFiltradas = operaciones.filter(
+      (operacion) => parseFloat(operacion.Monto) > 0
+    );
+  } else {
+    operacionesFiltradas = operaciones;
+  }
+
+  generarTabla(operacionesFiltradas);
 };
+
 const filtroTipo = document.getElementById("filtro-tipo");
 filtroTipo.addEventListener("change", (e) => {
-  filtrarOperacionesTipo(e.target.value);
+  const tipoSeleccionado = e.target.value;
+  filtrarOperacionesTipo(tipoSeleccionado);
 });
-
-window.addEventListener("load", cargarDatosIniciales);
