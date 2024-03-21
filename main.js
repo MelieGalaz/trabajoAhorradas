@@ -324,7 +324,6 @@ document
     const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
     // Validación de campos
-    // Validación de campos
     if (descripcion === "") {
       alert("Por favor, ingrese una descripción.");
       document.getElementById("descripcionForm").style.background = "red";
@@ -1188,7 +1187,6 @@ const cargarDatosIniciales = () => {
   filtrarYGenerarTabla("Todas", null);
   filtrarOrdenar(operaciones);
 };
-
 
 const filtrarOperacionesTipo = (tipoOperacion) => {
   const operaciones = JSON.parse(localStorage.getItem("tablaData")) || [];
