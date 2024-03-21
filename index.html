@@ -311,32 +311,33 @@
         </section>
         <!--------------------------------Nueva Operación-------------------------------->
         <section id="nuevaOperacion" class="hidden">
-            <form class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
+            <form id="nuevaOperacionForm" type="submit" class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
                 rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
                     <label for="descripcionForm" class="text-xl">Descripción</label>
-                    <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
+                    <input type="text" id="descripcionForm" placeholder="Descripción de la operación"
+                        class="h-10 rounded-lg p-2 focus:outline-none focus:border-blue-500" required>
                     <label for="montoForm" class="text-xl">Monto</label>
-                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
+                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2" required>
                     <label for="tipo-gasto-ganancia" class="text-xl">Tipo</label>
-                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2">
+                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2" required>
                         <option value="Gastos">Gastos</option>
                         <option value="Ganancia">Ganancias</option>
 
                     </select>
                     <label for="selecCat" class="text-xl">Categoría</label>
-                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2">
+                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2" required>
                         <option value=""></option>
 
                     </select>
                     <label for="fechaForm" class="text-xl">Fecha</label>
-                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
+                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2" required>
                 </div>
                 <div class=" flex self-end gap-3">
                     <button type="reset" id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button type="submit" class="nueva-operacion-agregar-btn
+                    <button class="nueva-operacion-agregar-btn
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
                     rounded-lg m-auto lg:w-28">Agregar</button>
                 </div>

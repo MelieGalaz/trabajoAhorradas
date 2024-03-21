@@ -311,43 +311,77 @@ const mostrarModalEliminar = (id) => {
     });
 };
 
-document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
-  e.preventDefault();
+document
+  .getElementById("nuevaOperacionForm")
+  .addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  // Variables que guardan los datos del objeto
-  const descripcion = document.getElementById("descripcionForm").value;
-  const categoria = document.getElementById("selecCat").value;
-  const fecha = document.getElementById("fechaForm").value;
-  const monto = parseFloat(document.getElementById("montoForm").value);
-  const tipo = document.getElementById("tipo-gasto-ganancia").value;
+    //Variables que guardan los datos del objeto
+    const descripcion = document.getElementById("descripcionForm").value;
+    const categoria = document.getElementById("selecCat").value;
+    const fecha = document.getElementById("fechaForm").value;
+    const monto = parseFloat(document.getElementById("montoForm").value);
+    const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
-  //Función para colocar el signo correspondiente en monto
-  const tipoMonto = (tipo, monto) => {
-    if (tipo === "Gastos") {
-      return -monto;
+    // Validación de campos
+    // Validación de campos
+    if (descripcion === "") {
+      alert("Por favor, ingrese una descripción.");
+      document.getElementById("descripcionForm").style.background = "red";
+      descripcion.focus();
+      return false;
     } else {
-      return monto;
+      document.getElementById("descripcionForm").style.background = ""; // Restablecer el estilo
     }
-  };
-  // OBJETO
-  const operacion = {
-    id: uuidv4(), // Asegúrate de tener una función uuidv4() disponible o reemplázala por otra forma de generar un ID único
-    Descripcion: descripcion,
-    Categoria: categoria,
-    Fecha: fecha,
-    Monto: tipoMonto(tipo, monto),
-  };
-  // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
-  let tablaData = evaluarLocalStorage();
-  tablaData.push(operacion); // Agrega el objeto directamente
 
-  // Actualizar localStorage
-  localStorage.setItem("tablaData", JSON.stringify(tablaData));
-  generarTabla(evaluarLocalStorage());
+    if (categoria === "") {
+      alert("Por favor, seleccione una categoría.");
+      return;
+    }
 
-  actualizarBalance();
-  mostrarTablaReportes();
-});
+    if (fecha === "") {
+      alert("Por favor, seleccione una fecha.");
+      return;
+    }
+
+    if (isNaN(monto) || monto <= 0) {
+      alert("Por favor, ingrese un monto válido.");
+      return;
+    }
+
+    if (tipo === "") {
+      alert("Por favor, seleccione un tipo (Gastos/Ganancias).");
+      return;
+    }
+
+    //Función para colocar el signo correspondiente en monto
+    const tipoMonto = (tipo, monto) => {
+      if (tipo === "Gastos") {
+        return -monto;
+      } else {
+        return monto;
+      }
+    };
+
+    // OBJETO
+    const operacion = {
+      id: uuidv4(), // Asegúrate de tener una función uuidv4() disponible o reemplázala por otra forma de generar un ID único
+      Descripcion: descripcion,
+      Categoria: categoria,
+      Fecha: fecha,
+      Monto: tipoMonto(tipo, monto),
+    };
+    // Recuperar datos existentes de localStorage o inicializar un arreglo vacío
+    let tablaData = evaluarLocalStorage();
+    tablaData.push(operacion); // Agrega el objeto directamente
+
+    // Actualizar localStorage
+    localStorage.setItem("tablaData", JSON.stringify(tablaData));
+    generarTabla(evaluarLocalStorage());
+
+    actualizarBalance();
+    mostrarTablaReportes();
+  });
 
 function generarTabla(operaciones) {
   const tableBody = document.getElementById("tabody-operaciones");
