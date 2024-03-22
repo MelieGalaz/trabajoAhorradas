@@ -100,13 +100,13 @@ const actualizarSelectores = () => {
 const movimientoCategoria = () => {
   const categoria = document.querySelector(".categoria");
   let contenidoHTML = `
-    <div class="categoria flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 mt-[23px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-        <h2 class="text-3xl text-center font-bold lg:text-4xl">Categorías</h2>
+    <div class="categoria flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66] gap-5 mt-[23px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
+        <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Categorías</h2>
         <div>
-            <label for="agregarCategorias" class="text-xl">Nombre</label>
+            <label for="agregarCategorias" class="text-xl dark:text-white">Nombre</label>
             <div class="flex items-center lg:gap-6">
-                <input type="text" id="agregarCategorias" class="w-48 h-10 rounded-lg lg:w-4/5">
-                <button id="agregarCategoriaBtn" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505] rounded-lg m-auto lg:w-28">Agregar</button>
+                <input type="text" placeholder="categoria" id="agregarCategorias" class="w-48 p-1 h-10 rounded-lg lg:w-4/5 dark:text-white dark:bg-[#7d6899]">
+                <button id="agregarCategoriaBtn" class="w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505] rounded-lg m-auto lg:w-28 dark:lg:hover:bg-[#7c6a94] dark:bg-[#5f4187] dark:text-[white]">Agregar</button>
             </div>
         </div>
     `;
@@ -115,10 +115,10 @@ const movimientoCategoria = () => {
     const cat = ArrayCategoria[i];
     contenidoHTML += `
         <div class="flex justify-between">
-            <p>${cat}</p>
+            <p class="dark:text-[white]">${cat}</p>
             <div class="flex gap-2">
-                <a href="javascript:void(0)" class=" flex gap-1 text-green-500 text-sm eliminar" data-index="${i}"><i class="fi fi-sr-trash"></i>Eliminar</a>
-                <a href="javascript:void(0)" class="flex gap-1  text-green-500 text-sm editar" data-index="${i}"><i class="fi fi-sr-edit-alt"></i>Editar</a>
+                <a href="javascript:void(0)" class=" flex gap-1 text-green-500 text-sm eliminar dark:text-[#1e7020]" data-index="${i}"><i class="fi fi-sr-trash"></i>Eliminar</a>
+                <a href="javascript:void(0)" class="flex gap-1  text-green-500 text-sm editar dark:text-[#1e7020]" data-index="${i}"><i class="fi fi-sr-edit-alt"></i>Editar</a>
             </div>
         </div>
     `;
@@ -388,17 +388,19 @@ function generarTabla(operaciones) {
   operaciones.forEach((operacion) => {
     tableBody.innerHTML += `
       <tr class="border border-slate-400">
-          <td class="text-center text-xs lg:text-base">${
+          <td class="text-center text-xs lg:text-base dark:text-[white]">${
             operacion.Descripcion
           }</td>
-          <td class="text-center text-xs lg:text-base">${
+          <td class="text-center text-xs lg:text-base dark:text-[white]">${
             operacion.Categoria
           }</td>
-          <td class="text-center text-xs hidden lg:block lg:text-base">${fechaFormateada(
+          <td class="text-center text-xs hidden lg:block lg:text-base dark:text-[white]">${fechaFormateada(
             operacion.Fecha
           )}</td>
-          <td class="text-center text-xs lg:text-base" >${operacion.Monto}</td>
-          <td class="text-[#64c27b] flex justify-center gap-2 text-xs lg:text-base"> 
+          <td class="text-center text-xs lg:text-base dark:text-[white]" >${
+            operacion.Monto
+          }</td>
+          <td class="text-[#64c27b] dark:text-[#1e7020] flex justify-center gap-2 text-xs lg:text-base"> 
             <button class="edit-btn" data-id="${
               operacion.id
             }"><i class="fi fi-sr-edit-alt"></i> 
@@ -608,8 +610,10 @@ const actualizarBalance = () => {
   document.getElementById(
     "balance-ganancia"
   ).innerHTML = `<div id="balance-ganancia" class="ganancias flex w-72 lg:w-80 p-2 justify-between ">
-  <p class="text-xl">Ganancias</p>
-  <p class="text-xl text-[green]">$${ganancias.toFixed(2)}</p>
+  <p class="text-xl dark:text-white">Ganancias</p>
+  <p class="text-xl text-[green] dark:text-[#558a69]">$${ganancias.toFixed(
+    2
+  )}</p>
 </div>`;
 
   const gastos = operacionesGuardadas.reduce((total, operacion) => {
@@ -621,15 +625,17 @@ const actualizarBalance = () => {
   document.getElementById(
     "balance-gastos"
   ).innerHTML = `<div id="balance-gastos" class="gastos flex w-72 lg:w-80 p-2  justify-between ">
-  <p class="text-xl">Gastos</p>
-  <p class="text-xl text-[red]">$${Math.abs(gastos).toFixed(2)}</p>
+  <p class="text-xl dark:text-white">Gastos</p>
+  <p class="text-xl text-[red] dark:text-[#8a5160]">$${Math.abs(gastos).toFixed(
+    2
+  )}</p>
 </div>`;
   const balanceTotal = ganancias + gastos;
   document.getElementById(
     "balance-total"
   ).innerHTML = `<div id="balance-total" class="total flex w-72 lg:w-80 p-2   justify-between ">
-  <p class="text-xl">Total</p>
-  <p class="text-xl font-bold">$${balanceTotal.toFixed(2)}</p>
+  <p class="text-xl dark:text-white">Total</p>
+  <p class="text-xl font-bold dark:text-white">$${balanceTotal.toFixed(2)}</p>
 </div>`;
 };
 
@@ -968,48 +974,58 @@ const mostrarTablaReportes = () => {
     <table class="w-full">
       <thead class="">
         <tr >
-          <th class="font-bold text-xl text-black text-left py-3 lg:text-2xl">Resumen</th>
+          <th class="font-bold text-xl text-black text-left py-3 lg:text-2xl dark:text-white">Resumen</th>
         </tr>
       </thead>
       <tbody class="">
         <tr class=" border border-slate-400  ">
-          <td class="text-[#b240b8] text-sm font-bold ">Categoría con mayor ganancia</td>
-          <td class="text-sm text-center" >${categoria}</td>
-          <td class="text-sm text-center">$${montoTotal.toFixed(2)}</td>
+          <td class="text-[#b240b8] text-sm font-bold dark:text-white">Categoría con mayor ganancia</td>
+          <td class="text-sm text-center dark:text-white" >${categoria}</td>
+          <td class="text-sm text-center dark:text-white">$${montoTotal.toFixed(
+            2
+          )}</td>
         </tr>
         <tr class=" border border-slate-400 ">
-          <td class="text-[#b240b8] text-sm font-bold">Categoria con mayor gasto</td>
-          <td class="text-sm text-center">${categoriaGastos}</td>
-          <td class="text-sm text-center">$${montoTotalGastos.toFixed(2)}</td>
+          <td class="text-[#b240b8] text-sm font-bold dark:text-white">Categoria con mayor gasto</td>
+          <td class="text-sm text-center dark:text-white">${categoriaGastos}</td>
+          <td class="text-sm text-center dark:text-white">$${montoTotalGastos.toFixed(
+            2
+          )}</td>
         </tr>
         <tr class=" border border-slate-400 ">
-          <td class="text-[#b240b8] text-sm font-bold ">Categoria con mayor balance</td>
-          <td class="text-sm text-center">${categoriaBalance}</td>
-          <td class="text-sm text-center">$${balanceTotal.toFixed(2)}</td>
+          <td class="text-[#b240b8] text-sm font-bold dark:text-white">Categoria con mayor balance</td>
+          <td class="text-sm text-center dark:text-white">${categoriaBalance}</td>
+          <td class="text-sm text-center dark:text-white">$${balanceTotal.toFixed(
+            2
+          )}</td>
         </tr>
         <tr class=" border border-slate-400 ">
-          <td class="text-[#b240b8] text-sm font-bold ">Mes con mayor ganancia</td>
-          <td class="text-sm text-center">${mes}</td>
-          <td class="text-sm text-center">$${montoTotalMes.toFixed(2)}</td>
+          <td class="text-[#b240b8] text-sm font-bold dark:text-white">Mes con mayor ganancia</td>
+          <td class="text-sm text-center dark:text-white">${mes}</td>
+          <td class="text-sm text-center dark:text-white">$${montoTotalMes.toFixed(
+            2
+          )}</td>
         </tr>
         <tr class=" border border-slate-400 ">
-          <td class="text-[#b240b8] text-sm  font-bold ">Mes con mayor gasto</td>
-          <td class="text-sm text-center">${mesGasto}</td>
-         <td class="text-sm text-center">$${montoTotalGastoMes.toFixed(2)}</td>
+          <td class="text-[#b240b8] text-sm  font-bold dark:text-white ">Mes con mayor gasto</td>
+          <td class="text-sm text-center dark:text-white">${mesGasto}</td>
+         <td class="text-sm text-center dark:text-white">$${montoTotalGastoMes.toFixed(
+           2
+         )}</td>
         </tr>
       </tbody>
     </table>
   `;
   // Crear el HTML para la tabla de totales por categoría
   let tablaTotalesPorCategoriaHTML = `
-      <h3 class="font-bold text-xl text-black text-left py-3">Totales por categoría</h3>
+      <h3 class="font-bold text-xl text-black text-left py-3 dark:text-white">Totales por categoría</h3>
       <table class="w-full">
         <thead class="text-[#b240b8] ">
           <tr class="   border border-slate-400  w-full">
-            <th class="text-[#b240b8] text-sm  font-bold ">Categoría</th>
-            <th class="text-[#b240b8] text-sm    font-bold ">Ganancias</th>
-            <th class="text-[#b240b8] text-sm   font-bold ">Gastos</th>
-            <th class="text-[#b240b8] text-sm   font-bold ">Balance</th>
+            <th class="text-[#b240b8] text-sm  font-bold dark:text-white ">Categoría</th>
+            <th class="text-[#b240b8] text-sm    font-bold dark:text-white">Ganancias</th>
+            <th class="text-[#b240b8] text-sm   font-bold dark:text-white ">Gastos</th>
+            <th class="text-[#b240b8] text-sm   font-bold dark:text-white">Balance</th>
           </tr>
         </thead>
         <tbody class="" >
@@ -1021,10 +1037,16 @@ const mostrarTablaReportes = () => {
       const { ganancias, gastos, balance } = totalesPorCategoria[categoria];
       tablaTotalesPorCategoriaHTML += `
           <tr class=" border border-slate-400  w-full">
-            <td class="text-sm text-center ">${categoria}</td>
-            <td class="text-sm text-center ">$${ganancias.toFixed(2)}</td>
-            <td class="text-sm text-center ">$${gastos.toFixed(2)}</td>
-            <td class="text-sm text-center " >$${balance.toFixed(2)}</td>
+            <td class="text-sm text-center dark:text-white">${categoria}</td>
+            <td class="text-sm text-center dark:text-white ">$${ganancias.toFixed(
+              2
+            )}</td>
+            <td class="text-sm text-center dark:text-white">$${gastos.toFixed(
+              2
+            )}</td>
+            <td class="text-sm text-center dark:text-white " >$${balance.toFixed(
+              2
+            )}</td>
           </tr>
         `;
     }
@@ -1041,14 +1063,14 @@ const mostrarTablaReportes = () => {
 
   // Crear el HTML para la tabla de totales por mes
   let tablaTotalesPorMesHTML = `
-  <h3 class="font-bold text-xl text-black text-left py-3">Totales por mes</h3>
+  <h3 class="font-bold text-xl text-black text-left py-3 dark:text-white">Totales por mes</h3>
   <table class="w-full">
     <thead class="text-[#b240b8] ">
       <tr class=" border border-slate-400 w-full">
-        <th class="text-[#b240b8] text-sm   font-bold ">Mes</th>
-        <th class="text-[#b240b8] text-sm  font-bold ">Ganancias</th>
-        <th class="text-[#b240b8] text-sm   font-bold ">Gastos</th>
-        <th class="text-[#b240b8] text-sm  font-bold ">Balance</th>
+        <th class="text-[#b240b8] text-sm   font-bold dark:text-white ">Mes</th>
+        <th class="text-[#b240b8] text-sm  font-bold dark:text-white">Ganancias</th>
+        <th class="text-[#b240b8] text-sm   font-bold dark:text-white">Gastos</th>
+        <th class="text-[#b240b8] text-sm  font-bold dark:text-white">Balance</th>
       </tr>
     </thead>
     <tbody>`;
@@ -1059,10 +1081,16 @@ const mostrarTablaReportes = () => {
       const { ganancias, gastos, balance } = totalesPorMes[mes];
       tablaTotalesPorMesHTML += `
         <tr class=" border border-slate-400 ">
-          <td class="text-sm text-center  ">${mes}</td>
-          <td class="text-sm  text-center ">$${ganancias.toFixed(2)}</td>
-          <td class="text-sm text-center  ">$${gastos.toFixed(2)}</td>
-          <td class="text-sm  text-center ">$${balance.toFixed(2)}</td>
+          <td class="text-sm text-center dark:text-white ">${mes}</td>
+          <td class="text-sm  text-center dark:text-white ">$${ganancias.toFixed(
+            2
+          )}</td>
+          <td class="text-sm text-center dark:text-white ">$${gastos.toFixed(
+            2
+          )}</td>
+          <td class="text-sm  text-center dark:text-white ">$${balance.toFixed(
+            2
+          )}</td>
         </tr>`;
     }
   }
@@ -1211,4 +1239,26 @@ const filtroTipo = document.getElementById("filtro-tipo");
 filtroTipo.addEventListener("change", (e) => {
   const tipoSeleccionado = e.target.value;
   filtrarOperacionesTipo(tipoSeleccionado);
+});
+
+const htmlElement = document.querySelector("html");
+const toogleButton = document.getElementById("btn-claro-oscuro");
+const toogleButton2 = document.getElementById("btn-claro-oscuro2");
+toogleButton.addEventListener("click", () => {
+  if (document.documentElement.classList.toggle("dark")) {
+    toogleButton.innerHTML =
+      '<i class="fa-solid fa-sun text-yellow-600 text-lg"></i>';
+  } else {
+    toogleButton.innerHTML =
+      '<i class="fa-solid fa-moon text-blue-600 text-lg"></i>';
+  }
+});
+toogleButton2.addEventListener("click", () => {
+  if (document.documentElement.classList.toggle("dark")) {
+    toogleButton2.innerHTML =
+      '<i class="fa-solid fa-sun text-yellow-600 text-lg"></i>';
+  } else {
+    toogleButton2.innerHTML =
+      '<i class="fa-solid fa-moon text-blue-600 text-lg"></i>';
+  }
 });
