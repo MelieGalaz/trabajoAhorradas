@@ -316,42 +316,38 @@ document
   .addEventListener("submit", (e) => {
     e.preventDefault();
 
-    //Variables que guardan los datos del objeto
-    const descripcion = document.getElementById("descripcionForm").value;
-    const categoria = document.getElementById("selecCat").value;
-    const fecha = document.getElementById("fechaForm").value;
-    const monto = parseFloat(document.getElementById("montoForm").value);
-    const tipo = document.getElementById("tipo-gasto-ganancia").value;
+  // Variables que guardan los datos del objeto
+  const descripcion = document.getElementById("descripcionForm").value;
+  const categoria = document.getElementById("selecCat").value;
+  const fecha = document.getElementById("fechaForm").value;
+  const monto = parseFloat(document.getElementById("montoForm").value);
+  const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
-    // Validación de campos
-    if (descripcion === "") {
-      alert("Por favor, ingrese una descripción.");
-      document.getElementById("descripcionForm").style.background = "red";
-      descripcion.focus();
-      return false;
-    } else {
-      document.getElementById("descripcionForm").style.background = ""; // Restablecer el estilo
-    }
+const mantenerOperacion = () => {
+    document.getElementById("BALANCE").classList.add("hidden")
+    document.getElementById("nuevaOperacion").classList.remove("hidden")
+  }
 
-    if (categoria === "") {
-      alert("Por favor, seleccione una categoría.");
-      return;
-    }
+if(descripcion.trim() === ""){
+  document.getElementById("error-descripcion").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(isNaN(monto) || monto === ""){
+  document.getElementById("error-monto").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(fecha.trim() === ""){
+  document.getElementById("error-fecha").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(descripcion.trim() === "" || fecha.trim() === "" || isNaN(monto) || monto === ""){
+  return 
+}
 
-    if (fecha === "") {
-      alert("Por favor, seleccione una fecha.");
-      return;
-    }
+document.getElementById("error-descripcion").classList.add("hidden")
+document.getElementById("error-monto").classList.add("hidden")
+document.getElementById("error-fecha").classList.add("hidden")
 
-    if (isNaN(monto) || monto <= 0) {
-      alert("Por favor, ingrese un monto válido.");
-      return;
-    }
-
-    if (tipo === "") {
-      alert("Por favor, seleccione un tipo (Gastos/Ganancias).");
-      return;
-    }
 
     //Función para colocar el signo correspondiente en monto
     const tipoMonto = (tipo, monto) => {
