@@ -311,9 +311,7 @@ const mostrarModalEliminar = (id) => {
     });
 };
 
-document
-  .getElementById("nuevaOperacionForm")
-  .addEventListener("submit", (e) => {
+document.getElementById("nuevaOperacionForm").addEventListener("submit", (e) => {
     e.preventDefault();
 
   // Variables que guardan los datos del objeto
@@ -324,23 +322,23 @@ document
   const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
 const mantenerOperacion = () => {
-    document.getElementById("BALANCE").classList.add("hidden")
+    document.getElementById("Balance").classList.add("hidden")
     document.getElementById("nuevaOperacion").classList.remove("hidden")
-  }
+}
 
-if(descripcion.trim() === ""){
+if(descripcion.trim() === ''){
   document.getElementById("error-descripcion").classList.remove("hidden")
   mantenerOperacion()
 }
-if(isNaN(monto) || monto === ""){
+if(isNaN(monto) || monto === ''){
   document.getElementById("error-monto").classList.remove("hidden")
   mantenerOperacion()
 }
-if(fecha.trim() === ""){
+if(fecha.trim() === ''){
   document.getElementById("error-fecha").classList.remove("hidden")
   mantenerOperacion()
 }
-if(descripcion.trim() === "" || fecha.trim() === "" || isNaN(monto) || monto === ""){
+if(descripcion.trim() === '' || fecha.trim() === '' || isNaN(monto) || monto === ''){
   return 
 }
 
