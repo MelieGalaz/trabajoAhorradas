@@ -321,6 +321,32 @@ document.getElementById("nuevaOperacion").addEventListener("submit", (e) => {
   const monto = parseFloat(document.getElementById("montoForm").value);
   const tipo = document.getElementById("tipo-gasto-ganancia").value;
 
+const mantenerOperacion = () => {
+    document.getElementById("BALANCE").classList.add("hidden")
+    document.getElementById("nuevaOperacion").classList.remove("hidden")
+  }
+
+if(descripcion.trim() === ""){
+  document.getElementById("error-descripcion").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(isNaN(monto) || monto === ""){
+  document.getElementById("error-monto").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(fecha.trim() === ""){
+  document.getElementById("error-fecha").classList.remove("hidden")
+  mantenerOperacion()
+}
+if(descripcion.trim() === "" || fecha.trim() === "" || isNaN(monto) || monto === ""){
+  return 
+}
+
+document.getElementById("error-descripcion").classList.add("hidden")
+document.getElementById("error-monto").classList.add("hidden")
+document.getElementById("error-fecha").classList.add("hidden")
+
+
   //Función para colocar el signo correspondiente en monto
   const tipoMonto = (tipo, monto) => {
     if (tipo === "Gastos") {
@@ -1180,3 +1206,4 @@ filtroTipo.addEventListener("change", (e) => {
   const tipoSeleccionado = e.target.value;
   filtrarOperacionesTipo(tipoSeleccionado);
 });
+

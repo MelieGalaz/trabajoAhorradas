@@ -317,8 +317,10 @@
                 <div class="flex flex-col gap-2 lg:gap-3">
                     <label for="descripcionForm" class="text-xl">Descripción</label>
                     <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
+                    <div id="error-descripcion" class="text-red-500 hidden"> <p>Por favor completa este campo</p> </div>
                     <label for="montoForm" class="text-xl">Monto</label>
                     <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
+                    <div id="error-monto" class="text-red-500 hidden"> <p>Por favor ingresa un monto válido</p> </div>
                     <label for="tipo-gasto-ganancia" class="text-xl">Tipo</label>
                     <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2">
                         <option value="Gastos">Gastos</option>
@@ -332,6 +334,7 @@
                     </select>
                     <label for="fechaForm" class="text-xl">Fecha</label>
                     <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
+                    <div id="error-fecha" class="text-red-500 hidden"> <p>Por favor ingresá una fecha válida</p> </div>
                 </div>
                 <div class=" flex self-end gap-3">
                     <button type="reset" id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
