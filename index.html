@@ -93,121 +93,123 @@
         </nav>
     </header>
     <main>
-        <section id="Balance" class="flex flex-col items-center gap-3 lg:flex-row mt-5 lg:justify-center lg:m-auto lg:items-start 
-            lg:mt-10">
-            <div class="flex gap-5 flex-col  ">
-                <div class=" rounded-lg  flex w-80   flex-col p-4 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]
+        <section id="Balance" class="aBalance">
+            <div class="flex gap-5 flex-col items-center  lg:flex-row mt-5 lg:justify-center m-auto lg:items-start 
+            lg:mt-10 ">
+                <div class=" flex flex-col gap-5 ">
+                    <div class=" rounded-lg  flex w-80   flex-col p-4 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]
                    lg:w-96">
-                    <h2 class="text-3xl text-center font-bold p-4 dark:text-white ">Balance</h2>
-                    <div id="balance-ganancia" class="ganancias w-72 lg:w-80 p-2  flex justify-between ">
-                        <p class="text-xl dark:text-[#688773]">Ganancias</p>
-                        <p class="text-xl text-[green] dark:text-[#558a69]">+$0</p>
+                        <h2 class="text-3xl text-center font-bold p-4 dark:text-white ">Balance</h2>
+                        <div id="balance-ganancia" class="ganancias w-72 lg:w-80 p-2  flex justify-between ">
+                            <p class="text-xl dark:text-[#688773]">Ganancias</p>
+                            <p class="text-xl text-[green] dark:text-[#558a69]">+$0</p>
+                        </div>
+                        <div id="balance-gastos" class="gastos w-72 lg:w-80 p-2  flex  justify-between">
+                            <p class="text-xl dark:text-white">Gastos</p>
+                            <p class="text-xl text-[red] dark:text-[#8a5160]">-$0</p>
+                        </div>
+                        <div id="balance-total" class="total flex w-72 lg:w-80 p-2  justify-between">
+                            <p class="text-xl dark:text-white">Total</p>
+                            <p class="text-xl font-bold dark:text-white">$0</p>
+                        </div>
                     </div>
-                    <div id="balance-gastos" class="gastos w-72 lg:w-80 p-2  flex  justify-between">
-                        <p class="text-xl dark:text-white">Gastos</p>
-                        <p class="text-xl text-[red] dark:text-[#8a5160]">-$0</p>
-                    </div>
-                    <div id="balance-total" class="total flex w-72 lg:w-80 p-2  justify-between">
-                        <p class="text-xl dark:text-white">Total</p>
-                        <p class="text-xl font-bold dark:text-white">$0</p>
-                    </div>
-                </div>
 
-                <div class=" flex justify-between w-80 lg:w-[100%] lg:gap-5 flex-col p-4 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]  rounded-lg
+                    <div class=" flex justify-between w-80 lg:w-[100%] lg:gap-5 flex-col p-4 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]  rounded-lg
                 ">
-                    <div class="flex flex-row justify-between items-center gap-2 lg:gap-3">
-                        <h2 class="text-3xl text-center font-bold dark:text-white">Filtros</h2>
-                        <button id="ocultarFiltros" class="text-[#c402f5] dark:text-[#72608a] dark:hover:text-white font-medium hover:text-[#7830db]
+                        <div class="flex flex-row justify-between items-center gap-2 lg:gap-3">
+                            <h2 class="text-3xl text-center font-bold dark:text-white">Filtros</h2>
+                            <button id="ocultarFiltros" class="text-[#c402f5] dark:text-[#72608a] dark:hover:text-white font-medium hover:text-[#7830db]
                             hover:text-shadow-lg">Ocultar
-                            filtros</button>
-                    </div>
-                    <div id="filtrosContenedor" class="block">
-                        <div class="flex flex-col gap-2 lg:gap-3">
-                            <label for="filtro-tipo" class="text-xl dark:text-white">Tipo</label>
-                            <select name="" id="filtro-tipo"
-                                class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
-                                <option value="todo">Todos</option>
-                                <option value="ganancias">Ganancias</option>
-                                <option value="gastos">Gastos</option>
-                            </select>
+                                filtros</button>
                         </div>
-                        <div class="flex flex-col gap-2 lg:gap-3">
-                            <label for="selecBalance" class=" categorias text-xl dark:text-white">Categoria</label>
-                            <select name="" id="selecBalance"
-                                class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
-                                <option value="Todas ">Todas</option>
+                        <div id="filtrosContenedor" class="block">
+                            <div class="flex flex-col gap-2 lg:gap-3">
+                                <label for="filtro-tipo" class="text-xl dark:text-white">Tipo</label>
+                                <select name="" id="filtro-tipo"
+                                    class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
+                                    <option value="todo">Todos</option>
+                                    <option value="ganancias">Ganancias</option>
+                                    <option value="gastos">Gastos</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2 lg:gap-3">
+                                <label for="selecBalance" class=" categorias text-xl dark:text-white">Categoria</label>
+                                <select name="" id="selecBalance"
+                                    class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
+                                    <option value="Todas ">Todas</option>
 
-                            </select>
-                        </div>
-                        <div class="flex flex-col gap-2 lg:gap-3">
-                            <label for="filtro-fecha" class="text-xl dark:text-white">Desde</label>
-                            <input type="date" id="filtro-fecha"
-                                class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
-                        </div>
-                        <div class="flex flex-col gap-2 lg:gap-3">
-                            <label for="filtro-ordenar" class="text-xl dark:text-white">Ordenar por</label>
-                            <select name="" id="filtro-ordenar"
-                                class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
-                                <option value="masRecientes">Mas recientes</option>
-                                <option value="MenosRecientes">Menos recientes</option>
-                                <option value="MayorMonto">Mayor monto</option>
-                                <option value="ManorMonto">Menor monto</option>
-                                <option value="A/Z">A/Z</option>
-                                <option value="Z/A">Z/A</option>
-                            </select>
+                                </select>
+                            </div>
+                            <div class="flex flex-col gap-2 lg:gap-3">
+                                <label for="filtro-fecha" class="text-xl dark:text-white">Desde</label>
+                                <input type="date" id="filtro-fecha"
+                                    class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
+                            </div>
+                            <div class="flex flex-col gap-2 lg:gap-3">
+                                <label for="filtro-ordenar" class="text-xl dark:text-white">Ordenar por</label>
+                                <select name="" id="filtro-ordenar"
+                                    class="h-10 rounded-lg p-2 dark:text-white dark:bg-[#7d6899]">
+                                    <option value="masRecientes">Mas recientes</option>
+                                    <option value="MenosRecientes">Menos recientes</option>
+                                    <option value="MayorMonto">Mayor monto</option>
+                                    <option value="ManorMonto">Menor monto</option>
+                                    <option value="A/Z">A/Z</option>
+                                    <option value="Z/A">Z/A</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-
-            </div>
-            <div class="flex justify-between  flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 
+                <div class="flex justify-between  flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-5 
                 rounded-lg lg:w-2/4 dark:bg-[#3c2f66] ">
-                <h2 class="text-3xl text-center font-bold p-4 dark:text-white">Operaciones</h2>
-                <button id="abrirNuevaOperacion" class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505]
+                    <h2 class="text-3xl text-center font-bold p-4 dark:text-white">Operaciones</h2>
+                    <button id="abrirNuevaOperacion" class="w-52 h-10 my-4 bg-green text-white bg-[#b240b8] hover:bg-[#96e0a0] hover:text-[#050505]
                     rounded-lg m-auto dark:lg:hover:bg-[#7c6a94] dark:bg-[#5f4187] dark:text-white">+
-                    Nueva operación</button>
-                <div class="imagen-operaciones">
-                    <div class="object-contain lg:w-80 lg:m-auto">
-                        <img src="/assets/operaciones-girl.jpeg" alt="" />
+                        Nueva operación</button>
+                    <div class="imagen-operaciones">
+                        <div class="object-contain lg:w-80 lg:m-auto">
+                            <img src="assets/operaciones-girl.jpeg" alt="" />
+                        </div>
+                        <h3 class="text-xl font-bold text-center dark:text-white">Sin resultados</h3>
+                        <p class="text-center dark:text-white">Cambia los filtros o agrega operaciones</p>
                     </div>
-                    <h3 class="text-xl font-bold text-center dark:text-white">Sin resultados</h3>
-                    <p class="text-center dark:text-white">Cambia los filtros o agrega operaciones</p>
-                </div>
-                <!---------------------------tablas de operaciones  ---------------------------------------------------------->
-                <table id="tabla-data-operaciones" class="hidden">
-                    <thead class=" text-[#b240b8]">
-                        <tr>
-                            <th id="descripcion" class="text-sm lg:text-lg dark:text-white">Descripcion</th>
-                            <th id="categoria" class="text-sm lg:text-lg dark:text-white">Categoria</th>
-                            <th id="fecha" class="text-sm hidden lg:block lg:text-lg dark:text-white">Fecha</th>
-                            <th id="monto" class="text-sm lg:text-lg dark:text-white">Monto</th>
-                            <th class="text-sm lg:text-lg dark:text-white">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabody-operaciones">
-                        <tr>
 
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class=" flex justify-center text-[#64c27b] gap-2 ">
-                                <a href=""><i class=" fi fi-sr-edit-alt"></i></a>
-                                <a href=""><i class="fi fi-sr-trash"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <!---------------------------tablas de operaciones  ---------------------------------------------------------->
+                    <table id="tabla-data-operaciones" class="hidden">
+                        <thead class=" text-[#b240b8]">
+                            <tr>
+                                <th id="descripcion" class="text-sm lg:text-lg dark:text-white">Descripcion</th>
+                                <th id="categoria" class="text-sm lg:text-lg dark:text-white">Categoria</th>
+                                <th id="fecha" class="text-sm hidden lg:block lg:text-lg dark:text-white">Fecha</th>
+                                <th id="monto" class="text-sm lg:text-lg dark:text-white">Monto</th>
+                                <th class="text-sm lg:text-lg dark:text-white">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabody-operaciones" class=" dark:bg-[#3c2f66]">
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class=" flex justify-center text-[#64c27b] gap-2 ">
+                                    <a href=""><i class=" fi fi-sr-edit-alt"></i></a>
+                                    <a href=""><i class="fi fi-sr-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
         </section>
         <!---------------------sección reportes----------------------->
         <section id="reportes" class=" aReportes hidden">
-            <div class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]  gap-5 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
+            <div class="flex justify-between  flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66]  gap-5 mt-[23px]
+                rounded-lg lg:w-3/5 m-auto lg:mt-10">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Reportes</h2>
                 <div id="imagen-reportes" class="hidden">
-                    <div class="object-contain lg:w-80 lg:m-auto">
+                    <div class="object-contain lg:w-80 m-auto">
                         <img src="assets/reportes-girl.jpeg" alt="chica mirando reporte de finanzas">
                     </div>
                     <div>
@@ -296,32 +298,34 @@
         </section>
         <section id="EditarOperacion" class="hidden">
             <form class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-                <h2 class="text-3xl text-center font-bold lg:text-4xl">Editar Operación</h2>
+                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10 dark:bg-[#3c2f66] ">
+                <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Editar Operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
-                    <label for="descripcionForm-editar" class="text-xl">Descripción</label>
-                    <input type="text" id="descripcionForm-editar" class="h-10 rounded-lg p-2">
-                    <label for="montoForm-editar" class="text-xl">Monto</label>
-                    <input type="number" id="montoForm-editar" class="h-10 rounded-lg p-2">
-                    <label for="editar-gastos-ganacias" class="text-xl">Tipo</label>
-                    <select name="" id="editar-gastos-ganacias" class="h-10 rounded-lg p-2">
+                    <label for="descripcionForm-editar" class="text-xl dark:text-white">Descripción</label>
+                    <input type="text" id="descripcionForm-editar" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
+                    <label for="montoForm-editar" class="text-xl dark:text-white">Monto</label>
+                    <input type="number" id="montoForm-editar" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
+                    <label for="editar-gastos-ganacias" class="text-xl dark:text-white">Tipo</label>
+                    <select name="" id="editar-gastos-ganacias" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                         <option value="">Gastos</option>
                         <option value="">Ganancias</option>
                     </select>
-                    <label for="selecEditarOperacion" class="text-xl">Categoría</label>
-                    <select name="categoria" id="selecEditarOperacion" class="  h-10 rounded-lg p-2">
+                    <label for="selecEditarOperacion" class="text-xl dark:text-white">Categoría</label>
+                    <select name="categoria" id="selecEditarOperacion" class="  h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                         <option value=""></option>
 
                     </select>
-                    <label for="fecha-editar-operacion" class="text-xl">Fecha</label>
-                    <input type="date" id="fecha-editar-operacion" class="h-10 rounded-lg p-2">
+                    <label for="fecha-editar-operacion" class="text-xl dark:text-white">Fecha</label>
+                    <input type="date" id="fecha-editar-operacion" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                 </div>
                 <div class=" flex self-end gap-3">
-                    <button id="cancelar_editar_operacion" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
-                    rounded-lg m-auto lg:w-28">Cancelar</button>
-                    <button type="submit" id="editarOperacionBtn" class=" editarBtnOperacion
+                    <button id="cancelar_editar_operacion"
+                        class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
+                    rounded-lg m-auto lg:w-28 dark:bg-red-800 dark:hover:bg-red-700 dark:hover:text-white ">Cancelar</button>
+                    <button type="submit" id="editarOperacionBtn"
+                        class=" editarBtnOperacion
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
-                    rounded-lg m-auto lg:w-28">Editar</button>
+                    rounded-lg m-auto lg:w-28 dark:bg-purple-700 dark:hover:bg-purple-600 dark:hover:text-white">Editar</button>
                 </div>
             </form>
         </section>
@@ -332,34 +336,36 @@
         <!--------------------------------Nueva Operación-------------------------------->
         <section id="nuevaOperacion" class="hidden">
             <form id="nuevaOperacionForm" type="submit" class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-                <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
+                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10 dark:bg-[#3c2f66] ">
+                <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Nueva operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
-                    <label for="descripcionForm" class="text-xl">Descripción</label>
+                    <label for="descripcionForm" class="text-xl dark:text-white">Descripción</label>
                     <input type="text" id="descripcionForm" placeholder="Descripción de la operación"
-                        class="h-10 rounded-lg p-2 focus:outline-none focus:border-blue-500" required>
-                    <label for="montoForm" class="text-xl">Monto</label>
-                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2" required>
-                    <label for="tipo-gasto-ganancia" class="text-xl">Tipo</label>
-                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2" required>
+                        class="h-10 rounded-lg p-2 focus:outline-none focus:border-blue-500 dark:bg-[#7d6899]" required>
+                    <label for="montoForm" class="text-xl dark:text-white">Monto</label>
+                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
+                    <label for="tipo-gasto-ganancia" class="text-xl dark:text-white">Tipo</label>
+                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
                         <option value="Gastos">Gastos</option>
                         <option value="Ganancia">Ganancias</option>
 
                     </select>
-                    <label for="selecCat" class="text-xl">Categoría</label>
-                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2" required>
+                    <label for="selecCat" class="text-xl dark:text-white">Categoría</label>
+                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
                         <option value=""></option>
 
                     </select>
-                    <label for="fechaForm" class="text-xl">Fecha</label>
-                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2" required>
+                    <label for="fechaForm" class="text-xl dark:text-white">Fecha</label>
+                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
                 </div>
                 <div class=" flex self-end gap-3">
                     <button type="reset" id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
-                    rounded-lg m-auto lg:w-28">Cancelar</button>
+                    rounded-lg m-auto lg:w-28 dark:bg-red-800 dark:hover:bg-red-700 dark:hover:text-white
+                    ">Cancelar</button>
                     <button class="nueva-operacion-agregar-btn
                     w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
-                    rounded-lg m-auto lg:w-28">Agregar</button>
+                    rounded-lg m-auto lg:w-28 dark:bg-purple-700 dark:hover:bg-purple-600
+                    dark:hover:text-white">Agregar</button>
                 </div>
             </form>
         </section>
@@ -367,42 +373,43 @@
 
         <div id="modal" class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden ">
             <div class="modal-content  flex justify-between  flex-col p-4 w-80 drop-shadow-lg  bg-[#b240b8]
-               rounded-lg lg:w-3/5 ">
+               rounded-lg lg:w-3/5 dark:bg-[#3c2f66]">
                 <span class="close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white ">&times;</span>
 
                 <p class="text-xl mb-4 text-white ">Ingrese el nuevo nombre para la categoría:</p>
-                <input type="text" id="nuevoNombreInput"
-                    class="w-full h-10 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 px-4">
-                <button id="guardarNuevoNombre"
-                    class="w-full mt-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none focus:bg-purple-700">Guardar</button>
+                <input type="text" id="nuevoNombreInput" class="w-full h-10 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 px-4
+                    dark:bg-[#7d6899]">
+                <button id="guardarNuevoNombre" class="w-full mt-4 h-10 bg-purple-600 dark:bg-purple-700 text-white rounded-lg hover:bg-purple-700
+                    dark:hover:bg-purple-600
+                    focus:outline-none focus:bg-purple-700">Guardar</button>
             </div>
         </div>
 
         <div id="modal-eliminar"
             class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden">
-            <div
-                class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
+            <div class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg
+                lg:w-3/5 dark:bg-[#3c2f66]">
                 <span class="modal-close text-4xl fo top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
                 <p class="text-xl mb-4 text-white text-center">Está por eliminar la categoría:</p>
                 <h2 id="eliminarCategoria" class="text-white text-2xl text-center"></h2> <!-- Cambiado a h2 -->
-                <button id="eliminarCategoriaBtn"
-                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
+                <button id="eliminarCategoriaBtn" class="w-full mt-4 h-10 bg-red-600 hover:bg-red-700  dark:bg-red-900 dark:hover:bg-red-700  text-white rounded-lg hover:bg-red-700 focus:outline-none
+                    focus:bg-red-700 ">Eliminar</button>
                 <!-- Cambiado id y color del botón -->
-                <button class="modal-btn-close w-full mt-2 h-10 bg-purple-700 text-white rounded-lg hover:bg-gray-700 focus:outline-none
-                    focus:bg-purple-700 ">Cerrar</button>
+                <button
+                    class="modal-btn-close w-full mt-2 h-10 bg-purple-600 dark:bg-purple-700  dark:hover:bg-purple-600 text-white rounded-lg hover:bg-purple-700  ">Cerrar</button>
                 <!-- Agregado botón de cerrar -->
             </div>
         </div>
         <div id="modal-eliminar-operacion-tabla"
             class="flex items-center justify-center modal fixed z-10 inset-0 overflow-y-auto hidden">
-            <div
-                class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8] rounded-lg lg:w-3/5">
+            <div class="modal-content flex justify-between flex-col p-4 w-80 drop-shadow-lg bg-[#b240b8]
+                dark:bg-[#3c2f66] rounded-lg lg:w-3/5">
                 <span class=" modal-close-X  text-4xl top-0 right-0 mt-4 mr-4 cursor-pointer text-white">&times;</span>
                 <p class="text-xl mb-4 text-white text-center">Seguro quiere eliminar
                     la operación</p>
                 <h2 id="eliminarOperacion" class="text-white text-2xl text-center"></h2>
-                <button id="delete-btn-modal"
-                    class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:bg-red-700">Eliminar</button>
+                <button id="delete-btn-modal" class="w-full mt-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 dark:bg-red-900
+                    focus:outline-none focus:bg-red-700">Eliminar</button>
                 <button class="modal-close-operacion w-full mt-2 h-10 bg-purple-700 text-white rounded-lg hover:bg-gray-700
                     focus:outline-none focus:bg-purple-700">Cerrar</button>
             </div>

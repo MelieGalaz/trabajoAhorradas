@@ -100,7 +100,7 @@ const actualizarSelectores = () => {
 const movimientoCategoria = () => {
   const categoria = document.querySelector(".categoria");
   let contenidoHTML = `
-    <div class="categoria flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66] gap-5 mt-[23px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
+    <div class="categoria flex justify-between  flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66] gap-5 mt-[23px] rounded-lg lg:w-3/5 m-auto lg:mt-10">
         <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Categorías</h2>
         <div>
             <label for="agregarCategorias" class="text-xl dark:text-white">Nombre</label>
@@ -460,7 +460,6 @@ function generarTabla(operaciones) {
       EditarOperacion.classList.remove("hidden");
       Balance.classList.add("hidden");
       const idOperacion = el.getAttribute("data-id");
-      console.log(idOperacion);
       const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
       llenarFormularioEdicion(operacionSeleccionada);
     });
@@ -1141,21 +1140,6 @@ const filtrarYGenerarTabla = (categoriaSeleccionada, fechaSeleccionada) => {
   generarTabla(operacionesFiltradas);
 };
 
-// document.getElementById("selecBalance").addEventListener("change", function () {
-//   const categoriaSeleccionada = this.value;
-//   const filtroFechaInput = document.getElementById("filtro-fecha");
-//   const fechaSeleccionada = filtroFechaInput.value
-//     ? new Date(filtroFechaInput.value)
-//     : null;
-//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-// });
-
-// const filtroFechaInput = document.getElementById("filtro-fecha");
-// filtroFechaInput.addEventListener("change", function () {
-//   const fechaSeleccionada = this.value ? new Date(this.value) : null;
-//   const categoriaSeleccionada = document.getElementById("selecBalance").value;
-//   filtrarYGenerarTabla(categoriaSeleccionada, fechaSeleccionada);
-// });
 document.getElementById("selecBalance").addEventListener("change", () => {
   const categoriaSeleccionada = document.getElementById("selecBalance").value;
   const filtroFechaInput = document.getElementById("filtro-fecha");
