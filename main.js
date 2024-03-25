@@ -100,7 +100,8 @@ const actualizarSelectores = () => {
 const movimientoCategoria = () => {
   const categoria = document.querySelector(".categoria");
   let contenidoHTML = `
-    <div class="categoria flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66] gap-5 mt-[23px] rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
+    <div class="categoria flex justify-between 
+     flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] dark:bg-[#3c2f66] gap-5 mt-[23px] rounded-lg lg:w-3/5 m-auto lg:mt-10">
         <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Categorías</h2>
         <div>
             <label for="agregarCategorias" class="text-xl dark:text-white">Nombre</label>
