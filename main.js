@@ -1,7 +1,7 @@
 /**********************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
-
+const EditarOperacion = document.getElementById("EditarOperacion");
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -461,7 +461,7 @@ function generarTabla(operaciones) {
       EditarOperacion.classList.remove("hidden");
       Balance.classList.add("hidden");
       const idOperacion = el.getAttribute("data-id");
-      console.log(idOperacion);
+
       const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
       llenarFormularioEdicion(operacionSeleccionada);
     });
@@ -489,28 +489,38 @@ function generarTabla(operaciones) {
     );
 
     const mantenerEditarOperacion = () => {
-      document.getElementById("Balance").classList.add("hidden")
-      document.getElementById("EditarOperacion").classList.remove("hidden")
-    }
+      document.getElementById("Balance").classList.add("hidden");
+      document.getElementById("EditarOperacion").classList.remove("hidden");
+    };
 
-    if(tipoSeleccionado.trim() === ""){
-      document.getElementById("error-editarTipo").classList.remove("hidden")
-      mantenerEditarOperacion()
+    if (tipoSeleccionado.trim() === "") {
+      document.getElementById("error-editarTipo").classList.remove("hidden");
+      mantenerEditarOperacion();
     }
-    if(nuevaDescripcion.trim() === "") {
-       document.getElementById("error-editarDescripcion").classList.remove("hidden");
-       mantenerEditarOperacion();
-     }
+    if (nuevaDescripcion.trim() === "") {
+      document
+        .getElementById("error-editarDescripcion")
+        .classList.remove("hidden");
+      mantenerEditarOperacion();
+    }
     if (nuevaFecha.trim() === "") {
-        document.getElementById("error-editarFecha").classList.remove("hidden");
-        mantenerEditarOperacion();
+      document.getElementById("error-editarFecha").classList.remove("hidden");
+      mantenerEditarOperacion();
     }
     if (isNaN(nuevoMonto) || nuevoMonto === "") {
-       document.getElementById("error-editarNuevoMonto").classList.remove("hidden");
-       mantenerEditarOperacion();
+      document
+        .getElementById("error-editarNuevoMonto")
+        .classList.remove("hidden");
+      mantenerEditarOperacion();
     }
-    if(tipoSeleccionado.trim() === "" || nuevaDescripcion.trim() === "" || nuevaFecha.trim() === "" || isNaN(nuevoMonto) || nuevoMonto === "" ){
-      return 
+    if (
+      tipoSeleccionado.trim() === "" ||
+      nuevaDescripcion.trim() === "" ||
+      nuevaFecha.trim() === "" ||
+      isNaN(nuevoMonto) ||
+      nuevoMonto === ""
+    ) {
+      return;
     }
 
     // Cambiar el signo del monto según el tipo seleccionado
@@ -570,7 +580,7 @@ function generarTabla(operaciones) {
     .getElementById("cancelar_editar_operacion")
     .addEventListener("click", () => {
       EditarOperacion.classList.add("hidden");
-      console.log("cancelar_editar_operacion");
+
       Balance.classList.remove("hidden");
     });
 
@@ -588,7 +598,6 @@ function generarTabla(operaciones) {
     .getElementById("cancelar_editar_operacion")
     .addEventListener("click", () => {
       EditarOperacion.classList.add("hidden");
-      console.log("cancelar_editar_operacion");
       Balance.classList.remove("hidden");
     });
 }
