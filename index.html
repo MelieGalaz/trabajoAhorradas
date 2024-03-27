@@ -296,18 +296,27 @@
         </section>
         <section id="EditarOperacion" class="hidden">
             <form class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10 dark:bg-[#3c2f66] ">
+                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10 dark:bg-[#3c2f66]">
                 <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Editar Operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
                     <label for="descripcionForm-editar" class="text-xl dark:text-white">Descripción</label>
                     <input type="text" id="descripcionForm-editar" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
+                    <div id="error-editarDescripcion" class="text-red-500 hidden">
+                        <p>Por favor completa la descripción</p>
+                    </div>
                     <label for="montoForm-editar" class="text-xl dark:text-white">Monto</label>
                     <input type="number" id="montoForm-editar" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
+                    <div id="error-editarNuevoMonto" class="text-red-500 hidden">
+                        <p>Por favor ingresa un monto válido</p>
+                    </div>
                     <label for="editar-gastos-ganacias" class="text-xl dark:text-white">Tipo</label>
                     <select name="" id="editar-gastos-ganacias" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                         <option value="">Gastos</option>
                         <option value="">Ganancias</option>
                     </select>
+                    <div id="error-editarTipo" class="text-red-500 hidden">
+                        <p>Por favor seleccioná un tipo de monto</p>
+                    </div>
                     <label for="selecEditarOperacion" class="text-xl dark:text-white">Categoría</label>
                     <select name="categoria" id="selecEditarOperacion" class="  h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                         <option value=""></option>
@@ -315,15 +324,17 @@
                     </select>
                     <label for="fecha-editar-operacion" class="text-xl dark:text-white">Fecha</label>
                     <input type="date" id="fecha-editar-operacion" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
+                    <div id="error-editarFecha" class="text-red-500 hidden">
+                        <p>Por favor ingresá una fecha válida</p>
+                    </div>
                 </div>
                 <div class=" flex self-end gap-3">
-                    <button id="cancelar_editar_operacion" class=" w-20 my-4 h-10 
-                    rounded-lg m-auto lg:w-28 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none
-                    focus:bg-red-700 dark:bg-rose-900 dark:hover:bg-rose-800">Cancelar</button>
+                    <button id="cancelar_editar_operacion" class="w-20 my-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none
+                    focus:bg-red-700 dark:bg-rose-900 dark:hover:bg-rose-800
+                    rounded-lg m-auto lg:w-28">Cancelar</button>
                     <button type="submit" id="editarOperacionBtn" class=" editarBtnOperacion
-                    w-20 my-4 h-10 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:outline-none
-                    focus:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600
-                     m-auto lg:w-28">Editar</button>
+                  w-20 my-4 h-10 text-white rounded-lg text-white bg-purple-700 hover:bg-purple-600 hover:bg-[#c7adff]
+                  rounded-lg m-auto lg:w-28">Editar</button>
                 </div>
             </form>
         </section>
@@ -334,41 +345,42 @@
         <!--------------------------------Nueva Operación-------------------------------->
         <section id="nuevaOperacion" class="hidden">
             <form id="nuevaOperacionForm" type="submit" class="flex justify-between mx-7 flex-col p-4 w-80 drop-shadow-lg bg-[#eae6f7] gap-2 mt-[23px]
-                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10">
-                <h2 class="text-3xl text-center font-bold lg:text-4xl">Nueva operación</h2>
+                rounded-lg lg:w-3/5 lg:m-auto lg:mt-10 dark:bg-[#3c2f66]">
+                <h2 class="text-3xl text-center font-bold lg:text-4xl dark:text-white">Nueva operación</h2>
                 <div class="flex flex-col gap-2 lg:gap-3">
-                    <label for="descripcionForm" class="text-xl">Descripción</label>
-                    <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2">
+                    <label for="descripcionForm" class="text-xl dark:text-white">Descripción</label>
+                    <input type="text" id="descripcionForm" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                     <div id="error-descripcion" class="text-red-500 hidden">
                         <p>Por favor completa este campo</p>
                     </div>
-                    <label for="montoForm" class="text-xl">Monto</label>
-                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2">
+                    <label for="montoForm" class="text-xl dark:text-white">Monto</label>
+                    <input type="number" id="montoForm" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                     <div id="error-monto" class="text-red-500 hidden">
                         <p>Por favor ingresa un monto válido</p>
                     </div>
-                    <label for="tipo-gasto-ganancia" class="text-xl">Tipo</label>
-                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2" required>
+                    <label for="tipo-gasto-ganancia" class="text-xl dark:text-white">Tipo</label>
+                    <select name="" id="tipo-gasto-ganancia" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
                         <option value="Gastos">Gastos</option>
                         <option value="Ganancia">Ganancias</option>
 
                     </select>
-                    <label for="selecCat" class="text-xl">Categoría</label>
-                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2" required>
+                    <label for="selecCat" class="text-xl dark:text-white">Categoría</label>
+                    <select name="categoria" id="selecCat" class="  h-10 rounded-lg p-2 dark:bg-[#7d6899]" required>
                         <option value=""></option>
 
                     </select>
-                    <label for="fechaForm" class="text-xl">Fecha</label>
-                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2">
+                    <label for="fechaForm" class="text-xl dark:text-white">Fecha</label>
+                    <input type="date" id="fechaForm" class="h-10 rounded-lg p-2 dark:bg-[#7d6899]">
                     <div id="error-fecha" class="text-red-500 hidden">
                         <p>Por favor ingresá una fecha válida</p>
                     </div>
                 </div>
                 <div class=" flex self-end gap-3">
-                    <button type="reset" id="cerrar" class=" w-20 my-4 h-10 bg-green text-white bg-[#7271bf] hover:bg-[#96e0a0] hover:text-[#050505]
+                    <button type="reset" id="cerrar" class=" w-20 my-4 h-10 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none
+                    focus:bg-red-700 dark:bg-rose-900 dark:hover:bg-rose-800
                     rounded-lg m-auto lg:w-28">Cancelar</button>
                     <button class="nueva-operacion-agregar-btn
-                    w-20 my-4 h-10 bg-green text-white bg-[#b240b8] hover:bg-[#c7adff] hover:text-[#050505]
+                    w-20 my-4 h-10 text-white rounded-lg text-white bg-purple-700 hover:bg-purple-600 hover:bg-[#c7adff]
                     rounded-lg m-auto lg:w-28">Agregar</button>
                 </div>
             </form>

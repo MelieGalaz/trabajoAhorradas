@@ -1,7 +1,7 @@
 /**********************cerrar y abrir secciones******************************************* */
 
 const sections = ["Balance", "reportes", "categorias"];
-
+const EditarOperacion = document.getElementById("EditarOperacion");
 sections.forEach((sectionId) => {
   const section = document.getElementById(sectionId);
   if (sectionId !== "Balance") {
@@ -461,7 +461,7 @@ function generarTabla(operaciones) {
       EditarOperacion.classList.remove("hidden");
       Balance.classList.add("hidden");
       const idOperacion = el.getAttribute("data-id");
-      console.log(idOperacion);
+
       const operacionSeleccionada = obtenerValoresDeTabla(idOperacion);
       llenarFormularioEdicion(operacionSeleccionada);
     });
@@ -580,7 +580,7 @@ function generarTabla(operaciones) {
     .getElementById("cancelar_editar_operacion")
     .addEventListener("click", () => {
       EditarOperacion.classList.add("hidden");
-      console.log("cancelar_editar_operacion");
+
       Balance.classList.remove("hidden");
     });
 
@@ -598,7 +598,6 @@ function generarTabla(operaciones) {
     .getElementById("cancelar_editar_operacion")
     .addEventListener("click", () => {
       EditarOperacion.classList.add("hidden");
-      console.log("cancelar_editar_operacion");
       Balance.classList.remove("hidden");
     });
 }
