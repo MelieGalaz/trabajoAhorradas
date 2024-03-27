@@ -27,11 +27,13 @@ Panel de nueva operación
   Al completar Nueva Operación se carga en Operaciones cada dato y se suman dos botones uno de eliminar y otro de editar
 
 * Editar
+
   ![Editar operaciones](assets/ahorrada9.PNG)
 
   Aquí se ve que todos los datos que tenemos en el item estan cargados y pueden ser cambiados por el usuario segun sus preferencias.Tiene dos botones uno para cancelar esta edición y otro para guardar los cambios que se realicen.
 
 * Eliminar
+
   ![tabla de operaciones](assets/ahorrada11.PNG)
 
   Al tocar el boton en forma de tacho de basura saldrá esta confimacíon para que el usuario este seguro si quiere eliminar la operación
