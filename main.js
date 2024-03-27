@@ -489,28 +489,38 @@ function generarTabla(operaciones) {
     );
 
     const mantenerEditarOperacion = () => {
-      document.getElementById("Balance").classList.add("hidden")
-      document.getElementById("EditarOperacion").classList.remove("hidden")
-    }
+      document.getElementById("Balance").classList.add("hidden");
+      document.getElementById("EditarOperacion").classList.remove("hidden");
+    };
 
-    if(tipoSeleccionado.trim() === ""){
-      document.getElementById("error-editarTipo").classList.remove("hidden")
-      mantenerEditarOperacion()
+    if (tipoSeleccionado.trim() === "") {
+      document.getElementById("error-editarTipo").classList.remove("hidden");
+      mantenerEditarOperacion();
     }
-    if(nuevaDescripcion.trim() === "") {
-       document.getElementById("error-editarDescripcion").classList.remove("hidden");
-       mantenerEditarOperacion();
-     }
+    if (nuevaDescripcion.trim() === "") {
+      document
+        .getElementById("error-editarDescripcion")
+        .classList.remove("hidden");
+      mantenerEditarOperacion();
+    }
     if (nuevaFecha.trim() === "") {
-        document.getElementById("error-editarFecha").classList.remove("hidden");
-        mantenerEditarOperacion();
+      document.getElementById("error-editarFecha").classList.remove("hidden");
+      mantenerEditarOperacion();
     }
     if (isNaN(nuevoMonto) || nuevoMonto === "") {
-       document.getElementById("error-editarNuevoMonto").classList.remove("hidden");
-       mantenerEditarOperacion();
+      document
+        .getElementById("error-editarNuevoMonto")
+        .classList.remove("hidden");
+      mantenerEditarOperacion();
     }
-    if(tipoSeleccionado.trim() === "" || nuevaDescripcion.trim() === "" || nuevaFecha.trim() === "" || isNaN(nuevoMonto) || nuevoMonto === "" ){
-      return 
+    if (
+      tipoSeleccionado.trim() === "" ||
+      nuevaDescripcion.trim() === "" ||
+      nuevaFecha.trim() === "" ||
+      isNaN(nuevoMonto) ||
+      nuevoMonto === ""
+    ) {
+      return;
     }
 
     // Cambiar el signo del monto según el tipo seleccionado
