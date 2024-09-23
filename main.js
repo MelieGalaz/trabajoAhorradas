@@ -201,7 +201,12 @@ const movimientoCategoria = () => {
       // Rellenar el campo de entrada con el nombre actual de la categoría
       nuevoNombreInput.value = ArrayCategoria[index];
 
-      guardarNuevoNombre.addEventListener("click", () => {
+      // Remover cualquier evento anterior para evitar duplicaciones
+      guardarNuevoNombre.replaceWith(guardarNuevoNombre.cloneNode(true));
+      const nuevoGuardarBtn = document.getElementById("guardarNuevoNombre");
+
+      // Agregar el nuevo evento de guardar
+      nuevoGuardarBtn.addEventListener("click", () => {
         const nuevoNombre = nuevoNombreInput.value.trim();
         if (nuevoNombre !== "") {
           ArrayCategoria[index] = nuevoNombre;
@@ -216,7 +221,6 @@ const movimientoCategoria = () => {
       modal.querySelector(".close").addEventListener("click", () => {
         modal.classList.add("hidden");
         categorias.classList.remove("hidden");
-        // Ocultar la ventana modal
       });
     });
   });
@@ -487,7 +491,6 @@ function generarTabla(operaciones) {
     const nuevoMonto = parseFloat(
       document.getElementById("montoForm-editar").value
     );
-
     const mantenerEditarOperacion = () => {
       document.getElementById("Balance").classList.add("hidden");
       document.getElementById("EditarOperacion").classList.remove("hidden");
@@ -529,11 +532,16 @@ function generarTabla(operaciones) {
         ? -Math.abs(nuevoMonto)
         : Math.abs(nuevoMonto);
 
+    console.log("Tipo seleccionado:", tipoSeleccionado); // Verifica el valor
+    console.log("Monto con signo:", nuevoMontoConSigno);
+
     // Actualizar la fila correspondiente en la tabla con los nuevos valores
     const tableRows = document.querySelectorAll("#tabody-operaciones tr");
     tableRows.forEach((row) => {
-      const id = row.querySelector(".edit-btn").getAttribute("data-id");
-      if (id === idOperacion) {
+      const id = row.querySelector(".edit-btn")?.getAttribute("data-id");
+
+      // Asegúrate de que la fila tiene celdas y que corresponde a la operación que estás editando
+      if (id === idOperacion && row.cells.length >= 4) {
         row.cells[0].textContent = nuevaDescripcion;
         row.cells[1].textContent = nuevaCategoria;
         row.cells[2].textContent = fechaFormateada(nuevaFecha);
