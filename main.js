@@ -54,19 +54,20 @@ document.getElementById("hamburger").addEventListener("click", () => {
 
 /*************************************************************** */
 
-const ArrayCategoria = JSON.parse(localStorage.getItem("categorias")) || [
-  "Comida",
-  "Servicios",
-  "Salidas",
-  "Educación",
-  "Transporte",
-  "Trabajo",
+let ArrayCategoria = JSON.parse(localStorage.getItem("categorias")) || [
+  { id: 1, nombre: "Comida" },
+  { id: 2, nombre: "Servicios" },
+  { id: 3, nombre: "Salidas" },
+  { id: 4, nombre: "Educación" },
+  { id: 5, nombre: "Transporte" },
+  { id: 6, nombre: "Trabajo" },
 ];
 
 const actualizarSelectores = () => {
   const selecCat = document.getElementById("selecCat");
   const selecBalance = document.getElementById("selecBalance");
   const selecEditarOperacion = document.getElementById("selecEditarOperacion");
+
   selecCat.innerHTML = "";
   selecBalance.innerHTML = ""; // Limpiar el contenido previo
   selecEditarOperacion.innerHTML = "";
@@ -78,21 +79,21 @@ const actualizarSelectores = () => {
   optionTodas.textContent = "Todas";
   selecBalance.appendChild(optionTodas);
 
-  // Iterar sobre el array de categorías para agregarlas al select
+  // Iterar sobre el array de objetos para agregar las categorías a los selects
   for (let categoria of ArrayCategoria) {
     const optionCat = document.createElement("option");
-    optionCat.value = categoria;
-    optionCat.textContent = categoria;
+    optionCat.value = categoria.nombre; 
+    optionCat.textContent = categoria.nombre;
     selecCat.appendChild(optionCat);
 
     const optionBalance = document.createElement("option");
-    optionBalance.value = categoria;
-    optionBalance.textContent = categoria;
+    optionBalance.value = categoria.nombre; 
+    optionBalance.textContent = categoria.nombre;
     selecBalance.appendChild(optionBalance);
 
     const optionEditar = document.createElement("option");
-    optionEditar.value = categoria;
-    optionEditar.textContent = categoria;
+    optionEditar.value = categoria.nombre; 
+    optionEditar.textContent = categoria.nombre;
     selecEditarOperacion.appendChild(optionEditar);
   }
 };
@@ -112,63 +113,78 @@ const movimientoCategoria = () => {
         </div>
     `;
 
-  for (let i = 0; i < ArrayCategoria.length; i++) {
-    const cat = ArrayCategoria[i];
+  // Renderizar las categorías
+  ArrayCategoria.forEach((cat) => {
     contenidoHTML += `
-        <div class="flex justify-between">
-            <p class="dark:text-[white]">${cat}</p>
-            <div class="flex gap-2">
-                <a href="javascript:void(0)" class=" flex gap-1 text-green-500 text-sm eliminar dark:text-[#1e7020]" data-index="${i}"><i class="fi fi-sr-trash"></i>Eliminar</a>
-                <a href="javascript:void(0)" class="flex gap-1  text-green-500 text-sm editar dark:text-[#1e7020]" data-index="${i}"><i class="fi fi-sr-edit-alt"></i>Editar</a>
-            </div>
-        </div>
+      <div class="flex justify-between">
+          <p class="dark:text-[white]">${cat.nombre}</p>
+          <div class="flex gap-2">
+              <a href="javascript:void(0)" class="flex gap-1 text-green-500 text-sm eliminar dark:text-[#1e7020]" data-id="${cat.id}">
+                <i class="fi fi-sr-trash"></i>Eliminar</a>
+              <a href="javascript:void(0)" class="flex gap-1 text-green-500 text-sm editar dark:text-[#1e7020]" data-id="${cat.id}">
+                <i class="fi fi-sr-edit-alt"></i>Editar</a>
+          </div>
+      </div>
     `;
-  }
+  });
 
   contenidoHTML += `</div>`;
   categoria.innerHTML = contenidoHTML;
 
+  // Botón para agregar una nueva categoría
   const agregarCategoriaBtn = document.getElementById("agregarCategoriaBtn");
   agregarCategoriaBtn.addEventListener("click", () => {
     const nuevaCategoriaInput = document.getElementById("agregarCategorias");
-    const nuevaCategoria = nuevaCategoriaInput.value.trim();
-    if (nuevaCategoria !== "") {
-      ArrayCategoria.push(nuevaCategoria);
-      actualizarSelectores();
-      movimientoCategoria();
+    const nuevaCategoria = nuevaCategoriaInput.value.trim().toLowerCase();
+
+    if (nuevaCategoria === "") {
+      alert("El nombre de la categoría no puede estar vacío.");
+    } else {
+      const newId = ArrayCategoria.length
+        ? Math.max(...ArrayCategoria.map((cat) => cat.id)) + 1
+        : 1;
+      ArrayCategoria.push({ id: newId, nombre: nuevaCategoria });
+      localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
+      movimientoCategoria(); // Redibujar las categorías
       nuevaCategoriaInput.value = "";
     }
   });
-  const categorias = document.getElementById("categorias");
+
+  // Para la ventana modal de eliminación
   categoria.querySelectorAll(".eliminar").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
-      const index = parseInt(el.getAttribute("data-index"));
+      const id = parseInt(el.getAttribute("data-id"));
+
+      // Buscar la categoría a eliminar
+      const categoriaAEliminar = ArrayCategoria.find((cat) => cat.id === id);
+
+      if (!categoriaAEliminar) {
+        console.error(`Categoría con ID ${id} no encontrada.`);
+        return;
+      }
+
       const modalEliminar = document.getElementById("modal-eliminar");
       const eliminarCategoria = document.getElementById("eliminarCategoria");
 
-      // Obtener el nombre de la categoría a eliminar y mostrarlo en la ventana modal
-      const categoriaAEliminar = ArrayCategoria[index];
-      eliminarCategoria.textContent = categoriaAEliminar;
+      eliminarCategoria.textContent = categoriaAEliminar.nombre;
 
-      // Mostrar la ventana modal
       modalEliminar.classList.remove("hidden");
-      categorias.classList.add("hidden");
+      categoria.classList.add("hidden");
 
-      // Manejar evento de clic en el botón de eliminar de la ventana modal
+      // Confirmar la eliminación
       document
         .getElementById("eliminarCategoriaBtn")
         .addEventListener("click", () => {
-          ArrayCategoria.splice(index, 1);
-          movimientoCategoria();
-          actualizarSelectores();
+          ArrayCategoria = ArrayCategoria.filter((cat) => cat.id !== id);
+          localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
+          movimientoCategoria(); // Redibujar las categorías
 
-          // Cerrar la ventana modal después de eliminar la categoría
           modalEliminar.classList.add("hidden");
           categoria.classList.remove("hidden");
         });
 
-      // Manejar evento de clic en el botón de cerrar de la ventana modal
+      // Cancelar la eliminación
       document
         .querySelector(".modal-btn-close")
         .addEventListener("click", () => {
@@ -176,55 +192,58 @@ const movimientoCategoria = () => {
           categoria.classList.remove("hidden");
         });
       document.querySelector(".modal-close").addEventListener("click", () => {
-        // Cerrar la ventana modal sin eliminar la categoría
         modalEliminar.classList.add("hidden");
         categoria.classList.remove("hidden");
       });
     });
-    localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
   });
 
-  // Cuando se hace clic en el botón "Editar" de la categoría
-
+  // Para la ventana modal de edición
   categoria.querySelectorAll(".editar").forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
-      const index = parseInt(el.getAttribute("data-index"));
+      const id = parseInt(el.getAttribute("data-id"));
+
+      const categoriaAEditar = ArrayCategoria.find((cat) => cat.id === id);
+
+      if (!categoriaAEditar) {
+        console.error(`Categoría con ID ${id} no encontrada.`);
+        return;
+      }
+
       const modal = document.getElementById("modal");
       const nuevoNombreInput = document.getElementById("nuevoNombreInput");
-      const guardarNuevoNombre = document.getElementById("guardarNuevoNombre");
 
-      // Mostrar la ventana modal
-      categorias.classList.add("hidden");
+      categoria.classList.add("hidden");
       modal.classList.remove("hidden");
 
-      // Rellenar el campo de entrada con el nombre actual de la categoría
-      nuevoNombreInput.value = ArrayCategoria[index];
+      nuevoNombreInput.value = categoriaAEditar.nombre;
 
-      // Remover cualquier evento anterior para evitar duplicaciones
-      guardarNuevoNombre.replaceWith(guardarNuevoNombre.cloneNode(true));
+      // Clonar el botón para evitar múltiples listeners
       const nuevoGuardarBtn = document.getElementById("guardarNuevoNombre");
+      nuevoGuardarBtn.replaceWith(nuevoGuardarBtn.cloneNode(true));
+      const nuevoBtn = document.getElementById("guardarNuevoNombre");
 
-      // Agregar el nuevo evento de guardar
-      nuevoGuardarBtn.addEventListener("click", () => {
+      nuevoBtn.addEventListener("click", () => {
         const nuevoNombre = nuevoNombreInput.value.trim();
         if (nuevoNombre !== "") {
-          ArrayCategoria[index] = nuevoNombre;
+          categoriaAEditar.nombre = nuevoNombre;
+          localStorage.setItem("categorias", JSON.stringify(ArrayCategoria));
           modal.classList.add("hidden");
-          categorias.classList.remove("hidden");
-          movimientoCategoria();
-          actualizarSelectores();
+          categoria.classList.remove("hidden");
+          movimientoCategoria(); // Redibujar las categorías
         }
       });
 
-      // Cuando se hace clic en la 'x' para cerrar la ventana modal
       modal.querySelector(".close").addEventListener("click", () => {
         modal.classList.add("hidden");
-        categorias.classList.remove("hidden");
+        categoria.classList.remove("hidden");
       });
     });
   });
 };
+
+document.addEventListener("DOMContentLoaded", movimientoCategoria)
 
 movimientoCategoria();
 actualizarSelectores();
